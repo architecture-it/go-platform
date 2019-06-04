@@ -5,6 +5,7 @@ import (
 	"gopkg.in/resty.v1"
 	"fmt"
 	"errors"
+	"net/http"
 )
 
 type Queue struct {
@@ -33,14 +34,20 @@ func (q Queue) Put(data string) error {
 func (q Queue) Listen(ctx context.Context, f func (data string)) {
 	
 	go func() {
-		
+		exit:=false
+
+		go func() {
+			<- ctx.Done()
+			exit = true
+		}()
+
+		url := fmt.Sprintf("%s/queues/%s",q.api,q.name)
 		for {
-			select {
-			case <- ctx.Done():
-				return
+			if exit == true {
+				break
 			}
-			resp,err := resty.R().Get(fmt.Sprintf("%s/queues/%s",q.api,q.name))
-			if err == nil {
+			
+			if resp,err := resty.R().Get(url);err == nil && resp.StatusCode() == http.StatusOK {
 				f(resp.String())
 			}
 		}
