@@ -29,8 +29,8 @@ func NewServer(cfg Config) *Server {
 
 }
 
-// AddPrometheus agrega un endpoint /metrics con las metricas de Prometheus para los requests 
-func (s *Server) AddPrometheus() {
+// AddMetrics agrega un endpoint /metrics con las metricas de Prometheus para los requests 
+func (s *Server) AddMetrics() *ginprometheus.Prometheus {
 	p := ginprometheus.NewPrometheus("gin") 
 
 	//esta funcion es para que se contabilicen agrupadas las metricas en cada endpoint mas alla de como cambie el ultimo elemento del path (el nombre de la cola o del topic)
@@ -49,6 +49,8 @@ func (s *Server) AddPrometheus() {
 		return url
 	}
 	p.Use(s.r)
+
+	return p
 }
 
 
