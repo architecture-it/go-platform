@@ -7,10 +7,10 @@ import (
 	"time"
 	"github.com/gin-gonic/gin"
 	"context"
-	"log"
 	"github.com/zsais/go-gin-prometheus"
 	"strings"
 	"github.com/gin-contrib/cors"
+	"github.com/eandreani/go-platform/log"
 )
 //Server un server http basado en gin-gonic
 type Server struct {
@@ -85,7 +85,8 @@ func (s *Server) ListenAndServe() {
 
 	go func() {
 		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
-			log.Fatalf("listen: %s\n", err)
+			log.Fatal.Printf("listen: %s\n", err)
+			os.Exit(1)
 		}
 	}()
 
@@ -95,14 +96,14 @@ func (s *Server) ListenAndServe() {
 	signal.Notify(quit, os.Interrupt) //(1) que nos notifique en el chanel quit @ SIGINT
 	signal.Notify(quit, os.Kill)
 	<-quit //esto se queda bloqueado aca hasta que (1) no sucede.
-	log.Println("Apagando server ...")
+	log.Info.Println("Shutting down server...")
 
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 	if err := srv.Shutdown(ctx); err != nil {
-		log.Fatal("Apagando server:", err)
+		log.Fatal.Printf("Shutting down server: %s", err)
 	}
-	log.Println("Adios")
+	log.Info.Println("Farewell")
 
 }
 
