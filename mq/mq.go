@@ -35,7 +35,7 @@ func (q Queue) Listen(ctx context.Context, f func (data string)) {
 	
 	go func() {
 		url := fmt.Sprintf("%s/queues/%s",q.api,q.name)
-		tick := time.NewTicker(time.Second)
+		tick := time.NewTicker(50*time.Millisecond)
 		defer tick.Stop()
 		for {
 			select {
