@@ -11,6 +11,8 @@ import (
 	"strings"
 	"github.com/gin-contrib/cors"
 	"github.com/eandreani/go-platform/log"
+	//"github.com/gin-contrib/static"
+	"bytes"
 )
 //Server un server http basado en gin-gonic
 type Server struct {
@@ -27,6 +29,31 @@ func (s *Server) GetRouter() *gin.Engine {
 func NewServer(cfg Config) *Server {
 	return &Server{gin.Default(),cfg}
 
+}
+
+func serveFromURL(url string, c *gin.Context) {
+
+	resp, err := http.Get(url)
+	if err != nil {
+		c.Status(http.StatusNotFound)
+	}		
+	defer resp.Body.Close()
+	buf := new(bytes.Buffer)
+	buf.ReadFrom(resp.Body)
+	c.String(http.StatusOK,buf.String())
+}
+
+func (s* Server) AddApiDocs(url string) {
+//
+
+	s.r.GET("/apidocs",func (c *gin.Context) {
+		serveFromURL("https://raw.githubusercontent.com/eandreani/go-platform/master/web/index.html",c)		
+	})
+
+	s.r.GET("/openapi.yaml", func (c *gin.Context) {
+		serveFromURL(url,c)
+	})
+//	s.r.Use(static.Serve("/openapi.yaml", static.LocalFile("./apidocs/openapi.yaml", false)))
 }
 
 // AddMetrics agrega un endpoint /metrics con las metricas de Prometheus para los requests 
