@@ -10,6 +10,7 @@ import "context"
 func main() {
 
     //ReadConfigFromEnv() lee del environment HTTP_MQ_API_URL y QUEUE_NAME
+    //Tambien se puede leer la config del Vault usando ReadConfigFromVault().
     q := mq.GetQueue(mq.ReadConfigFromEnv()) 
 
     err := q.Put("Hola")
