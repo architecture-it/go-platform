@@ -23,8 +23,22 @@ func main() {
     })
     <-ctx.Done()
 
-    err = mq.Publish("topic/subtopic","mensaje")
+    topic := mq.GetTopic("topic/subtopic",mq.ReadConfigFromEnv())
+    err = topic.Publish("mensaje")
 }
 
 ```
 
+## Roadmap
+Ver si mejor no leer la configracion de forma global:
+```go
+mq.ReadConfigFromEnv()
+mq.ReadConfigFromVault()
+```
+Y luego cambian las apis a:
+```go
+q:= mq.GetQueue("miQueue")
+q.Put("mensaje")
+t:=mq.GetTopic("untopic/otro")
+t.Publish("un mensaje")
+```
