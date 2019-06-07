@@ -1,5 +1,5 @@
 # web
-Helpers para montar servicios de APIs usando (go-gonic)[]https://github.com/gin-gonic/gin
+Helpers para montar servicios de APIs usando [gin-gonic](https://github.com/gin-gonic/gin)
 
 ## Uso
 
@@ -17,7 +17,7 @@ import (
 func main() {
     
     server:= web.NewServer(web.ReadConfigFromEnv()) 
-	server.AddMetrics() // /metrics de los requests en formato prometheus 
+    server.AddMetrics() // /metrics de los requests en formato prometheus 
     server.AddCorsAllOrigins()
     
     //AddHealth(health.NewRedisHealthChecker(redisHealthChecker.Config{}),
