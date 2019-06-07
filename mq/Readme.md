@@ -18,7 +18,7 @@ func main() {
     ctx,cancel := context.WithTimeout(context.Background(),1*time.Second)
     defer cancel()
     //Listen() ejecuta la goroutine del closure cada vez que llega un mensaje hasta que el contexto (ctx) se cancele.
-	q.Listen(ctx,func(what string) {
+    q.Listen(ctx,func(what string) {
         //en what deberia venir "Hola"
     })
     <-ctx.Done()
