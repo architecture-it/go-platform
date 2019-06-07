@@ -16,6 +16,7 @@ import (
 
 func main() {
     
+    //Espera $PORT, por default usará el 8080.
     server:= web.NewServer(web.ReadConfigFromEnv()) 
     server.AddMetrics() // /metrics de los requests en formato prometheus 
     server.AddCorsAllOrigins()
