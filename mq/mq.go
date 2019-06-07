@@ -4,15 +4,31 @@ import (
 	"context"
 	"gopkg.in/resty.v1"
 	"fmt"
-	"errors"
+	"strings"
 	"net/http"
 	"time"
+	"gopkg.in/eapache/go-resiliency.v1/breaker"
 )
 
 //Queue representa el objeto Queue de MQ
 type Queue struct {
 	name string
 	api string
+}
+
+type Topic struct {
+	name string
+	api string
+}
+
+var circuitBreaker *breaker.Breaker
+
+func init() {
+	circuitBreaker = breaker.New(3,1,5*time.Second)
+}
+
+func GetTopic(topic string, config Config) Topic {
+	return Topic{strings.Replace(topic,"/",".",-1),config.HTTPMQAPIUrl}
 }
 
 //GetQueue obtiene una cola determinada por la config especificada
@@ -23,10 +39,13 @@ func GetQueue(config Config) Queue {
 //Put pone un mensaje en la cola
 func (q Queue) Put(data string) error {
 
-	_,err := resty.R().
-		SetBody(data).
-		Put(q.api)
-	return err
+	url := fmt.Sprintf("%s/queues/%s",q.api,q.name)
+	return circuitBreaker.Run(func() error {
+		_,err := resty.R().
+			SetBody(data).
+			Put(url)
+		return err
+	})
 
 }
 
@@ -52,6 +71,13 @@ func (q Queue) Listen(ctx context.Context, f func (data string)) {
 }
 
 // Publish publica en el topic 'topic' el mensaje 'data'
-func Publish(topic string, data string) error {
-	return errors.New("not implemented")
+func (t Topic) Publish(data string) error {
+
+	url := fmt.Sprintf("%s/topics/%s",t.api,t.name)
+	return circuitBreaker.Run(func() error {
+		_,err := resty.R().
+			SetBody(data).
+			Post(url)
+		return err
+	})
 }
