@@ -40,7 +40,7 @@ func serveFromURL(url string, c *gin.Context) {
 	defer resp.Body.Close()
 	buf := new(bytes.Buffer)
 	buf.ReadFrom(resp.Body)
-	c.String(http.StatusOK,buf.String())
+	c.Data(http.StatusOK,"text/html; charset=utf-8",buf.Bytes())
 }
 
 func (s* Server) AddApiDocs(url string) {
@@ -50,6 +50,9 @@ func (s* Server) AddApiDocs(url string) {
 		serveFromURL("https://raw.githubusercontent.com/eandreani/go-platform/master/web/index.html",c)		
 	})
 
+	s.r.GET("/openapi.json", func (c *gin.Context) {
+		serveFromURL(url,c)
+	})
 	s.r.GET("/openapi.yaml", func (c *gin.Context) {
 		serveFromURL(url,c)
 	})
