@@ -1,22 +1,27 @@
 package web
 
 import (
+	"context"
 	"net/http"
 	"os"
 	"os/signal"
-	"time"
-	"github.com/gin-gonic/gin"
-	"context"
-	"github.com/zsais/go-gin-prometheus"
 	"strings"
-	"github.com/gin-contrib/cors"
+	"time"
+
 	"github.com/eandreani/go-platform/log"
+	"github.com/gin-contrib/cors"
+	"github.com/gin-gonic/gin"
+	ginprometheus "github.com/zsais/go-gin-prometheus"
+
 	//"github.com/gin-contrib/static"
 	"bytes"
+
+	"github.com/common-nighthawk/go-figure"
 )
+
 //Server un server http basado en gin-gonic
 type Server struct {
-	r *gin.Engine
+	r      *gin.Engine
 	config Config
 }
 
@@ -27,7 +32,7 @@ func (s *Server) GetRouter() *gin.Engine {
 
 //NewServer crea un server nuevo con la config indicada
 func NewServer(cfg Config) *Server {
-	return &Server{gin.Default(),cfg}
+	return &Server{gin.Default(), cfg}
 
 }
 
@@ -36,32 +41,32 @@ func serveFromURL(url string, c *gin.Context) {
 	resp, err := http.Get(url)
 	if err != nil {
 		c.Status(http.StatusNotFound)
-	}		
+	}
 	defer resp.Body.Close()
 	buf := new(bytes.Buffer)
 	buf.ReadFrom(resp.Body)
-	c.Data(http.StatusOK,"text/html; charset=utf-8",buf.Bytes())
+	c.Data(http.StatusOK, "text/html; charset=utf-8", buf.Bytes())
 }
 
-func (s* Server) AddApiDocs(url string) {
-//
+func (s *Server) AddApiDocs(url string) {
+	//
 
-	s.r.GET("/apidocs",func (c *gin.Context) {
-		serveFromURL("https://raw.githubusercontent.com/eandreani/go-platform/master/web/index.html",c)		
+	s.r.GET("/apidocs", func(c *gin.Context) {
+		serveFromURL("https://raw.githubusercontent.com/eandreani/go-platform/master/web/index.html", c)
 	})
 
-	s.r.GET("/openapi.json", func (c *gin.Context) {
-		serveFromURL(url,c)
+	s.r.GET("/openapi.json", func(c *gin.Context) {
+		serveFromURL(url, c)
 	})
-	s.r.GET("/openapi.yaml", func (c *gin.Context) {
-		serveFromURL(url,c)
+	s.r.GET("/openapi.yaml", func(c *gin.Context) {
+		serveFromURL(url, c)
 	})
-//	s.r.Use(static.Serve("/openapi.yaml", static.LocalFile("./apidocs/openapi.yaml", false)))
+	//	s.r.Use(static.Serve("/openapi.yaml", static.LocalFile("./apidocs/openapi.yaml", false)))
 }
 
-// AddMetrics agrega un endpoint /metrics con las metricas de Prometheus para los requests 
+// AddMetrics agrega un endpoint /metrics con las metricas de Prometheus para los requests
 func (s *Server) AddMetrics() *ginprometheus.Prometheus {
-	p := ginprometheus.NewPrometheus("gin") 
+	p := ginprometheus.NewPrometheus("gin")
 
 	//esta funcion es para que se contabilicen agrupadas las metricas en cada endpoint mas alla de como cambie el ultimo elemento del path (el nombre de la cola o del topic)
 	p.ReqCntURLLabelMappingFn = func(c *gin.Context) string {
@@ -83,31 +88,34 @@ func (s *Server) AddMetrics() *ginprometheus.Prometheus {
 	return p
 }
 
-
 //AddHealth agrega un endpoint /health. Si alguno de los status_endpoints devuelve DOWN entonces /health va a devolver 404,
 //si todos devuelve UP, 200-OK
 //AddHealth(web.HealthAlwaysUp) siempre devuelve UP
 //AddHealth(health.NewRedisHealthChecker(redisHealthChecker.Config{}),
 //			health.NewMySqlHealthChecker(mySqlHealthChecker.Config{}),
 //			...func())
-func (s *Server) AddHealth(fs ...func()Status) {
-	
-	s.r.GET("/health", func (c *gin.Context) {
-		result := make([]Status,len(fs))
+func (s *Server) AddHealth(fs ...func() Status) {
+
+	s.r.GET("/health", func(c *gin.Context) {
+		result := make([]Status, len(fs))
 		statusCode := http.StatusOK
-		for i,f := range fs {
-			check:=f()
-			result[i]=check
+		for i, f := range fs {
+			check := f()
+			result[i] = check
 			if check.Result != UP {
 				statusCode = http.StatusNotFound
 			}
 		}
-		c.JSON(statusCode,result)
+		c.JSON(statusCode, result)
 	})
 }
+
 //ListenAndServe inicia el server http y bloquea hasta SIGINT
 func (s *Server) ListenAndServe() {
-	
+
+	myFigure := figure.NewFigure("go-platform", "", true)
+	myFigure.Print()
+
 	srv := &http.Server{
 		Addr:    ":" + s.config.Port,
 		Handler: s.r,

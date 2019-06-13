@@ -3,8 +3,8 @@ module github.com/eandreani/go-platform
 go 1.12
 
 require (
+	github.com/common-nighthawk/go-figure v0.0.0-20190529165535-67e0ed34491a
 	github.com/gin-contrib/cors v1.3.0
-	github.com/gin-contrib/static v0.0.0-20190511124741-c1cdf9c9ec7b
 	github.com/gin-gonic/gin v1.4.0
 	github.com/prometheus/client_golang v0.9.3 // indirect
 	github.com/sirupsen/logrus v1.4.2 // indirect
