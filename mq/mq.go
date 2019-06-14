@@ -2,6 +2,7 @@ package mq
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"net/http"
 	"strings"
@@ -24,6 +25,9 @@ type Topic struct {
 }
 
 var circuitBreaker *breaker.Breaker
+var (
+	errorQueueEmpty = errors.New("queue empty")
+)
 
 func init() {
 	circuitBreaker = breaker.New(3, 1, 5*time.Second)
@@ -76,6 +80,9 @@ func callMqBridge(url string) (string, error) {
 	resp, err := resty.R().Get(url)
 	if err == nil && resp.StatusCode() == http.StatusOK {
 		return resp.String(), nil
+	}
+	if err == nil {
+		err = errorQueueEmpty
 	}
 	return "", err
 }
