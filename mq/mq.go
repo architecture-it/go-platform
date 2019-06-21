@@ -4,6 +4,9 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"io/ioutil"
+	"mime"
+	"mime/multipart"
 	"net/http"
 	"strings"
 	"time"
@@ -67,7 +70,9 @@ func (q Queue) Listen(ctx context.Context, f func(data string)) {
 				return
 			default:
 				if resp, err := callMqBridge(url); err == nil {
-					f(resp)
+					for msg := range resp {
+						f(msg)
+					}
 				}
 			}
 		}
@@ -75,16 +80,42 @@ func (q Queue) Listen(ctx context.Context, f func(data string)) {
 
 }
 
-func callMqBridge(url string) (string, error) {
+func callMqBridge(url string) (<-chan string, error) {
 	//defer log.Benchmarkf("call resty: ", url)
-	resp, err := resty.R().Get(url)
-	if err == nil && resp.StatusCode() == http.StatusOK {
-		return resp.String(), nil
+	client := &http.Client{}
+	request, err := http.NewRequest("GET", fmt.Sprintf("%s?batch=20", url), nil)
+	if err != nil {
+		return nil, err
 	}
-	if err == nil {
+
+	resp, err := client.Do(request)
+
+	code := resp.StatusCode
+
+	if err == nil && code == http.StatusOK {
+		return parseMultipartResponse(resp), nil
+	}
+	if err == nil && code == http.StatusNoContent {
 		err = errorQueueEmpty
 	}
-	return "", err
+	return nil, err
+}
+
+func parseMultipartResponse(resp *http.Response) <-chan string {
+
+	result := make(chan string, 10)
+
+	go func() {
+		_, params, _ := mime.ParseMediaType(resp.Header.Get("Content-Type"))
+		mr := multipart.NewReader(resp.Body, params["boundary"])
+		defer resp.Body.Close()
+		defer close(result)
+		for part, err := mr.NextPart(); err == nil; part, err = mr.NextPart() {
+			value, _ := ioutil.ReadAll(part)
+			result <- string(value)
+		}
+	}()
+	return result
 }
 
 // Publish publica en el topic 'topic' el mensaje 'data'
