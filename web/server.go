@@ -51,7 +51,7 @@ func serveFromURL(url string, c *gin.Context) {
 func (s *Server) AddApiDocs(url string) {
 	//
 
-	s.r.GET("/apidocs", func(c *gin.Context) {
+	s.r.GET("/api/doc", func(c *gin.Context) {
 		serveFromURL("https://raw.githubusercontent.com/eandreani/go-platform/master/web/index.html", c)
 	})
 
