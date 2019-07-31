@@ -2,6 +2,9 @@ package web
 
 import (
 	"context"
+	"encoding/json"
+	"fmt"
+	"io/ioutil"
 	"net/http"
 	"os"
 	"os/signal"
@@ -12,10 +15,6 @@ import (
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	ginprometheus "github.com/zsais/go-gin-prometheus"
-
-	"bytes"
-
-	"github.com/gin-contrib/static"
 
 	"github.com/common-nighthawk/go-figure"
 )
@@ -36,27 +35,34 @@ func NewServer(cfg Config) *Server {
 	return &Server{gin.Default(), cfg}
 }
 
-func serveFromURL(url string, c *gin.Context) {
-	resp, err := http.Get(url)
+func serveFromFile(c *gin.Context, ext string) {
+	var d interface{}
+	file, err := os.Open("docs/swagger." + ext)
 	if err != nil {
-		c.Status(http.StatusNotFound)
+		log.Fatal.Println(err)
 	}
-	defer resp.Body.Close()
-	buf := new(bytes.Buffer)
-	buf.ReadFrom(resp.Body)
-	c.Data(http.StatusOK, "text/html; charset=utf-8", buf.Bytes())
+	defer file.Close()
+	b, _ := ioutil.ReadAll(file)
+	if err := json.Unmarshal(b, &d); err != nil {
+		log.Fatal.Println(err)
+	}
+	c.JSON(200, &d)
 }
 
 func (s *Server) AddApiDocs(url string) {
-	s.r.GET("/apidocs", func(c *gin.Context) {
-		serveFromURL("https://raw.githubusercontent.com/eandreani/go-platform/master/web/index.html", c)
-	})
-
 	s.r.GET("/openapi.json", func(c *gin.Context) {
-		serveFromURL(url, c)
+		serveFromFile(c, "json")
 	})
 
-	s.r.Use(static.Serve("/openapi.yaml", static.LocalFile(url, true)))
+	dir, err := os.Getwd()
+	if err != nil {
+		log.Fatal.Println(err)
+	}
+	fmt.Println(dir)
+
+	s.r.GET("/openapi.yaml", func(c *gin.Context) {
+		serveFromFile(c, "yaml")
+	})
 }
 
 // AddMetrics agrega un endpoint /metrics con las metricas de Prometheus para los requests
