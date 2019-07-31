@@ -52,9 +52,13 @@ func (s *Server) AddApiDocs(url string) {
 		serveFromURL("https://raw.githubusercontent.com/eandreani/go-platform/master/web/index.html", c)
 	})
 
-	//s.r.GET("/openapi.json", func(c *gin.Context) {
-	//	serveFromURL(url, c)
-	//})
+	s.r.GET("/openapi.json", func(c *gin.Context) {
+		serveFromURL(url, c)
+	})
+
+	s.r.GET("/openapi.json", func(c *gin.Context) {
+		serveFromURL(url, c)
+	})
 
 	s.r.Use(static.Serve("/openapi.yaml", static.LocalFile(url, false)))
 }
@@ -134,7 +138,7 @@ func (s *Server) ListenAndServe() {
 	if err := srv.Shutdown(ctx); err != nil {
 		log.Fatal.Printf("Shutting down server: %s", err)
 	}
-	log.Info.Println("Farewell!")
+	log.Info.Println("Farewell")
 
 }
 

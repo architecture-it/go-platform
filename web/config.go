@@ -1,8 +1,9 @@
 package web
 
 import (
-	"fmt"
 	"os"
+
+	"github.com/eandreani/go-platform/log"
 )
 
 //Config para los parametros de config del server
@@ -25,6 +26,6 @@ func ReadConfigFromEnv() Config {
 	if port != "" {
 		config.Port = port
 	}
-	fmt.Println(config.Port)
+	log.Info(config.Port)
 	return config
 }
