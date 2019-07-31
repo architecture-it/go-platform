@@ -34,9 +34,9 @@ func NewServer(cfg Config) *Server {
 	return &Server{gin.Default(), cfg}
 }
 
-func serveFromFile(c *gin.Context, ext string) {
+func serveJSONFromFile(c *gin.Context) {
 	var d interface{}
-	file, err := os.Open("docs/swagger." + ext)
+	file, err := os.Open("docs/swagger.json")
 	if err != nil {
 		log.Fatal.Println(err)
 	}
@@ -48,13 +48,27 @@ func serveFromFile(c *gin.Context, ext string) {
 	c.JSON(200, &d)
 }
 
+func serveYAMLFromFile(c *gin.Context) {
+	var d interface{}
+	file, err := os.Open("docs/swagger.yaml")
+	if err != nil {
+		log.Fatal.Println(err)
+	}
+	defer file.Close()
+	b, _ := ioutil.ReadAll(file)
+	if err := json.Unmarshal(b, &d); err != nil {
+		log.Fatal.Println(err)
+	}
+	c.YAML(200, &d)
+}
+
 func (s *Server) AddApiDocs() {
 	s.r.GET("/openapi.json", func(c *gin.Context) {
-		serveFromFile(c, "json")
+		serveJSONFromFile(c)
 	})
 
 	s.r.GET("/openapi.yaml", func(c *gin.Context) {
-		serveFromFile(c, "yaml")
+		serveYAMLFromFile(c)
 	})
 }
 
