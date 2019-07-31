@@ -56,11 +56,7 @@ func (s *Server) AddApiDocs(url string) {
 		serveFromURL(url, c)
 	})
 
-	s.r.GET("/openapi.json", func(c *gin.Context) {
-		serveFromURL(url, c)
-	})
-
-	s.r.Use(static.Serve("/openapi.yaml", static.LocalFile(url, false)))
+	s.r.Use(static.Serve("/openapi.yaml", static.LocalFile(url, true)))
 }
 
 // AddMetrics agrega un endpoint /metrics con las metricas de Prometheus para los requests
