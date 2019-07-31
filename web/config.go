@@ -2,12 +2,13 @@ package web
 
 import (
 	"os"
+
+	"github.com/eandreani/go-platform/log"
 )
+
 //Config para los parametros de config del server
 type Config struct {
-
 	Port string
-	
 }
 
 //DefaultConfig crea una Config default que escucha en 8080
@@ -25,6 +26,6 @@ func ReadConfigFromEnv() Config {
 	if port != "" {
 		config.Port = port
 	}
-
+	log.Info(config.Port)
 	return config
 }

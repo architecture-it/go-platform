@@ -13,8 +13,9 @@ import (
 	"github.com/gin-gonic/gin"
 	ginprometheus "github.com/zsais/go-gin-prometheus"
 
-	//"github.com/gin-contrib/static"
 	"bytes"
+
+	"github.com/gin-contrib/static"
 
 	"github.com/common-nighthawk/go-figure"
 )
@@ -33,7 +34,6 @@ func (s *Server) GetRouter() *gin.Engine {
 //NewServer crea un server nuevo con la config indicada
 func NewServer(cfg Config) *Server {
 	return &Server{gin.Default(), cfg}
-
 }
 
 func serveFromURL(url string, c *gin.Context) {
@@ -49,19 +49,15 @@ func serveFromURL(url string, c *gin.Context) {
 }
 
 func (s *Server) AddApiDocs(url string) {
-	//
-
 	s.r.GET("/apidocs", func(c *gin.Context) {
 		serveFromURL("https://raw.githubusercontent.com/eandreani/go-platform/master/web/index.html", c)
 	})
 
-	s.r.GET("/openapi.json", func(c *gin.Context) {
-		serveFromURL(url, c)
-	})
-	s.r.GET("/openapi.yaml", func(c *gin.Context) {
-		serveFromURL(url, c)
-	})
-	//	s.r.Use(static.Serve("/openapi.yaml", static.LocalFile("./apidocs/openapi.yaml", false)))
+	//s.r.GET("/openapi.json", func(c *gin.Context) {
+	//	serveFromURL(url, c)
+	//})
+
+	s.r.Use(static.Serve("/openapi.yaml", static.LocalFile(url, false)))
 }
 
 // AddMetrics agrega un endpoint /metrics con las metricas de Prometheus para los requests
