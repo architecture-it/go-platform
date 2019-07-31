@@ -3,7 +3,6 @@ package web
 import (
 	"context"
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"net/http"
 	"os"
@@ -49,16 +48,10 @@ func serveFromFile(c *gin.Context, ext string) {
 	c.JSON(200, &d)
 }
 
-func (s *Server) AddApiDocs(url string) {
+func (s *Server) AddApiDocs() {
 	s.r.GET("/openapi.json", func(c *gin.Context) {
 		serveFromFile(c, "json")
 	})
-
-	dir, err := os.Getwd()
-	if err != nil {
-		log.Fatal.Println(err)
-	}
-	fmt.Println(dir)
 
 	s.r.GET("/openapi.yaml", func(c *gin.Context) {
 		serveFromFile(c, "yaml")
