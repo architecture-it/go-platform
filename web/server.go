@@ -10,6 +10,8 @@ import (
 	"strings"
 	"time"
 
+	yaml "gopkg.in/yaml.v3"
+
 	"github.com/eandreani/go-platform/log"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
@@ -56,7 +58,7 @@ func serveYAMLFromFile(c *gin.Context) {
 	}
 	defer file.Close()
 	b, _ := ioutil.ReadAll(file)
-	if err := json.Unmarshal(b, &d); err != nil {
+	if err := yaml.Unmarshal(b, &d); err != nil {
 		log.Fatal.Println(err)
 	}
 	c.YAML(200, &d)
