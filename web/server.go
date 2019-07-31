@@ -48,7 +48,6 @@ func serveFromURL(url string, c *gin.Context) {
 }
 
 func (s *Server) AddApiDocs(url string) {
-<<<<<<< HEAD
 	s.r.GET("/apidocs", func(c *gin.Context) {
 		serveFromURL("https://raw.githubusercontent.com/eandreani/go-platform/master/web/index.html", c)
 	})
@@ -58,20 +57,6 @@ func (s *Server) AddApiDocs(url string) {
 	//})
 
 	s.r.Use(static.Serve("/openapi.yaml", static.LocalFile(url, false)))
-=======
-	s.r.GET("/api/doc", func(c *gin.Context) {
-		serveFromURL("https://raw.githubusercontent.com/eandreani/go-platform/master/web/index.html", c)
-	})
-
-	s.r.GET("/openapi.json", func(c *gin.Context) {
-		serveFromURL(url, c)
-	})
-	s.r.GET("/openapi.yaml", func(c *gin.Context) {
-		serveFromURL(url, c)
-	})
-	
-	//s.r.Use(static.Serve("/openapi.yaml", static.LocalFile("./apidocs/openapi.yaml", false)))
->>>>>>> e5117b78f04e2649c82584a99532251f95c49356
 }
 
 // AddMetrics agrega un endpoint /metrics con las metricas de Prometheus para los requests
@@ -149,7 +134,7 @@ func (s *Server) ListenAndServe() {
 	if err := srv.Shutdown(ctx); err != nil {
 		log.Fatal.Printf("Shutting down server: %s", err)
 	}
-	log.Info.Println("Farewell")
+	log.Info.Println("Farewell!")
 
 }
 
