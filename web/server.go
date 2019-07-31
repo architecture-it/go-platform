@@ -37,7 +37,6 @@ func NewServer(cfg Config) *Server {
 }
 
 func serveFromURL(url string, c *gin.Context) {
-
 	resp, err := http.Get(url)
 	if err != nil {
 		c.Status(http.StatusNotFound)
@@ -49,8 +48,6 @@ func serveFromURL(url string, c *gin.Context) {
 }
 
 func (s *Server) AddApiDocs(url string) {
-	//
-
 	s.r.GET("/api/doc", func(c *gin.Context) {
 		serveFromURL("https://raw.githubusercontent.com/eandreani/go-platform/master/web/index.html", c)
 	})
@@ -61,14 +58,15 @@ func (s *Server) AddApiDocs(url string) {
 	s.r.GET("/openapi.yaml", func(c *gin.Context) {
 		serveFromURL(url, c)
 	})
-	//	s.r.Use(static.Serve("/openapi.yaml", static.LocalFile("./apidocs/openapi.yaml", false)))
+	
+	//s.r.Use(static.Serve("/openapi.yaml", static.LocalFile("./apidocs/openapi.yaml", false)))
 }
 
 // AddMetrics agrega un endpoint /metrics con las metricas de Prometheus para los requests
 func (s *Server) AddMetrics() *ginprometheus.Prometheus {
 	p := ginprometheus.NewPrometheus("gin")
 
-	//esta funcion es para que se contabilicen agrupadas las metricas en cada endpoint mas alla de como cambie el ultimo elemento del path (el nombre de la cola o del topic)
+	//Esta funcion es para que se contabilicen agrupadas las metricas en cada endpoint mas alla de como cambie el ultimo elemento del path (el nombre de la cola o del topic)
 	p.ReqCntURLLabelMappingFn = func(c *gin.Context) string {
 		url := c.Request.URL.String()
 		for _, p := range c.Params {
@@ -88,14 +86,14 @@ func (s *Server) AddMetrics() *ginprometheus.Prometheus {
 	return p
 }
 
-//AddHealth agrega un endpoint /health. Si alguno de los status_endpoints devuelve DOWN entonces /health va a devolver 404,
-//si todos devuelve UP, 200-OK
-//AddHealth(web.HealthAlwaysUp) siempre devuelve UP
-//AddHealth(health.NewRedisHealthChecker(redisHealthChecker.Config{}),
+//AddHealth agrega un endpoint /health
+//Si alguno de los status_endpoints devuelve DOWN entonces /health va a devolver 404, si todos devuelve UP, 200-OK
+//	AddHealth(web.HealthAlwaysUp) siempre devuelve UP
+//	AddHealth(health.NewRedisHealthChecker(redisHealthChecker.Config{}),
 //			health.NewMySqlHealthChecker(mySqlHealthChecker.Config{}),
 //			...func())
-func (s *Server) AddHealth(fs ...func() Status) {
 
+func (s *Server) AddHealth(fs ...func() Status) {
 	s.r.GET("/health", func(c *gin.Context) {
 		result := make([]Status, len(fs))
 		statusCode := http.StatusOK
@@ -112,7 +110,6 @@ func (s *Server) AddHealth(fs ...func() Status) {
 
 //ListenAndServe inicia el server http y bloquea hasta SIGINT
 func (s *Server) ListenAndServe() {
-
 	myFigure := figure.NewFigure("go-platform", "", true)
 	myFigure.Print()
 
@@ -128,12 +125,11 @@ func (s *Server) ListenAndServe() {
 		}
 	}()
 
-	// Wait for interrupt signal to gracefully shutdown the server with
-	// a timeout of 5 seconds.
+	// Wait for interrupt signal to gracefully shutdown the server with a timeout of 5 seconds
 	quit := make(chan os.Signal)
-	signal.Notify(quit, os.Interrupt) //(1) que nos notifique en el chanel quit @ SIGINT
+	signal.Notify(quit, os.Interrupt) //(1) que nos notifique en el channel quit @SIGINT
 	signal.Notify(quit, os.Kill)
-	<-quit //esto se queda bloqueado aca hasta que (1) no sucede.
+	<-quit //Esto se queda bloqueado aca hasta que (1) no sucede
 	log.Info.Println("Shutting down server...")
 
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
