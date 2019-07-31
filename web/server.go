@@ -69,7 +69,7 @@ func (s *Server) AddApiDocs() {
 		serveJSONFromFile(c)
 	})
 
-	s.r.GET("/openapi.yaml", func(c *gin.Context) {
+	s.r.GET("/openapi.3", func(c *gin.Context) {
 		serveYAMLFromFile(c)
 	})
 }
