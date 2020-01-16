@@ -37,19 +37,18 @@ func init() {
 		currentTime.Format("2006-01-02 15:04:05.000")+" | 0 | TRACE | "+filepath.Dir(d)+" | "+string(log.Llongfile)+" | ", 0)
 
 	Info = log.New(os.Stdout,
-		"INFO: ",
-		log.Ldate|log.Ltime|log.Lshortfile)
+		currentTime.Format("2006-01-02 15:04:05.000")+" | 0 | INFO | "+filepath.Dir(d)+" | "+string(log.Llongfile)+" | ", 0)
 
 	Warning = log.New(os.Stdout,
-		"WARNING: ",
-		log.Ldate|log.Ltime|log.Lshortfile)
+		currentTime.Format("2006-01-02 15:04:05.000")+" | 0 | WARNING | "+filepath.Dir(d)+" | "+string(log.Llongfile)+" | ", 0)
+
 
 	Error = log.New(os.Stdout,
-		"ERROR: ",
-		log.Ldate|log.Ltime|log.Lshortfile)
+		currentTime.Format("2006-01-02 15:04:05.000")+" | 0 | ERROR | "+filepath.Dir(d)+" | "+string(log.Llongfile)+" | ", 0)
+
 
 	Fatal = log.New(os.Stdout,
-		"FATAL: ",
-		log.Ldate|log.Ltime|log.Lshortfile)
+		currentTime.Format("2006-01-02 15:04:05.000")+" | 0 | FATAL | "+filepath.Dir(d)+" | "+string(log.Llongfile)+" | ", 0)
+
 
 }
