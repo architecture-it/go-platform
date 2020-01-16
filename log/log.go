@@ -2,9 +2,11 @@ package log
 
 import (
 	"fmt"
-	"io/ioutil"
 	"log"
 	"os"
+	"path"
+	"path/filepath"
+	"runtime"
 	"time"
 )
 
@@ -27,10 +29,12 @@ func Benchmarkf(fmtt string, args ...string) func() {
 	}
 }
 func init() {
+	_, b, _, _ := runtime.Caller(0)
+	d := path.Join(path.Dir(b))
+	currentTime := time.Now()
 
-	Trace = log.New(ioutil.Discard,
-		"TRACE: ",
-		log.Ldate|log.Ltime|log.Lshortfile)
+	Trace = log.New(os.Stdout,
+		currentTime.Format("2006-01-02 15:04:05.000")+" | 0 | TRACE | "+filepath.Dir(d)+" | ", log.Llongfile)
 
 	Info = log.New(os.Stdout,
 		"INFO: ",
