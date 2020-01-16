@@ -34,21 +34,21 @@ func init() {
 	currentTime := time.Now()
 
 	Trace = log.New(os.Stdout,
-		currentTime.Format("2006-01-02 15:04:05.000")+" | 0 | TRACE | "+filepath.Dir(d)+" | "+string(log.Llongfile)+" | ", 0)
+		currentTime.Format("2006-01-02 15:04:05.000")+" | 0 | TRACE | "+filepath.Dir(d)+" | nil | ", log.Llongfile)
 
 	Info = log.New(os.Stdout,
-		currentTime.Format("2006-01-02 15:04:05.000")+" | 0 | INFO | "+filepath.Dir(d)+" | "+string(log.Llongfile)+" | ", 0)
+		currentTime.Format("2006-01-02 15:04:05.000")+" | 0 | INFO | "+filepath.Dir(d)+" | nil | ", log.Llongfile)
 
 	Warning = log.New(os.Stdout,
-		currentTime.Format("2006-01-02 15:04:05.000")+" | 0 | WARNING | "+filepath.Dir(d)+" | "+string(log.Llongfile)+" | ", 0)
+		currentTime.Format("2006-01-02 15:04:05.000")+" | 0 | WARNING | "+filepath.Dir(d)+" | nil | ", log.Llongfile)
 
 
 	Error = log.New(os.Stdout,
-		currentTime.Format("2006-01-02 15:04:05.000")+" | 0 | ERROR | "+filepath.Dir(d)+" | "+string(log.Llongfile)+" | ", 0)
+		currentTime.Format("2006-01-02 15:04:05.000")+" | 0 | ERROR | "+filepath.Dir(d)+" | nil | ", log.Llongfile)
 
 
 	Fatal = log.New(os.Stdout,
-		currentTime.Format("2006-01-02 15:04:05.000")+" | 0 | FATAL | "+filepath.Dir(d)+" | "+string(log.Llongfile)+" | ", 0)
+		currentTime.Format("2006-01-02 15:04:05.000")+" | 0 | FATAL | "+filepath.Dir(d)+" | nil | ", log.Llongfile)
 
 
 }
