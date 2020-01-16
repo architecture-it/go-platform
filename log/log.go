@@ -34,7 +34,7 @@ func init() {
 	currentTime := time.Now()
 
 	Trace = log.New(os.Stdout,
-		currentTime.Format("2006-01-02 15:04:05.000")+" | 0 | TRACE | "+filepath.Dir(d)+" | ", log.Llongfile)
+		currentTime.Format("2006-01-02 15:04:05.000")+" | 0 | TRACE | "+filepath.Dir(d)+" | "+string(log.Llongfile)+" | ", 0)
 
 	Info = log.New(os.Stdout,
 		"INFO: ",
