@@ -1,4 +1,4 @@
-## mq
+## mssql
 
 
 Este paquete se permite la conexion a una base de datos MSSql. Se deben configurar las variables de entorno: SQL_DRIVER y SQL_CONNECTION
