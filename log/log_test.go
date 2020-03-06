@@ -5,5 +5,5 @@ import (
 )
 
 func TestBenchmark(t *testing.T) {
-	defer Benchmark(Info)
+	defer Benchmark("Info")
 }
