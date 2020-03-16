@@ -4,9 +4,6 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"path"
-	"path/filepath"
-	"runtime"
 	"time"
 )
 
@@ -29,23 +26,21 @@ func Benchmark(fmtt string, args ...string) func() {
 	}
 }
 func init() {
-	_, b, _, _ := runtime.Caller(0)
-	d := path.Join(path.Dir(b))
 	currentTime := time.Now()
 
 	Trace = log.New(os.Stdout,
-		currentTime.Format("2006-01-02 15:04:05.000")+" | 0 | TRACE | "+filepath.Dir(d)+" | nil | ", log.Llongfile)
+		currentTime.Format("2006-01-02 15:04:05.000")+" | 0 | TRACE | "+os.Args[0]+" | nil | ", log.Llongfile)
 
 	Info = log.New(os.Stdout,
-		currentTime.Format("2006-01-02 15:04:05.000")+" | 0 | INFO | "+filepath.Dir(d)+" | nil | ", log.Llongfile)
+		currentTime.Format("2006-01-02 15:04:05.000")+" | 0 | INFO | "+os.Args[0]+" | nil | ", log.Llongfile)
 
 	Warning = log.New(os.Stdout,
-		currentTime.Format("2006-01-02 15:04:05.000")+" | 0 | WARNING | "+filepath.Dir(d)+" | nil | ", log.Llongfile)
+		currentTime.Format("2006-01-02 15:04:05.000")+" | 0 | WARNING | "+os.Args[0]+" | nil | ", log.Llongfile)
 
 	Error = log.New(os.Stdout,
-		currentTime.Format("2006-01-02 15:04:05.000")+" | 0 | ERROR | "+filepath.Dir(d)+" | nil | ", log.Llongfile)
+		currentTime.Format("2006-01-02 15:04:05.000")+" | 0 | ERROR | "+os.Args[0]+" | nil | ", log.Llongfile)
 
 	Fatal = log.New(os.Stdout,
-		currentTime.Format("2006-01-02 15:04:05.000")+" | 0 | FATAL | "+filepath.Dir(d)+" | nil | ", log.Llongfile)
+		currentTime.Format("2006-01-02 15:04:05.000")+" | 0 | FATAL | "+os.Args[0]+" | nil | ", log.Llongfile)
 
 }
