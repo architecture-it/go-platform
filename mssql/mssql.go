@@ -5,14 +5,14 @@ import (
 
 	"github.com/eandreani/go-platform/log"
 	"github.com/jinzhu/gorm"
+	_ "github.com/jinzhu/gorm/dialects/mssql"
 )
 
 var db *gorm.DB
 
 func init() {
-	dialect := os.Getenv("SQL_DRIVER")
 	args := os.Getenv("SQL_CONNECTION")
-	conn, err := gorm.Open(dialect, args)
+	conn, err := gorm.Open("mssql", args)
 	if err != nil {
 		log.Error.Println(err.Error())
 	} else {
