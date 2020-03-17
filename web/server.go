@@ -12,7 +12,7 @@ import (
 
 	yaml "gopkg.in/yaml.v3"
 
-	"github.com/eandreani/go-platform/log"
+	"github.com/andreani-publico/go-platform/log"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	ginprometheus "github.com/zsais/go-gin-prometheus"

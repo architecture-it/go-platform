@@ -4,7 +4,7 @@
 Este paquete exporta algunas apis para sacar y poner de las colas de MQ y para publicar. Para hacerlo no usa el protocolo de IBM/MQ si no que llama a http-mq-bridge.
 
 ```go
-import "github.com/eandreani/go-platform/mq"
+import "github.com/andreani-publico/go-platform/mq"
 import "context"
 
 func main() {
