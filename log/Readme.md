@@ -1,7 +1,7 @@
 # log
 
 ```go
-import "github.com/eandreani/go-platform/log"
+import "github.com/andreani-publico/go-platform/log"
 import "errors"
 
 func main() {
