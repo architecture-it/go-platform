@@ -1,4 +1,5 @@
 
+
 ## mssql
 
 
@@ -18,7 +19,9 @@ func FindByCondition() []string {
 
 ```
 Sino se puede hacer de la siguiente forma:
-```
+```go
+import "github.com/andreani-publico/go-platform/mssql"
+
 type Ejemplo struct {
 	Dato1 string `sql:"column:nombreDelDatoEnBBDD"` 
 	// Si no se agrega la etiqueta sql:"column:nombre" toma por defecto el nombre del struct con minuscula
