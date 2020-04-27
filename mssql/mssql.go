@@ -3,7 +3,7 @@ package mssql
 import (
 	"os"
 
-	"github.com/andreani-publico/go-platform/log"
+	"github.com/architecture-it/go-platform/log"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mssql"
 )

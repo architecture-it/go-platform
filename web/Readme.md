@@ -3,13 +3,13 @@ Helpers para montar servicios de APIs usando [gin-gonic](https://github.com/gin-
 
 ## Uso
 
-``` go get github.com/andreani-publico/go-platform/web ``` 
+``` go get github.com/architecture-it/go-platform/web ``` 
 
 ## Ejemplos
 
 ```go
 import (
-    "github.com/andreani-publico/go-platform/web"
+    "github.com/architecture-it/go-platform/web"
     "github.com/gin-gonic/gin"
     "net/http"
 )
