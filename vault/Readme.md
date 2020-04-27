@@ -1,12 +1,12 @@
 # vault
 ## Uso
 
-```go get "github.com/andreani-publico/go-platform/vault"```
+```go get "github.com/architecture-it/go-platform/vault"```
 
 Este paquete expone las apis para poder acceder al Vault de la configuracion
 
 ```go
-import "github.com/andreani-publico/go-platformm/vault"
+import "github.com/architecture-it/go-platformm/vault"
 
 func main() {
     //La configracion del Vault se puede leer del entorno. Deben estar definidas las siguientes variables: VAULT_PASSPHRASE, VAULT_URL y APP_NAMESPACE
@@ -25,8 +25,8 @@ Hay algunas apps de go-platform que se pueden configurar con el vault.
 
 ```go
 import (
-    "github.com/andreani-publico/go-platform/vault"
-    "github.com/andreani-publico/go-platform/mq"
+    "github.com/architecture-it/go-platform/vault"
+    "github.com/architecture-it/go-platform/mq"
 )
 
 func main() {

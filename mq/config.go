@@ -2,8 +2,8 @@ package mq
 
 import (
 	"os"
-	"github.com/andreani-publico/go-platform/log"
-	"github.com/andreani-publico/go-platform/vault"
+	"github.com/architecture-it/go-platform/log"
+	"github.com/architecture-it/go-platform/vault"
 )
 type Config struct {
 	HTTPMQAPIUrl string
