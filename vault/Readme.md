@@ -6,7 +6,7 @@
 Este paquete expone las apis para poder acceder al Vault de la configuracion
 
 ```go
-import "github.com/architecture-it/go-platformm/vault"
+import "github.com/architecture-it/go-platform/vault"
 
 func main() {
     //La configracion del Vault se puede leer del entorno. Deben estar definidas las siguientes variables: VAULT_PASSPHRASE, VAULT_URL y APP_NAMESPACE

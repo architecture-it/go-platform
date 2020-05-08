@@ -27,7 +27,7 @@ func main() {
     server.AddHealth(web.HealthAlwaysUp) // pone un endpoint en /health
 
     // apidocs con la documentacion de openApi que se especifique
-    server.AddApiDocs("https://raw.githubusercontent.com/eandreani/proyecto/openapi.yaml")
+    server.AddApiDocs("https://raw.githubusercontent.com/architecture-it/proyecto/openapi.yaml")
 
     r := server.GetRouter()
     r.GET("/ping", func (c *gin.Context) {
