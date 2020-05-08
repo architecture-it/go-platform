@@ -3,7 +3,7 @@ package web
 import (
 	"os"
 
-	"github.com/eandreani/go-platform/log"
+	"github.com/architecture-it/go-platform/log"
 )
 
 //Config para los parametros de config del server

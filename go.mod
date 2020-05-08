@@ -1,4 +1,4 @@
-module github.com/eandreani/go-platform
+module github.com/architecture-it/go-platform
 
 go 1.12
 

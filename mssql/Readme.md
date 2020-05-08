@@ -6,7 +6,7 @@ Este paquete se permite la conexion a una base de datos MSSql. Se deben configur
 
 
 ```go
-import "github.com/eandreani/go-platform/mssql"
+import "github.com/architecture-it/go-platform/mssql"
 import "context"
 
 func FindByCondition() struct string {
