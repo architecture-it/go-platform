@@ -9,21 +9,21 @@ import (
 
 //ErrorMessage estructura generica que maneja la compañia para los errores
 type ErrorMessage struct {
-	Type         string                `json:"type"`
-	Title        string                `json:"title"`
-	Detail       string                `json:"detail"`
-	Status       int                   `json:"status"`
+	Type         string                 `json:"type"`
+	Title        string                 `json:"title"`
+	Detail       string                 `json:"detail"`
+	Status       int                    `json:"status"`
 	ListaErrores []CampoYMensajeDeError `json:"errors"`
 }
 
-//CampoYMensajeDeError exportable para desarrollos a medida 
+//CampoYMensajeDeError exportable para desarrollos a medida
 type CampoYMensajeDeError struct {
 	Field   string `json:"field"`
 	Message string `json:"message"`
 }
 
 //ErrorResponse para errores no contemplados, tratar de usar los siguientes:
-//PedidoIncorrecto(),RecursoNoEncontrado(),ServicioNoDisponible() para manejar 
+//PedidoIncorrecto(),RecursoNoEncontrado(),ServicioNoDisponible() para manejar
 //un estandar de errores
 func ErrorResponse(titulo string, detalle string, estado int, listaDeErrores []CampoYMensajeDeError) ErrorMessage {
 	return ErrorMessage{Type: "about:blank", Title: titulo, Detail: detalle, Status: estado, ListaErrores: listaDeErrores}
@@ -47,7 +47,7 @@ func EnlistarErrores(e error) []CampoYMensajeDeError {
 	var ListaDeErrores []CampoYMensajeDeError
 	if ute, ok := e.(*json.UnmarshalTypeError); ok {
 		unError.Field = strings.ToLower(ute.Field)
-		unError.Message = ute.Value
+		unError.Message = "expected:" + strings.ToLower(ute.Type.String()) + " actual:" + ute.Value
 		ListaDeErrores = append(ListaDeErrores, unError)
 	}
 
