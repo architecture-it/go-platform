@@ -2,28 +2,33 @@ package errores
 
 import (
 	"encoding/json"
-	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 )
 
 func TestErrores(t *testing.T) {
-	errores := PedidoIncorrecto("detalle", nil)
-	if errores.Detail != "detalle" || errores.ListaErrores != nil {
+	errores := PedidoIncorrecto.Default("detalle", nil)
+	if errores.Detail != "detalle" || errores.List != nil {
 		t.Errorf("Fallo la funcion PedidoIncorrecto")
 	}
 }
 
 func TestEnlistarErrores(t *testing.T) {
-	data := []byte(`{"numero":true}`)
-	var errJson errorJSon
-	err := json.Unmarshal(data, &errJson)
-	errVal := EnlistarErrores(err)
-	fmt.Println(err)
-	assert.Equal(t, "expected:int actual:bool", errVal[0].Message)
+	var errJSON errJSON
+	data1 := []byte(`{"numero":true}`)
+	err1 := json.Unmarshal(data1, &errJSON)
+	data2 := []byte(`{"numero":1}`)
+	err2 := json.Unmarshal(data2, &errJSON)
+	errVal := errores2List([]error{err1, err2})
+	out, err := json.Marshal(errVal)
+	if err != nil {
+		panic(err)
+	}
+
+	assert.Equal(t, string(out), "[{\"name\":\"numero\",\"description\":\"bool\"}]")
 }
 
-type errorJSon struct {
+type errJSON struct {
 	Numero int `json:"numero"`
 }
