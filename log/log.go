@@ -1,46 +1,47 @@
-package log
+package main
 
 import (
 	"fmt"
-	"log"
 	"os"
+	"strings"
 	"time"
+
+	"github.com/rs/zerolog"
 )
 
-var (
-	Trace   *log.Logger
-	Info    *log.Logger
-	Warning *log.Logger
-	Error   *log.Logger
-	Fatal   *log.Logger
-)
+// log.Info.Println("Info")
+//
 
-//Benchmark imprime el tiempo que transcurrio en el logger Trace.
-//Ejemplo:
-// defer Benchmarkf("paso el %s","tiempo")
-// imprime: 2019/06/11 17:38:21 log.go:22: paso el tiempo: 1.2121ms
+// Benchmark - Imprime el tiempo que transcurrio en el logger Trace.
+// Ejemplo:
+//  defer Benchmarkf("paso el %s","tiempo")
+//  imprime: 2019/06/11 17:38:21 log.go:22: paso el tiempo: 1.2121ms
 func Benchmark(fmtt string, args ...string) func() {
-	started := time.Now()
+	//started := time.Now()
 	return func() {
-		Trace.Printf("%s: %s", fmt.Sprintf(fmtt, args), time.Since(started))
+		//Trace.Printf("%s: %s", fmt.Sprintf(fmtt, args), time.Since(started))
 	}
 }
-func init() {
-	currentTime := time.Now()
 
-	Trace = log.New(os.Stdout,
-		currentTime.Format("2006-01-02 15:04:05.000")+" | 0 | TRACE | "+os.Args[0]+" | nil | ", log.Llongfile)
+func main() {
+	// currentTime := time.Now()
+	zerolog.TimeFieldFormat = zerolog.TimeFormatUnix
 
-	Info = log.New(os.Stdout,
-		currentTime.Format("2006-01-02 15:04:05.000")+" | 0 | INFO | "+os.Args[0]+" | nil | ", log.Llongfile)
+	output := zerolog.ConsoleWriter{Out: os.Stdout, TimeFormat: time.RFC3339}
+	output.FormatLevel = func(i interface{}) string {
+		return strings.ToUpper(fmt.Sprintf("| %-6s|", i))
+	}
+	output.FormatMessage = func(i interface{}) string {
+		return fmt.Sprintf("***%s****", i)
+	}
+	output.FormatFieldName = func(i interface{}) string {
+		return fmt.Sprintf("%s:", i)
+	}
+	output.FormatFieldValue = func(i interface{}) string {
+		return strings.ToUpper(fmt.Sprintf("%s", i))
+	}
 
-	Warning = log.New(os.Stdout,
-		currentTime.Format("2006-01-02 15:04:05.000")+" | 0 | WARNING | "+os.Args[0]+" | nil | ", log.Llongfile)
+	log := zerolog.New(output).With().Timestamp().Logger()
 
-	Error = log.New(os.Stdout,
-		currentTime.Format("2006-01-02 15:04:05.000")+" | 0 | ERROR | "+os.Args[0]+" | nil | ", log.Llongfile)
-
-	Fatal = log.New(os.Stdout,
-		currentTime.Format("2006-01-02 15:04:05.000")+" | 0 | FATAL | "+os.Args[0]+" | nil | ", log.Llongfile)
-
+	log.Info().Msg("Hello World")
 }
