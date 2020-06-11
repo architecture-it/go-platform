@@ -29,7 +29,7 @@ type Field struct {
 	Description string `json:"description"`
 }
 
-func intit() {
+func init() {
 	ErrorResponse = &ErrorRequest{Type: "about:blank", Title: "Error en la Respuesta", Status: 400}
 	PedidoIncorrecto = &ErrorRequest{Type: "about:blank", Title: "Error en la validacion de su pedido", Status: 400}
 	RecursoNoEncontrado = &ErrorRequest{Type: "about:blank", Title: "Recurso no encontrado", Status: 404}
