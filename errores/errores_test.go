@@ -14,7 +14,7 @@ func TestErrores(t *testing.T) {
 	}
 }
 
-func TestEnlistarErrores(t *testing.T) {
+func TestErrores2List(t *testing.T) {
 	var errJSON errJSON
 	data1 := []byte(`{"numero":true}`)
 	err1 := json.Unmarshal(data1, &errJSON)

@@ -30,18 +30,20 @@ type Field struct {
 }
 
 func init() {
-	ErrorResponse = &ErrorRequest{Type: "about:blank", Title: "Error en la Respuesta", Status: 400}
+	ErrorResponse = &ErrorRequest{Type: "about:blank", Title: "Error en la Respuesta", Status: 500}
 	PedidoIncorrecto = &ErrorRequest{Type: "about:blank", Title: "Error en la validacion de su pedido", Status: 400}
 	RecursoNoEncontrado = &ErrorRequest{Type: "about:blank", Title: "Recurso no encontrado", Status: 404}
 	ServicioNoDisponible = &ErrorRequest{Type: "about:blank", Title: "Servicio no disponible momentaneamete, intente nuevamente", Status: 503}
 }
 
+// Default - Permite settear solo el detalle y los errores del campo List
 func (er *ErrorRequest) Default(d string, e ...error) ErrorRequest {
 	er.Detail = d
 	er.List = errores2List(e)
 	return *er
 }
 
+// All - Permite settear todos los valores del error
 func (er *ErrorRequest) All(t string, ti string, d string, s int, e ...error) ErrorRequest {
 	er.Type = t
 	er.Title = ti

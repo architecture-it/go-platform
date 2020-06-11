@@ -7,12 +7,13 @@ Ejemplo:
 ```go
 import "github.com/architecture-it/go-platform/errores"
 import "context"
+import "errors"
 
 func main() {
 
-  err := ctx.BindJSON(&bodyRequest)
+  err := context.BindJSON(&bodyRequest)
 	if err != nil {
-   ctx.JSON(http.StatusBadRequest, errores.PedidoIncorrecto("detalle", listaDeErrores))
+   context.JSON(http.StatusBadRequest, errores.ErrorResponse.Default("Detalle", errors.New("Error")))
   }
   
 
