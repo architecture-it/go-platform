@@ -39,7 +39,7 @@ func init() {
 // Default - Permite settear solo el detalle y los errores del campo List
 func (er *ErrorRequest) Default(d string, e ...error) ErrorRequest {
 	er.Detail = d
-	er.List = errores2List(e)
+	er.List = *errores2List(e)
 	return *er
 }
 
@@ -49,11 +49,11 @@ func (er *ErrorRequest) All(t string, ti string, d string, s int, e ...error) Er
 	er.Title = ti
 	er.Detail = d
 	er.Status = s
-	er.List = errores2List(e)
+	er.List = *errores2List(e)
 	return *er
 }
 
-func errores2List(errs []error) []Field {
+func errores2List(errs []error) *[]Field {
 	var fieldList []Field
 
 	for _, err := range errs {
@@ -77,6 +77,6 @@ func errores2List(errs []error) []Field {
 		}
 	}
 
-	return fieldList
+	return &fieldList
 
 }
