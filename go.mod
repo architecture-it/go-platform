@@ -8,7 +8,9 @@ require (
 	github.com/gin-gonic/gin v1.6.3
 	github.com/go-playground/validator v9.31.0+incompatible
 	github.com/go-playground/validator/v10 v10.3.0 // indirect
+	github.com/go-redis/redis v6.15.8+incompatible
 	github.com/jinzhu/gorm v1.9.12
+	github.com/onsi/ginkgo v1.13.0 // indirect
 	github.com/prometheus/client_golang v1.6.0 // indirect
 	github.com/sirupsen/logrus v1.6.0 // indirect
 	github.com/stretchr/testify v1.4.0

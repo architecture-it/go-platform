@@ -10,6 +10,8 @@ import (
 	"strings"
 	"time"
 
+	"github.com/architecture-it/go-platform/health"
+
 	yaml "gopkg.in/yaml.v3"
 
 	"github.com/architecture-it/go-platform/log"
@@ -105,14 +107,14 @@ func (s *Server) AddMetrics() *ginprometheus.Prometheus {
 //			health.NewMySqlHealthChecker(mySqlHealthChecker.Config{}),
 //			...func())
 
-func (s *Server) AddHealth(fs ...func() Status) {
+func (s *Server) AddHealth(fs ...func() health.Status) {
 	s.r.GET("/health", func(c *gin.Context) {
-		result := make([]Status, len(fs))
+		result := make([]health.Status, len(fs))
 		statusCode := http.StatusOK
 		for i, f := range fs {
 			check := f()
 			result[i] = check
-			if check.Result != UP {
+			if check.Status != health.UP {
 				statusCode = http.StatusNotFound
 			}
 		}
