@@ -39,7 +39,7 @@ func TestDefault(t *testing.T) {
 	err1 := json.Unmarshal([]byte(`{"numero":true}`), &errJSON)
 	err2 := json.Unmarshal([]byte(`{"numero":1}`), &errJSON)
 
-	errVal := ErrorResponse.Default("Default", err1, err2)
+	errVal := ErrorServidorInterno.Default("Default", err1, err2)
 
 	assert.Equal(t, errVal.Fields[0].Value, "bool")
 }
