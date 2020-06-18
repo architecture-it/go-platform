@@ -9,7 +9,7 @@ import (
 
 func TestErrores(t *testing.T) {
 	errores := PedidoIncorrecto.Default("detalle", nil)
-	if errores.Detail != "detalle" || errores.List != nil {
+	if errores.Detail != "detalle" || errores.Fields != nil {
 		t.Errorf("Fallo la funcion PedidoIncorrecto")
 	}
 }
@@ -41,5 +41,5 @@ func TestDefault(t *testing.T) {
 
 	errVal := ErrorResponse.Default("Default", err1, err2)
 
-	assert.Equal(t, errVal.List[0].Description, "bool")
+	assert.Equal(t, errVal.Fields[0].Value, "bool")
 }

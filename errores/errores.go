@@ -20,13 +20,13 @@ type ErrorRequest struct {
 	Title  string  `json:"title"`
 	Detail string  `json:"detail"`
 	Status int     `json:"status"`
-	List   []Field `json:"errors"`
+	Fields []Field `json:"errors"`
 }
 
 // Field Exportable para desarrollos a medida
 type Field struct {
-	Name        string `json:"name"`
-	Description string `json:"description"`
+	Name  string `json:"name"`
+	Value string `json:"value"`
 }
 
 func init() {
@@ -39,7 +39,7 @@ func init() {
 // Default - Permite settear solo el detalle y los errores del campo List
 func (er *ErrorRequest) Default(d string, e ...error) ErrorRequest {
 	er.Detail = d
-	er.List = *errores2List(e)
+	er.Fields = *errores2List(e)
 	return *er
 }
 
@@ -49,7 +49,7 @@ func (er *ErrorRequest) All(t string, ti string, d string, s int, e ...error) Er
 	er.Title = ti
 	er.Detail = d
 	er.Status = s
-	er.List = *errores2List(e)
+	er.Fields = *errores2List(e)
 	return *er
 }
 
@@ -60,7 +60,7 @@ func errores2List(errs []error) *[]Field {
 		var field Field
 		if ute, ok := err.(*json.UnmarshalTypeError); ok {
 			field.Name = strings.ToLower(ute.Field)
-			field.Description = ute.Value
+			field.Value = ute.Value
 			fieldList = append(fieldList, field)
 		}
 
@@ -68,9 +68,9 @@ func errores2List(errs []error) *[]Field {
 			for _, e := range validatorErrors {
 				field.Name = strings.ToLower(e.Field())
 				if e.Param() != "" {
-					field.Description = e.Tag() + ": " + e.Param()
+					field.Value = e.Tag() + ": " + e.Param()
 				} else {
-					field.Description = e.Tag()
+					field.Value = e.Tag()
 				}
 				fieldList = append(fieldList, field)
 			}
