@@ -41,5 +41,5 @@ func TestDefault(t *testing.T) {
 
 	errVal := ErrorServidorInterno.Default("Default", err1, err2)
 
-	assert.Equal(t, errVal.Fields[0].Value, "bool")
+	assert.Equal(t, errVal.Fields[0].Message, "bool")
 }

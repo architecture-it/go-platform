@@ -20,13 +20,13 @@ type Error struct {
 	Title  string  `json:"title"`
 	Detail string  `json:"detail"`
 	Status int     `json:"status"`
-	Fields []Field `json:"errors"` // TODO
+	Fields []Field `json:"fields"`
 }
 
 // Field Exportable para desarrollos a medida
 type Field struct {
-	Name  string `json:"name"`
-	Value string `json:"value"`
+	Name    string `json:"name"`
+	Message string `json:"message"`
 }
 
 func init() {
@@ -60,7 +60,7 @@ func errores2List(errs []error) *[]Field {
 		var field Field
 		if ute, ok := err.(*json.UnmarshalTypeError); ok {
 			field.Name = strings.ToLower(ute.Field)
-			field.Value = ute.Value
+			field.Message = ute.Value
 			fieldList = append(fieldList, field)
 		}
 
@@ -68,9 +68,9 @@ func errores2List(errs []error) *[]Field {
 			for _, e := range validatorErrors {
 				field.Name = strings.ToLower(e.Field())
 				if e.Param() != "" {
-					field.Value = e.Tag() + ": " + e.Param()
+					field.Message = e.Tag() + ": " + e.Param()
 				} else {
-					field.Value = e.Tag()
+					field.Message = e.Tag()
 				}
 				fieldList = append(fieldList, field)
 			}
