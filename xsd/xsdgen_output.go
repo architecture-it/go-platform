@@ -24,12 +24,6 @@ func (t *API) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	layout.Endpoints.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *API) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T API
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type ActualizacionDeCliente struct {
 	XMLNs         string   `xml:"xmlns:ei,attr,omitempty"`
@@ -49,12 +43,6 @@ func (t *ActualizacionDeCliente) MarshalXML(e *xml.Encoder, start xml.StartEleme
 	layout.Cliente.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *ActualizacionDeCliente) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T ActualizacionDeCliente
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type ActualizacionDeEstadoEnvio struct {
 	XMLNs         string         `xml:"xmlns:ei,attr,omitempty"`
@@ -73,12 +61,6 @@ func (t *ActualizacionDeEstadoEnvio) MarshalXML(e *xml.Encoder, start xml.StartE
 	layout.T = (*T)(t)
 	layout.Envio.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *ActualizacionDeEstadoEnvio) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T ActualizacionDeEstadoEnvio
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type Admision struct {
@@ -110,12 +92,6 @@ func (t *Admision) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	layout.Donde.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *Admision) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T Admision
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type AltaAutomatica struct {
@@ -150,12 +126,6 @@ func (t *AltaAutomatica) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	layout.Contrato.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *AltaAutomatica) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T AltaAutomatica
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type AltaConAnomalias struct {
 	XMLNs                    string         `xml:"xmlns:ei,attr,omitempty"`
@@ -189,12 +159,6 @@ func (t *AltaConAnomalias) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 	layout.Contrato.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *AltaConAnomalias) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T AltaConAnomalias
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type AltaDeCliente struct {
 	XMLNs         string   `xml:"xmlns:ei,attr,omitempty"`
@@ -213,12 +177,6 @@ func (t *AltaDeCliente) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	layout.T = (*T)(t)
 	layout.Cliente.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *AltaDeCliente) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T AltaDeCliente
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type AltaDeComponente struct {
@@ -245,12 +203,6 @@ func (t *AltaDeComponente) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 	layout.Linking.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *AltaDeComponente) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T AltaDeComponente
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type AltaDeDistribuidor struct {
 	XMLNs         string             `xml:"xmlns:ei,attr,omitempty"`
@@ -271,12 +223,6 @@ func (t *AltaDeDistribuidor) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 	layout.Distribuidor.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	layout.Linking.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *AltaDeDistribuidor) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T AltaDeDistribuidor
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type AltaDeExcedente struct {
@@ -311,12 +257,6 @@ func (t *AltaDeExcedente) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 	layout.Contrato.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *AltaDeExcedente) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T AltaDeExcedente
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type AltaDePaquete struct {
 	XMLNs                 string             `xml:"xmlns:ei,attr,omitempty"`
@@ -341,12 +281,6 @@ func (t *AltaDePaquete) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	layout.T = (*T)(t)
 	layout.Linking.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *AltaDePaquete) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T AltaDePaquete
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type AltaDeRecibo struct {
@@ -377,12 +311,6 @@ func (t *AltaDeRecibo) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	layout.SucursalDeAlta.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *AltaDeRecibo) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T AltaDeRecibo
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type AltaDeSucursal struct {
 	XMLNs         string        `xml:"xmlns:ei,attr,omitempty"`
@@ -401,12 +329,6 @@ func (t *AltaDeSucursal) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	layout.T = (*T)(t)
 	layout.DatosSucursal.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *AltaDeSucursal) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T AltaDeSucursal
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type AltaInterna struct {
@@ -427,12 +349,6 @@ func (t *AltaInterna) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	layout.T = (*T)(t)
 	layout.Envio.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *AltaInterna) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T AltaInterna
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type AltaManual struct {
@@ -467,12 +383,6 @@ func (t *AltaManual) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	layout.Contrato.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *AltaManual) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T AltaManual
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type AltaPorDevolucion struct {
 	XMLNs                    string        `xml:"xmlns:ei,attr,omitempty"`
@@ -505,12 +415,6 @@ func (t *AltaPorDevolucion) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 	layout.Donde.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *AltaPorDevolucion) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T AltaPorDevolucion
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type AltaPorRecanalizacion struct {
 	XMLNs                    string        `xml:"xmlns:ei,attr,omitempty"`
@@ -542,12 +446,6 @@ func (t *AltaPorRecanalizacion) MarshalXML(e *xml.Encoder, start xml.StartElemen
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	layout.Donde.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *AltaPorRecanalizacion) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T AltaPorRecanalizacion
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type AltaRemota struct {
@@ -582,12 +480,6 @@ func (t *AltaRemota) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	layout.Contrato.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *AltaRemota) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T AltaRemota
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type AnularPorteDebidoYEntregar struct {
 	XMLNs          string   `xml:"xmlns:re,attr,omitempty"`
@@ -605,19 +497,6 @@ type AnularPorteDebidoYEntregar struct {
 	Topic          _anon361 `xml:"re:topic"`
 }
 
-func (t *AnularPorteDebidoYEntregar) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T AnularPorteDebidoYEntregar
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *AnularPorteDebidoYEntregar) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T AnularPorteDebidoYEntregar
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
-
 type AnularRetiro struct {
 	XMLNs          string   `xml:"xmlns:re,attr,omitempty"`
 	Timestamp      *xsdDate `xml:"http://integracion.andreani.com/eventosDeIntegracion timestamp"`
@@ -632,19 +511,6 @@ type AnularRetiro struct {
 	CierraPregunta bool     `xml:"re:cierraPregunta,omitempty"`
 	EsParaCliente  bool     `xml:"re:esParaCliente,omitempty"`
 	Topic          _anon364 `xml:"re:topic"`
-}
-
-func (t *AnularRetiro) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T AnularRetiro
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *AnularRetiro) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T AnularRetiro
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type AsignacionACaja struct {
@@ -679,12 +545,6 @@ func (t *AsignacionACaja) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 	layout.SucursalActual.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *AsignacionACaja) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T AsignacionACaja
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type AutorizarCustoria struct {
 	XMLNs          string   `xml:"xmlns:re,attr,omitempty"`
@@ -700,19 +560,6 @@ type AutorizarCustoria struct {
 	CierraPregunta bool     `xml:"re:cierraPregunta,omitempty"`
 	EsParaCliente  bool     `xml:"re:esParaCliente,omitempty"`
 	Topic          _anon354 `xml:"re:topic"`
-}
-
-func (t *AutorizarCustoria) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T AutorizarCustoria
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *AutorizarCustoria) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T AutorizarCustoria
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type AutorizarEstacionar struct {
@@ -731,19 +578,6 @@ type AutorizarEstacionar struct {
 	Topic          _anon356 `xml:"re:topic"`
 }
 
-func (t *AutorizarEstacionar) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T AutorizarEstacionar
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *AutorizarEstacionar) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T AutorizarEstacionar
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
-
 type AutorizarModificacionGestionCobranza struct {
 	XMLNs          string   `xml:"xmlns:re,attr,omitempty"`
 	Timestamp      *xsdDate `xml:"http://integracion.andreani.com/eventosDeIntegracion timestamp"`
@@ -758,19 +592,6 @@ type AutorizarModificacionGestionCobranza struct {
 	CierraPregunta bool     `xml:"re:cierraPregunta,omitempty"`
 	EsParaCliente  bool     `xml:"re:esParaCliente,omitempty"`
 	Topic          _anon359 `xml:"re:topic"`
-}
-
-func (t *AutorizarModificacionGestionCobranza) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T AutorizarModificacionGestionCobranza
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *AutorizarModificacionGestionCobranza) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T AutorizarModificacionGestionCobranza
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type BajaDeDistribuidor struct {
@@ -793,12 +614,6 @@ func (t *BajaDeDistribuidor) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 	layout.Linking.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *BajaDeDistribuidor) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T BajaDeDistribuidor
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type BajaDeSucursal struct {
 	XMLNs         string        `xml:"xmlns:ei,attr,omitempty"`
@@ -817,12 +632,6 @@ func (t *BajaDeSucursal) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	layout.T = (*T)(t)
 	layout.DatosSucursal.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *BajaDeSucursal) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T BajaDeSucursal
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type BloquearEnvio struct {
@@ -853,12 +662,6 @@ func (t *BloquearEnvio) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *BloquearEnvio) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T BloquearEnvio
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type BultoPesadoYMedido struct {
 	XMLNs            string        `xml:"xmlns:ei,attr,omitempty"`
@@ -883,12 +686,6 @@ func (t *BultoPesadoYMedido) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 	layout.T = (*T)(t)
 	layout.Donde.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *BultoPesadoYMedido) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T BultoPesadoYMedido
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type CacInformaSituacionEnvio struct {
@@ -919,12 +716,6 @@ func (t *CacInformaSituacionEnvio) MarshalXML(e *xml.Encoder, start xml.StartEle
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *CacInformaSituacionEnvio) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T CacInformaSituacionEnvio
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type CadenaDeFrioContieneDataLogger struct {
 	XMLNs                    string        `xml:"xmlns:in,attr,omitempty"`
@@ -954,12 +745,6 @@ func (t *CadenaDeFrioContieneDataLogger) MarshalXML(e *xml.Encoder, start xml.St
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *CadenaDeFrioContieneDataLogger) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T CadenaDeFrioContieneDataLogger
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type CadenaDeFrioSinFrecuencia struct {
 	XMLNs                    string        `xml:"xmlns:in,attr,omitempty"`
@@ -988,12 +773,6 @@ func (t *CadenaDeFrioSinFrecuencia) MarshalXML(e *xml.Encoder, start xml.StartEl
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *CadenaDeFrioSinFrecuencia) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T CadenaDeFrioSinFrecuencia
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 // Must be at least 1 items long
@@ -1026,12 +805,6 @@ func (t *CambioDeConservadora) MarshalXML(e *xml.Encoder, start xml.StartElement
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *CambioDeConservadora) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T CambioDeConservadora
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type CambioDeDestino struct {
@@ -1070,12 +843,6 @@ func (t *CambioDeDestino) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 	layout.NuevaSucursal.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *CambioDeDestino) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T CambioDeDestino
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type CambioDeDestinoRechazado struct {
 	XMLNs             string               `xml:"xmlns:ei,attr,omitempty"`
@@ -1099,12 +866,6 @@ func (t *CambioDeDestinoRechazado) MarshalXML(e *xml.Encoder, start xml.StartEle
 	layout.DestinoActual.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *CambioDeDestinoRechazado) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T CambioDeDestinoRechazado
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type CambioDeDetinoRealizado struct {
 	XMLNs           string               `xml:"xmlns:ei,attr,omitempty"`
@@ -1126,12 +887,6 @@ func (t *CambioDeDetinoRealizado) MarshalXML(e *xml.Encoder, start xml.StartElem
 	layout.NuevoDestino.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	layout.DestinoAnterior.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *CambioDeDetinoRealizado) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T CambioDeDetinoRealizado
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type CambioEnCoberturaDeDistribucion struct {
@@ -1155,12 +910,6 @@ func (t *CambioEnCoberturaDeDistribucion) MarshalXML(e *xml.Encoder, start xml.S
 	layout.CodigosPostalesAfectados.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *CambioEnCoberturaDeDistribucion) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T CambioEnCoberturaDeDistribucion
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type CambioEnEquipoComercial struct {
 	XMLNs         string   `xml:"xmlns:ei,attr,omitempty"`
@@ -1179,12 +928,6 @@ func (t *CambioEnEquipoComercial) MarshalXML(e *xml.Encoder, start xml.StartElem
 	layout.T = (*T)(t)
 	layout.Cliente.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *CambioEnEquipoComercial) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T CambioEnEquipoComercial
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type CaminoIntransitable struct {
@@ -1214,12 +957,6 @@ func (t *CaminoIntransitable) MarshalXML(e *xml.Encoder, start xml.StartElement)
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *CaminoIntransitable) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T CaminoIntransitable
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 // Must be at least 1 items long
@@ -1256,12 +993,6 @@ func (t *CanalizadoACourier) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 	layout.DatosAdicionales.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *CanalizadoACourier) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T CanalizadoACourier
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type CancelacionDeOrdenDeEnvioRechazada struct {
 	XMLNs                string   `xml:"xmlns:ei,attr,omitempty"`
@@ -1274,19 +1005,6 @@ type CancelacionDeOrdenDeEnvioRechazada struct {
 	NumeroDeEnvio        string   `xml:"ei:numeroDeEnvio,omitempty"`
 	Razon                string   `xml:"ei:razon,omitempty"`
 	Topic                _anon157 `xml:"ei:topic"`
-}
-
-func (t *CancelacionDeOrdenDeEnvioRechazada) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T CancelacionDeOrdenDeEnvioRechazada
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *CancelacionDeOrdenDeEnvioRechazada) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T CancelacionDeOrdenDeEnvioRechazada
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type CapacidadOperativaExcedida struct {
@@ -1317,12 +1035,6 @@ func (t *CapacidadOperativaExcedida) MarshalXML(e *xml.Encoder, start xml.StartE
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *CapacidadOperativaExcedida) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T CapacidadOperativaExcedida
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type CargaConsolidada struct {
 	XMLNs         string        `xml:"xmlns:ei,attr,omitempty"`
@@ -1344,12 +1056,6 @@ func (t *CargaConsolidada) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 	layout.Donde.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *CargaConsolidada) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T CargaConsolidada
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type CargaDesconsolidada struct {
 	XMLNs         string        `xml:"xmlns:ei,attr,omitempty"`
@@ -1370,12 +1076,6 @@ func (t *CargaDesconsolidada) MarshalXML(e *xml.Encoder, start xml.StartElement)
 	layout.T = (*T)(t)
 	layout.Donde.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *CargaDesconsolidada) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T CargaDesconsolidada
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 // Must be at least 1 items long
@@ -1413,12 +1113,6 @@ func (t *CierreDeEntidad) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 	layout.DatosAdicionales.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *CierreDeEntidad) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T CierreDeEntidad
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type Cliente struct {
 	XMLNs                   string                 `xml:"xmlns:dr,attr,omitempty"`
@@ -1436,19 +1130,6 @@ type Cliente struct {
 	EjecutivoDeCuentasLogin string                 `xml:"dr:ejecutivoDeCuentasLogin,omitempty"`
 	NombreDeFantasia        NombreDeFantasia       `xml:"dr:nombreDeFantasia"`
 	Cuit                    Cuit                   `xml:"dr:cuit,omitempty"`
-}
-
-func (t *Cliente) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T Cliente
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *Cliente) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T Cliente
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type ClienteDifiereFechaEntrega struct {
@@ -1479,12 +1160,6 @@ func (t *ClienteDifiereFechaEntrega) MarshalXML(e *xml.Encoder, start xml.StartE
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *ClienteDifiereFechaEntrega) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T ClienteDifiereFechaEntrega
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type ClienteInformaCambioDomicilio struct {
 	XMLNs                    string        `xml:"xmlns:in,attr,omitempty"`
@@ -1513,12 +1188,6 @@ func (t *ClienteInformaCambioDomicilio) MarshalXML(e *xml.Encoder, start xml.Sta
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *ClienteInformaCambioDomicilio) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T ClienteInformaCambioDomicilio
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type ClienteInformaNoEsProductoSolicitado struct {
@@ -1549,12 +1218,6 @@ func (t *ClienteInformaNoEsProductoSolicitado) MarshalXML(e *xml.Encoder, start 
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *ClienteInformaNoEsProductoSolicitado) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T ClienteInformaNoEsProductoSolicitado
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type ClienteInformaSinCheques struct {
 	XMLNs                    string        `xml:"xmlns:in,attr,omitempty"`
@@ -1583,12 +1246,6 @@ func (t *ClienteInformaSinCheques) MarshalXML(e *xml.Encoder, start xml.StartEle
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *ClienteInformaSinCheques) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T ClienteInformaSinCheques
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type ClienteRetieneDocumentacionYMercaderia struct {
@@ -1619,12 +1276,6 @@ func (t *ClienteRetieneDocumentacionYMercaderia) MarshalXML(e *xml.Encoder, star
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *ClienteRetieneDocumentacionYMercaderia) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T ClienteRetieneDocumentacionYMercaderia
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type ClienteSolicitaRepactarVisita struct {
 	XMLNs                    string        `xml:"xmlns:in,attr,omitempty"`
@@ -1653,12 +1304,6 @@ func (t *ClienteSolicitaRepactarVisita) MarshalXML(e *xml.Encoder, start xml.Sta
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *ClienteSolicitaRepactarVisita) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T ClienteSolicitaRepactarVisita
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 // Must be at least 1 items long
@@ -1703,12 +1348,6 @@ func (t *ComienzoCustodiaEnSucursal) MarshalXML(e *xml.Encoder, start xml.StartE
 	layout.SucursalDeCustodia.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *ComienzoCustodiaEnSucursal) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T ComienzoCustodiaEnSucursal
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type ComponenteRecibido struct {
 	XMLNs         string             `xml:"xmlns:ei,attr,omitempty"`
@@ -1733,12 +1372,6 @@ func (t *ComponenteRecibido) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 	layout.T = (*T)(t)
 	layout.Linking.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *ComponenteRecibido) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T ComponenteRecibido
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type ConformacionDiferida struct {
@@ -1769,12 +1402,6 @@ func (t *ConformacionDiferida) MarshalXML(e *xml.Encoder, start xml.StartElement
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *ConformacionDiferida) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T ConformacionDiferida
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type ConformacionEntregado struct {
 	XMLNs                    string        `xml:"xmlns:in,attr,omitempty"`
@@ -1803,12 +1430,6 @@ func (t *ConformacionEntregado) MarshalXML(e *xml.Encoder, start xml.StartElemen
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *ConformacionEntregado) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T ConformacionEntregado
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type ConformacionObservada struct {
@@ -1839,12 +1460,6 @@ func (t *ConformacionObservada) MarshalXML(e *xml.Encoder, start xml.StartElemen
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *ConformacionObservada) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T ConformacionObservada
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type ConstanciaDeEntregaDigitalizadaDisponible struct {
 	XMLNs                   string                        `xml:"xmlns:ei,attr,omitempty"`
@@ -1868,12 +1483,6 @@ func (t *ConstanciaDeEntregaDigitalizadaDisponible) MarshalXML(e *xml.Encoder, s
 	layout.Documentos.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *ConstanciaDeEntregaDigitalizadaDisponible) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T ConstanciaDeEntregaDigitalizadaDisponible
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type ConstanciaDeHojaDeRutaGenerada struct {
 	XMLNs              string                        `xml:"xmlns:ei,attr,omitempty"`
@@ -1896,12 +1505,6 @@ func (t *ConstanciaDeHojaDeRutaGenerada) MarshalXML(e *xml.Encoder, start xml.St
 	layout.Linking.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	layout.Documentos.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *ConstanciaDeHojaDeRutaGenerada) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T ConstanciaDeHojaDeRutaGenerada
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type ConstanciaElectronicaGenerada struct {
@@ -1930,12 +1533,6 @@ func (t *ConstanciaElectronicaGenerada) MarshalXML(e *xml.Encoder, start xml.Sta
 	layout.Documentos.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *ConstanciaElectronicaGenerada) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T ConstanciaElectronicaGenerada
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type ConstanciaEnPdfGenerada struct {
 	XMLNs                   string                        `xml:"xmlns:ei,attr,omitempty"`
@@ -1960,12 +1557,6 @@ func (t *ConstanciaEnPdfGenerada) MarshalXML(e *xml.Encoder, start xml.StartElem
 	layout.Linking.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	layout.Documentos.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *ConstanciaEnPdfGenerada) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T ConstanciaEnPdfGenerada
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type ContenidoRotoEnEmpaqueSano struct {
@@ -1996,12 +1587,6 @@ func (t *ContenidoRotoEnEmpaqueSano) MarshalXML(e *xml.Encoder, start xml.StartE
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *ContenidoRotoEnEmpaqueSano) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T ContenidoRotoEnEmpaqueSano
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type ContingenciaEnSistemas struct {
 	XMLNs                    string        `xml:"xmlns:in,attr,omitempty"`
@@ -2031,12 +1616,6 @@ func (t *ContingenciaEnSistemas) MarshalXML(e *xml.Encoder, start xml.StartEleme
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *ContingenciaEnSistemas) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T ContingenciaEnSistemas
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type ContingenciaSanitaria struct {
 	XMLNs              string   `xml:"xmlns:pr,attr,omitempty"`
@@ -2053,19 +1632,6 @@ type ContingenciaSanitaria struct {
 	Topic              _anon345 `xml:"pr:topic"`
 }
 
-func (t *ContingenciaSanitaria) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T ContingenciaSanitaria
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *ContingenciaSanitaria) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T ContingenciaSanitaria
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
-
 type Contrato struct {
 	XMLNs                   string `xml:"xmlns:dr,attr,omitempty"`
 	CodigoDeContratoInterno string `xml:"dr:codigoDeContratoInterno"`
@@ -2076,19 +1642,6 @@ type Contrato struct {
 	CodigoDeClienteInterno  string `xml:"dr:codigoDeClienteInterno"`
 	VigenciaDesde           string `xml:"dr:vigenciaDesde,omitempty"`
 	VigenciaHasta           string `xml:"dr:vigenciaHasta,omitempty"`
-}
-
-func (t *Contrato) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T Contrato
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *Contrato) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T Contrato
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type ContratoActualizado struct {
@@ -2109,12 +1662,6 @@ func (t *ContratoActualizado) MarshalXML(e *xml.Encoder, start xml.StartElement)
 	layout.Contrato.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *ContratoActualizado) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T ContratoActualizado
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type CoordinarTurnoDeEntrega struct {
 	XMLNs          string   `xml:"xmlns:re,attr,omitempty"`
@@ -2130,19 +1677,6 @@ type CoordinarTurnoDeEntrega struct {
 	CierraPregunta bool     `xml:"re:cierraPregunta,omitempty"`
 	EsParaCliente  bool     `xml:"re:esParaCliente,omitempty"`
 	Topic          _anon351 `xml:"re:topic"`
-}
-
-func (t *CoordinarTurnoDeEntrega) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T CoordinarTurnoDeEntrega
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *CoordinarTurnoDeEntrega) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T CoordinarTurnoDeEntrega
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 // Must be at least 1 items long
@@ -2168,12 +1702,6 @@ func (t *DatosDeDistribuidorActualizados) MarshalXML(e *xml.Encoder, start xml.S
 	layout.Linking.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *DatosDeDistribuidorActualizados) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T DatosDeDistribuidorActualizados
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type DatosDistribuidor struct {
 	XMLNs                string           `xml:"xmlns:dr,attr,omitempty"`
@@ -2194,19 +1722,6 @@ type DatosDistribuidor struct {
 	Cuit                 string           `xml:"dr:cuit,omitempty"`
 }
 
-func (t *DatosDistribuidor) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T DatosDistribuidor
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *DatosDistribuidor) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T DatosDistribuidor
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
-
 type DatosPersonales struct {
 	XMLNs               string           `xml:"xmlns:dr,attr,omitempty"`
 	NumeroDeDocumento   string           `xml:"dr:numeroDeDocumento,omitempty"`
@@ -2218,37 +1733,11 @@ type DatosPersonales struct {
 	TipoDeDocumento     _anon2           `xml:"dr:tipoDeDocumento,omitempty"`
 }
 
-func (t *DatosPersonales) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T DatosPersonales
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *DatosPersonales) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T DatosPersonales
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
-
 type DatosSucursal struct {
 	XMLNs  string `xml:"xmlns:dr,attr,omitempty"`
 	Codigo string `xml:"dr:codigo,omitempty"`
 	Nombre string `xml:"dr:nombre,omitempty"`
 	Id     string `xml:"dr:id,omitempty"`
-}
-
-func (t *DatosSucursal) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T DatosSucursal
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *DatosSucursal) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T DatosSucursal
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 // Must be at least 1 items long
@@ -2267,19 +1756,6 @@ type DestinatarioCreado struct {
 	Topic          _anon19  `xml:"ea:topic"`
 }
 
-func (t *DestinatarioCreado) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T DestinatarioCreado
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *DestinatarioCreado) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T DestinatarioCreado
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
-
 type DestinatarioDeViaje struct {
 	XMLNs              string   `xml:"xmlns:pr,attr,omitempty"`
 	Timestamp          *xsdDate `xml:"http://integracion.andreani.com/eventosDeIntegracion timestamp"`
@@ -2293,19 +1769,6 @@ type DestinatarioDeViaje struct {
 	PosiblesRespuestas string   `xml:"pr:posiblesRespuestas,omitempty"`
 	EsParaCliente      bool     `xml:"pr:esParaCliente,omitempty"`
 	Topic              _anon323 `xml:"pr:topic"`
-}
-
-func (t *DestinatarioDeViaje) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T DestinatarioDeViaje
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *DestinatarioDeViaje) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T DestinatarioDeViaje
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type DestinatarioDesconocido struct {
@@ -2323,19 +1786,6 @@ type DestinatarioDesconocido struct {
 	Topic              _anon325 `xml:"pr:topic"`
 }
 
-func (t *DestinatarioDesconocido) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T DestinatarioDesconocido
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *DestinatarioDesconocido) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T DestinatarioDesconocido
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
-
 type DestinatarioEliminado struct {
 	XMLNs          string   `xml:"xmlns:ea,attr,omitempty"`
 	Timestamp      *xsdDate `xml:"http://integracion.andreani.com/eventosDeIntegracion timestamp"`
@@ -2346,19 +1796,6 @@ type DestinatarioEliminado struct {
 	IdCliente      string   `xml:"ea:idCliente,omitempty"`
 	IdDestinatario string   `xml:"ea:idDestinatario"`
 	Topic          _anon21  `xml:"ea:topic"`
-}
-
-func (t *DestinatarioEliminado) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T DestinatarioEliminado
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *DestinatarioEliminado) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T DestinatarioEliminado
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type DestinatarioEnfermoFallecido struct {
@@ -2376,19 +1813,6 @@ type DestinatarioEnfermoFallecido struct {
 	Topic              _anon333 `xml:"pr:topic"`
 }
 
-func (t *DestinatarioEnfermoFallecido) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T DestinatarioEnfermoFallecido
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *DestinatarioEnfermoFallecido) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T DestinatarioEnfermoFallecido
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
-
 type DestinatarioInformaDesconocerEntrega struct {
 	XMLNs              string   `xml:"xmlns:pr,attr,omitempty"`
 	Timestamp          *xsdDate `xml:"http://integracion.andreani.com/eventosDeIntegracion timestamp"`
@@ -2402,19 +1826,6 @@ type DestinatarioInformaDesconocerEntrega struct {
 	PosiblesRespuestas string   `xml:"pr:posiblesRespuestas,omitempty"`
 	EsParaCliente      bool     `xml:"pr:esParaCliente,omitempty"`
 	Topic              _anon338 `xml:"pr:topic"`
-}
-
-func (t *DestinatarioInformaDesconocerEntrega) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T DestinatarioInformaDesconocerEntrega
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *DestinatarioInformaDesconocerEntrega) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T DestinatarioInformaDesconocerEntrega
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type DestinatarioInformaEnvioDuplicado struct {
@@ -2432,19 +1843,6 @@ type DestinatarioInformaEnvioDuplicado struct {
 	Topic              _anon322 `xml:"pr:topic"`
 }
 
-func (t *DestinatarioInformaEnvioDuplicado) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T DestinatarioInformaEnvioDuplicado
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *DestinatarioInformaEnvioDuplicado) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T DestinatarioInformaEnvioDuplicado
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
-
 type DestinatarioInformaNoEsCantidadSolicitada struct {
 	XMLNs              string   `xml:"xmlns:pr,attr,omitempty"`
 	Timestamp          *xsdDate `xml:"http://integracion.andreani.com/eventosDeIntegracion timestamp"`
@@ -2458,19 +1856,6 @@ type DestinatarioInformaNoEsCantidadSolicitada struct {
 	PosiblesRespuestas string   `xml:"pr:posiblesRespuestas,omitempty"`
 	EsParaCliente      bool     `xml:"pr:esParaCliente,omitempty"`
 	Topic              _anon336 `xml:"pr:topic"`
-}
-
-func (t *DestinatarioInformaNoEsCantidadSolicitada) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T DestinatarioInformaNoEsCantidadSolicitada
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *DestinatarioInformaNoEsCantidadSolicitada) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T DestinatarioInformaNoEsCantidadSolicitada
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type DestinatarioInformaNoEsProductoSolicitado struct {
@@ -2488,19 +1873,6 @@ type DestinatarioInformaNoEsProductoSolicitado struct {
 	Topic              _anon337 `xml:"pr:topic"`
 }
 
-func (t *DestinatarioInformaNoEsProductoSolicitado) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T DestinatarioInformaNoEsProductoSolicitado
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *DestinatarioInformaNoEsProductoSolicitado) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T DestinatarioInformaNoEsProductoSolicitado
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
-
 type DestinatarioModificado struct {
 	XMLNs          string   `xml:"xmlns:ea,attr,omitempty"`
 	Timestamp      *xsdDate `xml:"http://integracion.andreani.com/eventosDeIntegracion timestamp"`
@@ -2512,19 +1884,6 @@ type DestinatarioModificado struct {
 	IdDestinatario string   `xml:"ea:idDestinatario"`
 	Location       string   `xml:"ea:location,omitempty"`
 	Topic          _anon20  `xml:"ea:topic"`
-}
-
-func (t *DestinatarioModificado) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T DestinatarioModificado
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *DestinatarioModificado) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T DestinatarioModificado
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type DestinatarioNoCumpleCondicionesPactadas struct {
@@ -2542,19 +1901,6 @@ type DestinatarioNoCumpleCondicionesPactadas struct {
 	Topic              _anon334 `xml:"pr:topic"`
 }
 
-func (t *DestinatarioNoCumpleCondicionesPactadas) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T DestinatarioNoCumpleCondicionesPactadas
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *DestinatarioNoCumpleCondicionesPactadas) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T DestinatarioNoCumpleCondicionesPactadas
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
-
 type DestinatarioNoCumpleRequisitos struct {
 	XMLNs              string   `xml:"xmlns:pr,attr,omitempty"`
 	Timestamp          *xsdDate `xml:"http://integracion.andreani.com/eventosDeIntegracion timestamp"`
@@ -2568,19 +1914,6 @@ type DestinatarioNoCumpleRequisitos struct {
 	PosiblesRespuestas string   `xml:"pr:posiblesRespuestas,omitempty"`
 	EsParaCliente      bool     `xml:"pr:esParaCliente,omitempty"`
 	Topic              _anon335 `xml:"pr:topic"`
-}
-
-func (t *DestinatarioNoCumpleRequisitos) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T DestinatarioNoCumpleRequisitos
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *DestinatarioNoCumpleRequisitos) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T DestinatarioNoCumpleRequisitos
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type DestinatarioNoDisponeDePagoFlete struct {
@@ -2598,19 +1931,6 @@ type DestinatarioNoDisponeDePagoFlete struct {
 	Topic              _anon339 `xml:"pr:topic"`
 }
 
-func (t *DestinatarioNoDisponeDePagoFlete) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T DestinatarioNoDisponeDePagoFlete
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *DestinatarioNoDisponeDePagoFlete) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T DestinatarioNoDisponeDePagoFlete
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
-
 type DestinatarioRechazaEntrega struct {
 	XMLNs              string   `xml:"xmlns:pr,attr,omitempty"`
 	Timestamp          *xsdDate `xml:"http://integracion.andreani.com/eventosDeIntegracion timestamp"`
@@ -2624,19 +1944,6 @@ type DestinatarioRechazaEntrega struct {
 	PosiblesRespuestas string   `xml:"pr:posiblesRespuestas,omitempty"`
 	EsParaCliente      bool     `xml:"pr:esParaCliente,omitempty"`
 	Topic              _anon326 `xml:"pr:topic"`
-}
-
-func (t *DestinatarioRechazaEntrega) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T DestinatarioRechazaEntrega
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *DestinatarioRechazaEntrega) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T DestinatarioRechazaEntrega
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type DestinatarioSeMudo struct {
@@ -2654,19 +1961,6 @@ type DestinatarioSeMudo struct {
 	Topic              _anon328 `xml:"pr:topic"`
 }
 
-func (t *DestinatarioSeMudo) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T DestinatarioSeMudo
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *DestinatarioSeMudo) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T DestinatarioSeMudo
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
-
 type DestinatarioSinChequesPreparados struct {
 	XMLNs              string   `xml:"xmlns:pr,attr,omitempty"`
 	Timestamp          *xsdDate `xml:"http://integracion.andreani.com/eventosDeIntegracion timestamp"`
@@ -2680,19 +1974,6 @@ type DestinatarioSinChequesPreparados struct {
 	PosiblesRespuestas string   `xml:"pr:posiblesRespuestas,omitempty"`
 	EsParaCliente      bool     `xml:"pr:esParaCliente,omitempty"`
 	Topic              _anon332 `xml:"pr:topic"`
-}
-
-func (t *DestinatarioSinChequesPreparados) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T DestinatarioSinChequesPreparados
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *DestinatarioSinChequesPreparados) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T DestinatarioSinChequesPreparados
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type DestinatarioSolicitaCambiarDomicilio struct {
@@ -2710,19 +1991,6 @@ type DestinatarioSolicitaCambiarDomicilio struct {
 	Topic              _anon324 `xml:"pr:topic"`
 }
 
-func (t *DestinatarioSolicitaCambiarDomicilio) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T DestinatarioSolicitaCambiarDomicilio
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *DestinatarioSolicitaCambiarDomicilio) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T DestinatarioSolicitaCambiarDomicilio
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
-
 type DestinatarioSolicitaRepactarEntrega struct {
 	XMLNs              string   `xml:"xmlns:pr,attr,omitempty"`
 	Timestamp          *xsdDate `xml:"http://integracion.andreani.com/eventosDeIntegracion timestamp"`
@@ -2736,19 +2004,6 @@ type DestinatarioSolicitaRepactarEntrega struct {
 	PosiblesRespuestas string   `xml:"pr:posiblesRespuestas,omitempty"`
 	EsParaCliente      bool     `xml:"pr:esParaCliente,omitempty"`
 	Topic              _anon329 `xml:"pr:topic"`
-}
-
-func (t *DestinatarioSolicitaRepactarEntrega) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T DestinatarioSolicitaRepactarEntrega
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *DestinatarioSolicitaRepactarEntrega) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T DestinatarioSolicitaRepactarEntrega
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type DestinatarioSolicitaRetirarEnSucursal struct {
@@ -2766,19 +2021,6 @@ type DestinatarioSolicitaRetirarEnSucursal struct {
 	Topic              _anon327 `xml:"pr:topic"`
 }
 
-func (t *DestinatarioSolicitaRetirarEnSucursal) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T DestinatarioSolicitaRetirarEnSucursal
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *DestinatarioSolicitaRetirarEnSucursal) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T DestinatarioSolicitaRetirarEnSucursal
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
-
 type DestinoEnZonaDeRiesgo struct {
 	XMLNs              string   `xml:"xmlns:pr,attr,omitempty"`
 	Timestamp          *xsdDate `xml:"http://integracion.andreani.com/eventosDeIntegracion timestamp"`
@@ -2792,19 +2034,6 @@ type DestinoEnZonaDeRiesgo struct {
 	PosiblesRespuestas string   `xml:"pr:posiblesRespuestas,omitempty"`
 	EsParaCliente      bool     `xml:"pr:esParaCliente,omitempty"`
 	Topic              _anon320 `xml:"pr:topic"`
-}
-
-func (t *DestinoEnZonaDeRiesgo) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T DestinoEnZonaDeRiesgo
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *DestinoEnZonaDeRiesgo) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T DestinoEnZonaDeRiesgo
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type Destruccion struct {
@@ -2835,30 +2064,11 @@ func (t *Destruccion) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *Destruccion) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T Destruccion
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type DetallaDelCobro struct {
 	XMLNs        string       `xml:"xmlns:dr,attr,omitempty"`
 	FormaDeCobro FormaDeCobro `xml:"dr:formaDeCobro"`
 	Importe      float64      `xml:"dr:importe"`
-}
-
-func (t *DetallaDelCobro) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T DetallaDelCobro
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *DetallaDelCobro) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T DetallaDelCobro
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type DetalleConceptoTarifado struct {
@@ -2871,19 +2081,6 @@ type DetalleConceptoTarifado struct {
 	TotalConceptoTarifado float32 `xml:"dr:totalConceptoTarifado"`
 }
 
-func (t *DetalleConceptoTarifado) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T DetalleConceptoTarifado
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *DetalleConceptoTarifado) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T DetalleConceptoTarifado
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
-
 type DetalleDeAbono struct {
 	XMLNs                   string                  `xml:"xmlns:dr,attr,omitempty"`
 	CodigoDeContratoInterno string                  `xml:"dr:codigoDeContratoInterno"`
@@ -2893,19 +2090,6 @@ type DetalleDeAbono struct {
 	SucursalOrigen          LugarDeRetiroEntrega    `xml:"dr:sucursalOrigen,omitempty"`
 	SucursalDestino         LugarDeRetiroEntrega    `xml:"dr:sucursalDestino,omitempty"`
 	ConceptoTarifado        DetalleConceptoTarifado `xml:"dr:conceptoTarifado,omitempty"`
-}
-
-func (t *DetalleDeAbono) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T DetalleDeAbono
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *DetalleDeAbono) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T DetalleDeAbono
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type DetalleDeEnvio struct {
@@ -2948,19 +2132,6 @@ type DetalleDeEnvio struct {
 	LargoEnCm                     float64                `xml:"dr:largoEnCm,omitempty"`
 }
 
-func (t *DetalleDeEnvio) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T DetalleDeEnvio
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *DetalleDeEnvio) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T DetalleDeEnvio
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
-
 type DetalleDeEnvioInterno struct {
 	XMLNs               string               `xml:"xmlns:dr,attr,omitempty"`
 	CodigoDeEnvio       string               `xml:"dr:codigoDeEnvio,omitempty"`
@@ -2972,19 +2143,6 @@ type DetalleDeEnvioInterno struct {
 	Contenido           ListaDeObjetos       `xml:"dr:contenido,omitempty"`
 	CicloDelEnvio       string               `xml:"dr:cicloDelEnvio,omitempty"`
 	EstadoDeLaRendicion string               `xml:"dr:estadoDeLaRendicion,omitempty"`
-}
-
-func (t *DetalleDeEnvioInterno) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T DetalleDeEnvioInterno
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *DetalleDeEnvioInterno) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T DetalleDeEnvioInterno
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type DetalleDeEnvioTarifado struct {
@@ -3028,19 +2186,6 @@ type DetalleDeEnvioTarifado struct {
 	ConceptosTarifados            ListaDeConceptosTarifados `xml:"dr:conceptosTarifados"`
 }
 
-func (t *DetalleDeEnvioTarifado) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T DetalleDeEnvioTarifado
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *DetalleDeEnvioTarifado) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T DetalleDeEnvioTarifado
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
-
 type DetalleDeOrdenDeEnvio struct {
 	XMLNs                    string                `xml:"xmlns:dr,attr,omitempty"`
 	NumeroDeEnvio            string                `xml:"dr:numeroDeEnvio"`
@@ -3066,19 +2211,6 @@ type DetalleDeOrdenDeEnvio struct {
 	ListaDePaquetes          ListaDePaquetes       `xml:"dr:listaDePaquetes,omitempty"`
 }
 
-func (t *DetalleDeOrdenDeEnvio) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T DetalleDeOrdenDeEnvio
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *DetalleDeOrdenDeEnvio) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T DetalleDeOrdenDeEnvio
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
-
 type DetalleDePaquete struct {
 	XMLNs                     string             `xml:"xmlns:dr,attr,omitempty"`
 	PesoEnKg                  float32            `xml:"dr:pesoEnKg,omitempty"`
@@ -3092,19 +2224,6 @@ type DetalleDePaquete struct {
 	ValorDeclaradoConImpuesto float32            `xml:"dr:valorDeclaradoConImpuesto,omitempty"`
 }
 
-func (t *DetalleDePaquete) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T DetalleDePaquete
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *DetalleDePaquete) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T DetalleDePaquete
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
-
 type DetalleLiquidacionFacturada struct {
 	XMLNs               string `xml:"xmlns:dr,attr,omitempty"`
 	CentroEmisor        string `xml:"dr:centroEmisor,omitempty"`
@@ -3114,19 +2233,6 @@ type DetalleLiquidacionFacturada struct {
 	NumeroDeComprobante string `xml:"dr:numeroDeComprobante"`
 	NumeroDePrefactura  int    `xml:"dr:numeroDePrefactura"`
 	TipoDeTransaccion   string `xml:"dr:tipoDeTransaccion,omitempty"`
-}
-
-func (t *DetalleLiquidacionFacturada) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T DetalleLiquidacionFacturada
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *DetalleLiquidacionFacturada) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T DetalleLiquidacionFacturada
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type DetalleLiquidacionNoFacturada struct {
@@ -3139,19 +2245,6 @@ type DetalleLiquidacionNoFacturada struct {
 	NumeroDePrefactura  int    `xml:"dr:numeroDePrefactura"`
 	TipoDeTransaccion   string `xml:"dr:tipoDeTransaccion,omitempty"`
 	Razon               Razon  `xml:"dr:razon"`
-}
-
-func (t *DetalleLiquidacionNoFacturada) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T DetalleLiquidacionNoFacturada
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *DetalleLiquidacionNoFacturada) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T DetalleLiquidacionNoFacturada
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type DevolucionEntregadaSinDocumentacion struct {
@@ -3182,12 +2275,6 @@ func (t *DevolucionEntregadaSinDocumentacion) MarshalXML(e *xml.Encoder, start x
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *DevolucionEntregadaSinDocumentacion) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T DevolucionEntregadaSinDocumentacion
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type DevolucionEnvioPlazoVencido struct {
 	XMLNs                    string        `xml:"xmlns:in,attr,omitempty"`
@@ -3216,12 +2303,6 @@ func (t *DevolucionEnvioPlazoVencido) MarshalXML(e *xml.Encoder, start xml.Start
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *DevolucionEnvioPlazoVencido) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T DevolucionEnvioPlazoVencido
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type DevolucionEnvioRecibidaPlazaInterior struct {
@@ -3252,12 +2333,6 @@ func (t *DevolucionEnvioRecibidaPlazaInterior) MarshalXML(e *xml.Encoder, start 
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *DevolucionEnvioRecibidaPlazaInterior) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T DevolucionEnvioRecibidaPlazaInterior
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type DevolucionParcialCortoVto struct {
 	XMLNs                    string        `xml:"xmlns:in,attr,omitempty"`
@@ -3287,12 +2362,6 @@ func (t *DevolucionParcialCortoVto) MarshalXML(e *xml.Encoder, start xml.StartEl
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *DevolucionParcialCortoVto) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T DevolucionParcialCortoVto
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type DevolverEnvioAOrigen struct {
 	XMLNs          string   `xml:"xmlns:re,attr,omitempty"`
@@ -3308,19 +2377,6 @@ type DevolverEnvioAOrigen struct {
 	CierraPregunta bool     `xml:"re:cierraPregunta,omitempty"`
 	EsParaCliente  bool     `xml:"re:esParaCliente,omitempty"`
 	Topic          _anon349 `xml:"re:topic"`
-}
-
-func (t *DevolverEnvioAOrigen) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T DevolverEnvioAOrigen
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *DevolverEnvioAOrigen) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T DevolverEnvioAOrigen
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type Digitalizacion struct {
@@ -3351,12 +2407,6 @@ func (t *Digitalizacion) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *Digitalizacion) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T Digitalizacion
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type Direccion struct {
 	XMLNs                  string             `xml:"xmlns:dr,attr,omitempty"`
@@ -3372,19 +2422,6 @@ type Direccion struct {
 	CodigoISOPais          string             `xml:"dr:codigoISOPais,omitempty"`
 	Localidad              string             `xml:"dr:localidad,omitempty"`
 	ComponentesDeDireccion ListaDePropiedades `xml:"dr:componentesDeDireccion,omitempty"`
-}
-
-func (t *Direccion) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T Direccion
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *Direccion) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T Direccion
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type Distribucion struct {
@@ -3422,12 +2459,6 @@ func (t *Distribucion) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	layout.DesdeDonde.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *Distribucion) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T Distribucion
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type DocumentoAndreaniDigitalizadoDisponible struct {
 	XMLNs                   string                        `xml:"xmlns:ei,attr,omitempty"`
@@ -3450,12 +2481,6 @@ func (t *DocumentoAndreaniDigitalizadoDisponible) MarshalXML(e *xml.Encoder, sta
 	layout.Linking.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	layout.Documentos.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *DocumentoAndreaniDigitalizadoDisponible) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T DocumentoAndreaniDigitalizadoDisponible
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 // Must be at least 1 items long
@@ -3489,12 +2514,6 @@ func (t *EliminarMarcaDeDestruccion) MarshalXML(e *xml.Encoder, start xml.StartE
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *EliminarMarcaDeDestruccion) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EliminarMarcaDeDestruccion
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type EliminarMarcaDeRescate struct {
 	XMLNs                    string        `xml:"xmlns:ei,attr,omitempty"`
@@ -3524,31 +2543,12 @@ func (t *EliminarMarcaDeRescate) MarshalXML(e *xml.Encoder, start xml.StartEleme
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *EliminarMarcaDeRescate) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EliminarMarcaDeRescate
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type EntidadRetirada struct {
 	XMLNs string  `xml:"xmlns:dr,attr,omitempty"`
 	Peso  float64 `xml:"dr:peso,omitempty"`
 	Id    string  `xml:"dr:id"`
 	Tipo  string  `xml:"dr:tipo"`
-}
-
-func (t *EntidadRetirada) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T EntidadRetirada
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *EntidadRetirada) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EntidadRetirada
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type EntregaEnSucursalSolicitada struct {
@@ -3580,12 +2580,6 @@ func (t *EntregaEnSucursalSolicitada) MarshalXML(e *xml.Encoder, start xml.Start
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *EntregaEnSucursalSolicitada) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EntregaEnSucursalSolicitada
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type EntregaPactadaEnReparto struct {
 	XMLNs                    string        `xml:"xmlns:in,attr,omitempty"`
@@ -3615,12 +2609,6 @@ func (t *EntregaPactadaEnReparto) MarshalXML(e *xml.Encoder, start xml.StartElem
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *EntregaPactadaEnReparto) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EntregaPactadaEnReparto
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type EntregarSinTurno struct {
 	XMLNs          string   `xml:"xmlns:re,attr,omitempty"`
@@ -3636,19 +2624,6 @@ type EntregarSinTurno struct {
 	CierraPregunta bool     `xml:"re:cierraPregunta,omitempty"`
 	EsParaCliente  bool     `xml:"re:esParaCliente,omitempty"`
 	Topic          _anon352 `xml:"re:topic"`
-}
-
-func (t *EntregarSinTurno) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T EntregarSinTurno
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *EntregarSinTurno) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EntregarSinTurno
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type EntregarYCobrarDiferido struct {
@@ -3667,19 +2642,6 @@ type EntregarYCobrarDiferido struct {
 	Topic          _anon360 `xml:"re:topic"`
 }
 
-func (t *EntregarYCobrarDiferido) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T EntregarYCobrarDiferido
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *EntregarYCobrarDiferido) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EntregarYCobrarDiferido
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
-
 type EnviarOrdenDeCompra struct {
 	XMLNs          string   `xml:"xmlns:re,attr,omitempty"`
 	Timestamp      *xsdDate `xml:"http://integracion.andreani.com/eventosDeIntegracion timestamp"`
@@ -3694,19 +2656,6 @@ type EnviarOrdenDeCompra struct {
 	CierraPregunta bool     `xml:"re:cierraPregunta,omitempty"`
 	EsParaCliente  bool     `xml:"re:esParaCliente,omitempty"`
 	Topic          _anon358 `xml:"re:topic"`
-}
-
-func (t *EnviarOrdenDeCompra) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T EnviarOrdenDeCompra
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *EnviarOrdenDeCompra) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EnviarOrdenDeCompra
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type EnvioActivacionPendienteEnCAC struct {
@@ -3737,12 +2686,6 @@ func (t *EnvioActivacionPendienteEnCAC) MarshalXML(e *xml.Encoder, start xml.Sta
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *EnvioActivacionPendienteEnCAC) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EnvioActivacionPendienteEnCAC
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type EnvioActualizado struct {
 	XMLNs                    string        `xml:"xmlns:ei,attr,omitempty"`
@@ -3771,12 +2714,6 @@ func (t *EnvioActualizado) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *EnvioActualizado) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EnvioActualizado
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type EnvioAnulado struct {
@@ -3808,12 +2745,6 @@ func (t *EnvioAnulado) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *EnvioAnulado) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EnvioAnulado
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type EnvioAnuladoEnOrigen struct {
 	XMLNs                    string        `xml:"xmlns:in,attr,omitempty"`
@@ -3842,12 +2773,6 @@ func (t *EnvioAnuladoEnOrigen) MarshalXML(e *xml.Encoder, start xml.StartElement
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *EnvioAnuladoEnOrigen) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EnvioAnuladoEnOrigen
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type EnvioCompletoLiberado struct {
@@ -3878,12 +2803,6 @@ func (t *EnvioCompletoLiberado) MarshalXML(e *xml.Encoder, start xml.StartElemen
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *EnvioCompletoLiberado) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EnvioCompletoLiberado
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type EnvioConContingenciaSanitaria struct {
 	XMLNs                    string        `xml:"xmlns:in,attr,omitempty"`
@@ -3912,12 +2831,6 @@ func (t *EnvioConContingenciaSanitaria) MarshalXML(e *xml.Encoder, start xml.Sta
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *EnvioConContingenciaSanitaria) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EnvioConContingenciaSanitaria
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type EnvioConDocumentacionErronea struct {
@@ -3950,12 +2863,6 @@ func (t *EnvioConDocumentacionErronea) MarshalXML(e *xml.Encoder, start xml.Star
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *EnvioConDocumentacionErronea) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EnvioConDocumentacionErronea
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type EnvioConDocumentacionFaltante struct {
 	XMLNs                    string        `xml:"xmlns:in,attr,omitempty"`
@@ -3984,12 +2891,6 @@ func (t *EnvioConDocumentacionFaltante) MarshalXML(e *xml.Encoder, start xml.Sta
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *EnvioConDocumentacionFaltante) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EnvioConDocumentacionFaltante
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type EnvioConEntegaParcial struct {
@@ -4020,12 +2921,6 @@ func (t *EnvioConEntegaParcial) MarshalXML(e *xml.Encoder, start xml.StartElemen
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *EnvioConEntegaParcial) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EnvioConEntegaParcial
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type EnvioConEntegaUrgente struct {
 	XMLNs                    string        `xml:"xmlns:in,attr,omitempty"`
@@ -4054,12 +2949,6 @@ func (t *EnvioConEntegaUrgente) MarshalXML(e *xml.Encoder, start xml.StartElemen
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *EnvioConEntegaUrgente) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EnvioConEntegaUrgente
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type EnvioConEntregaObservada struct {
@@ -4090,12 +2979,6 @@ func (t *EnvioConEntregaObservada) MarshalXML(e *xml.Encoder, start xml.StartEle
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *EnvioConEntregaObservada) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EnvioConEntregaObservada
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type EnvioConErrorConformacion struct {
 	XMLNs                    string        `xml:"xmlns:in,attr,omitempty"`
@@ -4124,12 +3007,6 @@ func (t *EnvioConErrorConformacion) MarshalXML(e *xml.Encoder, start xml.StartEl
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *EnvioConErrorConformacion) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EnvioConErrorConformacion
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type EnvioConGestionActivacionCAC struct {
@@ -4160,12 +3037,6 @@ func (t *EnvioConGestionActivacionCAC) MarshalXML(e *xml.Encoder, start xml.Star
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *EnvioConGestionActivacionCAC) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EnvioConGestionActivacionCAC
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type EnvioConGestionCACCliente struct {
 	XMLNs                    string        `xml:"xmlns:in,attr,omitempty"`
@@ -4194,12 +3065,6 @@ func (t *EnvioConGestionCACCliente) MarshalXML(e *xml.Encoder, start xml.StartEl
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *EnvioConGestionCACCliente) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EnvioConGestionCACCliente
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type EnvioConGestionCACOperacion struct {
@@ -4230,12 +3095,6 @@ func (t *EnvioConGestionCACOperacion) MarshalXML(e *xml.Encoder, start xml.Start
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *EnvioConGestionCACOperacion) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EnvioConGestionCACOperacion
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type EnvioConGestionTelefonica struct {
 	XMLNs                    string        `xml:"xmlns:in,attr,omitempty"`
@@ -4264,12 +3123,6 @@ func (t *EnvioConGestionTelefonica) MarshalXML(e *xml.Encoder, start xml.StartEl
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *EnvioConGestionTelefonica) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EnvioConGestionTelefonica
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type EnvioConMercaderiaDecomisada struct {
@@ -4300,12 +3153,6 @@ func (t *EnvioConMercaderiaDecomisada) MarshalXML(e *xml.Encoder, start xml.Star
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *EnvioConMercaderiaDecomisada) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EnvioConMercaderiaDecomisada
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type EnvioConMercaderiaSecuetradaAduana struct {
 	XMLNs                    string        `xml:"xmlns:in,attr,omitempty"`
@@ -4334,12 +3181,6 @@ func (t *EnvioConMercaderiaSecuetradaAduana) MarshalXML(e *xml.Encoder, start xm
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *EnvioConMercaderiaSecuetradaAduana) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EnvioConMercaderiaSecuetradaAduana
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type EnvioConReconformacionDeDocumentacion struct {
@@ -4370,12 +3211,6 @@ func (t *EnvioConReconformacionDeDocumentacion) MarshalXML(e *xml.Encoder, start
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *EnvioConReconformacionDeDocumentacion) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EnvioConReconformacionDeDocumentacion
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type EnvioConSolicitudDeRetorno struct {
 	XMLNs                    string        `xml:"xmlns:in,attr,omitempty"`
@@ -4405,12 +3240,6 @@ func (t *EnvioConSolicitudDeRetorno) MarshalXML(e *xml.Encoder, start xml.StartE
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *EnvioConSolicitudDeRetorno) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EnvioConSolicitudDeRetorno
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type EnvioConTurnoConvenido struct {
 	XMLNs                    string        `xml:"xmlns:in,attr,omitempty"`
@@ -4439,12 +3268,6 @@ func (t *EnvioConTurnoConvenido) MarshalXML(e *xml.Encoder, start xml.StartEleme
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *EnvioConTurnoConvenido) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EnvioConTurnoConvenido
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type EnvioConsolidado struct {
@@ -4476,12 +3299,6 @@ func (t *EnvioConsolidado) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *EnvioConsolidado) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EnvioConsolidado
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type EnvioDeMuestraMedica struct {
 	XMLNs                    string        `xml:"xmlns:in,attr,omitempty"`
@@ -4511,12 +3328,6 @@ func (t *EnvioDeMuestraMedica) MarshalXML(e *xml.Encoder, start xml.StartElement
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *EnvioDeMuestraMedica) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EnvioDeMuestraMedica
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type EnvioDesactivadoAutomaticamente struct {
 	XMLNs                    string        `xml:"xmlns:ei,attr,omitempty"`
@@ -4545,12 +3356,6 @@ func (t *EnvioDesactivadoAutomaticamente) MarshalXML(e *xml.Encoder, start xml.S
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *EnvioDesactivadoAutomaticamente) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EnvioDesactivadoAutomaticamente
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type EnvioDespachado struct {
@@ -4582,12 +3387,6 @@ func (t *EnvioDespachado) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *EnvioDespachado) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EnvioDespachado
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type EnvioDevuelto struct {
 	XMLNs                    string        `xml:"xmlns:ei,attr,omitempty"`
@@ -4617,12 +3416,6 @@ func (t *EnvioDevuelto) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *EnvioDevuelto) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EnvioDevuelto
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type EnvioDigitalizado struct {
@@ -4656,12 +3449,6 @@ func (t *EnvioDigitalizado) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *EnvioDigitalizado) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EnvioDigitalizado
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type EnvioEnAreaDevoluciones struct {
 	XMLNs                    string        `xml:"xmlns:in,attr,omitempty"`
@@ -4690,12 +3477,6 @@ func (t *EnvioEnAreaDevoluciones) MarshalXML(e *xml.Encoder, start xml.StartElem
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *EnvioEnAreaDevoluciones) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EnvioEnAreaDevoluciones
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type EnvioEnCoordinacionEntregaCAC struct {
@@ -4726,12 +3507,6 @@ func (t *EnvioEnCoordinacionEntregaCAC) MarshalXML(e *xml.Encoder, start xml.Sta
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *EnvioEnCoordinacionEntregaCAC) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EnvioEnCoordinacionEntregaCAC
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type EnvioEnCoordinacionTelefonicaCAC struct {
 	XMLNs                    string        `xml:"xmlns:in,attr,omitempty"`
@@ -4760,12 +3535,6 @@ func (t *EnvioEnCoordinacionTelefonicaCAC) MarshalXML(e *xml.Encoder, start xml.
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *EnvioEnCoordinacionTelefonicaCAC) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EnvioEnCoordinacionTelefonicaCAC
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type EnvioEnInformeDeRendicion struct {
@@ -4798,12 +3567,6 @@ func (t *EnvioEnInformeDeRendicion) MarshalXML(e *xml.Encoder, start xml.StartEl
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *EnvioEnInformeDeRendicion) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EnvioEnInformeDeRendicion
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type EnvioEnProcesoExpedicion struct {
 	XMLNs                    string        `xml:"xmlns:in,attr,omitempty"`
@@ -4833,12 +3596,6 @@ func (t *EnvioEnProcesoExpedicion) MarshalXML(e *xml.Encoder, start xml.StartEle
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *EnvioEnProcesoExpedicion) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EnvioEnProcesoExpedicion
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type EnvioEnServicioDeCoordinacionDeEntrega struct {
 	XMLNs                    string        `xml:"xmlns:in,attr,omitempty"`
@@ -4867,12 +3624,6 @@ func (t *EnvioEnServicioDeCoordinacionDeEntrega) MarshalXML(e *xml.Encoder, star
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *EnvioEnServicioDeCoordinacionDeEntrega) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EnvioEnServicioDeCoordinacionDeEntrega
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type EnvioEntregado struct {
@@ -4904,12 +3655,6 @@ func (t *EnvioEntregado) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *EnvioEntregado) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EnvioEntregado
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type EnvioEntregadoPendienteConfirmarCAC struct {
 	XMLNs                    string        `xml:"xmlns:in,attr,omitempty"`
@@ -4938,12 +3683,6 @@ func (t *EnvioEntregadoPendienteConfirmarCAC) MarshalXML(e *xml.Encoder, start x
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *EnvioEntregadoPendienteConfirmarCAC) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EnvioEntregadoPendienteConfirmarCAC
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type EnvioEntregadoSePosdatadaGGCC struct {
@@ -4974,12 +3713,6 @@ func (t *EnvioEntregadoSePosdatadaGGCC) MarshalXML(e *xml.Encoder, start xml.Sta
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *EnvioEntregadoSePosdatadaGGCC) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EnvioEntregadoSePosdatadaGGCC
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type EnvioFacturado struct {
 	XMLNs                    string        `xml:"xmlns:ei,attr,omitempty"`
@@ -5008,12 +3741,6 @@ func (t *EnvioFacturado) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *EnvioFacturado) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EnvioFacturado
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type EnvioFacturadoSap struct {
@@ -5044,12 +3771,6 @@ func (t *EnvioFacturadoSap) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *EnvioFacturadoSap) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EnvioFacturadoSap
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type EnvioFueraGrilla struct {
 	XMLNs                    string        `xml:"xmlns:in,attr,omitempty"`
@@ -5078,12 +3799,6 @@ func (t *EnvioFueraGrilla) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *EnvioFueraGrilla) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EnvioFueraGrilla
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type EnvioIngresaReacondicionamiento struct {
@@ -5114,12 +3829,6 @@ func (t *EnvioIngresaReacondicionamiento) MarshalXML(e *xml.Encoder, start xml.S
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *EnvioIngresaReacondicionamiento) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EnvioIngresaReacondicionamiento
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type EnvioLiberado struct {
 	XMLNs                    string        `xml:"xmlns:in,attr,omitempty"`
@@ -5148,12 +3857,6 @@ func (t *EnvioLiberado) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *EnvioLiberado) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EnvioLiberado
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type EnvioNoEntregado struct {
@@ -5187,12 +3890,6 @@ func (t *EnvioNoEntregado) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *EnvioNoEntregado) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EnvioNoEntregado
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type EnvioNovedadEnRecepcion struct {
 	XMLNs                    string        `xml:"xmlns:ei,attr,omitempty"`
@@ -5221,12 +3918,6 @@ func (t *EnvioNovedadEnRecepcion) MarshalXML(e *xml.Encoder, start xml.StartElem
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *EnvioNovedadEnRecepcion) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EnvioNovedadEnRecepcion
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type EnvioNovedadEnRendicion struct {
@@ -5257,12 +3948,6 @@ func (t *EnvioNovedadEnRendicion) MarshalXML(e *xml.Encoder, start xml.StartElem
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *EnvioNovedadEnRendicion) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EnvioNovedadEnRendicion
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type EnvioNovedadEnReparto struct {
 	XMLNs                    string        `xml:"xmlns:ei,attr,omitempty"`
@@ -5291,12 +3976,6 @@ func (t *EnvioNovedadEnReparto) MarshalXML(e *xml.Encoder, start xml.StartElemen
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *EnvioNovedadEnReparto) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EnvioNovedadEnReparto
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type EnvioNovedadEnRetiro struct {
@@ -5327,12 +4006,6 @@ func (t *EnvioNovedadEnRetiro) MarshalXML(e *xml.Encoder, start xml.StartElement
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *EnvioNovedadEnRetiro) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EnvioNovedadEnRetiro
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type EnvioNovedadEnSucursalDestino struct {
 	XMLNs                    string        `xml:"xmlns:ei,attr,omitempty"`
@@ -5361,12 +4034,6 @@ func (t *EnvioNovedadEnSucursalDestino) MarshalXML(e *xml.Encoder, start xml.Sta
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *EnvioNovedadEnSucursalDestino) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EnvioNovedadEnSucursalDestino
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type EnvioNovedadEnTransito struct {
@@ -5397,12 +4064,6 @@ func (t *EnvioNovedadEnTransito) MarshalXML(e *xml.Encoder, start xml.StartEleme
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *EnvioNovedadEnTransito) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EnvioNovedadEnTransito
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type EnvioNovedadNoEntregado struct {
 	XMLNs                    string        `xml:"xmlns:ei,attr,omitempty"`
@@ -5431,12 +4092,6 @@ func (t *EnvioNovedadNoEntregado) MarshalXML(e *xml.Encoder, start xml.StartElem
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *EnvioNovedadNoEntregado) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EnvioNovedadNoEntregado
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type EnvioNovedadPostEntrega struct {
@@ -5467,12 +4122,6 @@ func (t *EnvioNovedadPostEntrega) MarshalXML(e *xml.Encoder, start xml.StartElem
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *EnvioNovedadPostEntrega) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EnvioNovedadPostEntrega
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type EnvioPendienteDeDigitalizacion struct {
 	XMLNs                    string        `xml:"xmlns:ei,attr,omitempty"`
@@ -5501,12 +4150,6 @@ func (t *EnvioPendienteDeDigitalizacion) MarshalXML(e *xml.Encoder, start xml.St
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *EnvioPendienteDeDigitalizacion) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EnvioPendienteDeDigitalizacion
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type EnvioPendienteDeValidacion struct {
@@ -5537,12 +4180,6 @@ func (t *EnvioPendienteDeValidacion) MarshalXML(e *xml.Encoder, start xml.StartE
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *EnvioPendienteDeValidacion) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EnvioPendienteDeValidacion
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type EnvioPosdatado struct {
 	XMLNs                    string        `xml:"xmlns:in,attr,omitempty"`
@@ -5572,12 +4209,6 @@ func (t *EnvioPosdatado) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *EnvioPosdatado) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EnvioPosdatado
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type EnvioProcesadoEnSorter struct {
 	XMLNs                    string        `xml:"xmlns:in,attr,omitempty"`
@@ -5606,12 +4237,6 @@ func (t *EnvioProcesadoEnSorter) MarshalXML(e *xml.Encoder, start xml.StartEleme
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *EnvioProcesadoEnSorter) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EnvioProcesadoEnSorter
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type EnvioRecanalizado struct {
@@ -5644,12 +4269,6 @@ func (t *EnvioRecanalizado) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 	layout.NuevaSucursalDeDistribucion.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *EnvioRecanalizado) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EnvioRecanalizado
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type EnvioRecomendado struct {
 	XMLNs                    string        `xml:"xmlns:in,attr,omitempty"`
@@ -5679,12 +4298,6 @@ func (t *EnvioRecomendado) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *EnvioRecomendado) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EnvioRecomendado
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type EnvioRemitenteSolicitaEstacionar struct {
 	XMLNs                    string        `xml:"xmlns:in,attr,omitempty"`
@@ -5713,12 +4326,6 @@ func (t *EnvioRemitenteSolicitaEstacionar) MarshalXML(e *xml.Encoder, start xml.
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *EnvioRemitenteSolicitaEstacionar) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EnvioRemitenteSolicitaEstacionar
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type EnvioRemitoRecibidoEnSucursal struct {
@@ -5752,12 +4359,6 @@ func (t *EnvioRemitoRecibidoEnSucursal) MarshalXML(e *xml.Encoder, start xml.Sta
 	layout.QueSucursal.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *EnvioRemitoRecibidoEnSucursal) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EnvioRemitoRecibidoEnSucursal
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type EnvioRendido struct {
 	XMLNs                    string        `xml:"xmlns:ei,attr,omitempty"`
@@ -5786,12 +4387,6 @@ func (t *EnvioRendido) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *EnvioRendido) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EnvioRendido
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type EnvioReprogramadoPorFeriado struct {
@@ -5822,12 +4417,6 @@ func (t *EnvioReprogramadoPorFeriado) MarshalXML(e *xml.Encoder, start xml.Start
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *EnvioReprogramadoPorFeriado) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EnvioReprogramadoPorFeriado
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type EnvioSaleReacondicionamiento struct {
 	XMLNs                    string        `xml:"xmlns:in,attr,omitempty"`
@@ -5857,12 +4446,6 @@ func (t *EnvioSaleReacondicionamiento) MarshalXML(e *xml.Encoder, start xml.Star
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *EnvioSaleReacondicionamiento) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EnvioSaleReacondicionamiento
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type EnvioSeModificanDatos struct {
 	XMLNs         string         `xml:"xmlns:ei,attr,omitempty"`
@@ -5881,12 +4464,6 @@ func (t *EnvioSeModificanDatos) MarshalXML(e *xml.Encoder, start xml.StartElemen
 	layout.T = (*T)(t)
 	layout.Envio.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *EnvioSeModificanDatos) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EnvioSeModificanDatos
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type EnvioSeRedirecciona struct {
@@ -5918,12 +4495,6 @@ func (t *EnvioSeRedirecciona) MarshalXML(e *xml.Encoder, start xml.StartElement)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *EnvioSeRedirecciona) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EnvioSeRedirecciona
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type EnvioSeRetiraDeSucursal struct {
 	XMLNs                    string        `xml:"xmlns:in,attr,omitempty"`
@@ -5952,12 +4523,6 @@ func (t *EnvioSeRetiraDeSucursal) MarshalXML(e *xml.Encoder, start xml.StartElem
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *EnvioSeRetiraDeSucursal) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EnvioSeRetiraDeSucursal
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type EnvioSinTurnoDeSucursal struct {
@@ -5988,12 +4553,6 @@ func (t *EnvioSinTurnoDeSucursal) MarshalXML(e *xml.Encoder, start xml.StartElem
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *EnvioSinTurnoDeSucursal) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EnvioSinTurnoDeSucursal
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type EspecificarRespuesta struct {
 	XMLNs          string   `xml:"xmlns:re,attr,omitempty"`
@@ -6011,19 +4570,6 @@ type EspecificarRespuesta struct {
 	Topic          _anon362 `xml:"re:topic"`
 }
 
-func (t *EspecificarRespuesta) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T EspecificarRespuesta
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *EspecificarRespuesta) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EspecificarRespuesta
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
-
 type EventoDeNegocio struct {
 	XMLNs         string   `xml:"xmlns:ei,attr,omitempty"`
 	Timestamp     *xsdDate `xml:"ei:timestamp"`
@@ -6031,19 +4577,6 @@ type EventoDeNegocio struct {
 	Destinatario  string   `xml:"ei:destinatario,omitempty"`
 	NumeroDeOrden string   `xml:"ei:numeroDeOrden,omitempty"`
 	Vencimiento   *xsdDate `xml:"ei:vencimiento,omitempty"`
-}
-
-func (t *EventoDeNegocio) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T EventoDeNegocio
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *EventoDeNegocio) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EventoDeNegocio
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type EventoDeRespuesta struct {
@@ -6076,12 +4609,6 @@ func (t *EventoDeRespuesta) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *EventoDeRespuesta) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EventoDeRespuesta
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type EventoDeRetiro struct {
 	XMLNs                   string       `xml:"xmlns:ei,attr,omitempty"`
@@ -6094,19 +4621,6 @@ type EventoDeRetiro struct {
 	CodigoDeContratoInterno string       `xml:"ei:codigoDeContratoInterno"`
 	Cuando                  string       `xml:"ei:cuando"`
 	HojaDeRutaDeRetiro      string       `xml:"ei:hojaDeRutaDeRetiro"`
-}
-
-func (t *EventoDeRetiro) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T EventoDeRetiro
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *EventoDeRetiro) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EventoDeRetiro
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type EventoDeTraza struct {
@@ -6136,12 +4650,6 @@ func (t *EventoDeTraza) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *EventoDeTraza) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EventoDeTraza
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type EventoDeTrazaDePedido struct {
 	XMLNs                      string   `xml:"xmlns:ea,attr,omitempty"`
@@ -6161,19 +4669,6 @@ type EventoDeTrazaDePedido struct {
 	IdentificadorUnicoDePedido string   `xml:"ea:identificadorUnicoDePedido,omitempty"`
 }
 
-func (t *EventoDeTrazaDePedido) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T EventoDeTrazaDePedido
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *EventoDeTrazaDePedido) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EventoDeTrazaDePedido
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
-
 type EventoDestinatario struct {
 	XMLNs          string   `xml:"xmlns:ea,attr,omitempty"`
 	Timestamp      *xsdDate `xml:"http://integracion.andreani.com/eventosDeIntegracion timestamp"`
@@ -6183,19 +4678,6 @@ type EventoDestinatario struct {
 	Vencimiento    *xsdDate `xml:"http://integracion.andreani.com/eventosDeIntegracion vencimiento,omitempty"`
 	IdCliente      string   `xml:"ea:idCliente,omitempty"`
 	IdDestinatario string   `xml:"ea:idDestinatario"`
-}
-
-func (t *EventoDestinatario) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T EventoDestinatario
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *EventoDestinatario) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EventoDestinatario
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type EventoEnCliente struct {
@@ -6215,12 +4697,6 @@ func (t *EventoEnCliente) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 	layout.Cliente.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *EventoEnCliente) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EventoEnCliente
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type EventoFacturable struct {
 	XMLNs         string       `xml:"xmlns:ei,attr,omitempty"`
@@ -6230,19 +4706,6 @@ type EventoFacturable struct {
 	NumeroDeOrden string       `xml:"ei:numeroDeOrden,omitempty"`
 	Vencimiento   *xsdDate     `xml:"ei:vencimiento,omitempty"`
 	QuienFactura  QuienFactura `xml:"ei:quienFactura"`
-}
-
-func (t *EventoFacturable) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T EventoFacturable
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *EventoFacturable) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EventoFacturable
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type EventoIncidencia struct {
@@ -6271,12 +4734,6 @@ func (t *EventoIncidencia) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *EventoIncidencia) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EventoIncidencia
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type EventoVisitaMobile struct {
@@ -6321,12 +4778,6 @@ func (t *EventoVisitaMobile) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 	layout.Observaciones.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *EventoVisitaMobile) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EventoVisitaMobile
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type EvidenciasDeVisitaActualizadas struct {
 	XMLNs         string                        `xml:"xmlns:ei,attr,omitempty"`
@@ -6351,12 +4802,6 @@ func (t *EvidenciasDeVisitaActualizadas) MarshalXML(e *xml.Encoder, start xml.St
 	layout.NoEntrega.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	layout.Linking.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *EvidenciasDeVisitaActualizadas) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T EvidenciasDeVisitaActualizadas
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type ExcedeValorPoliza struct {
@@ -6387,12 +4832,6 @@ func (t *ExcedeValorPoliza) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *ExcedeValorPoliza) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T ExcedeValorPoliza
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type ExcedenteLogico struct {
 	XMLNs                    string        `xml:"xmlns:ei,attr,omitempty"`
@@ -6421,12 +4860,6 @@ func (t *ExcedenteLogico) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *ExcedenteLogico) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T ExcedenteLogico
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type ExcesoDeCantidad struct {
@@ -6457,12 +4890,6 @@ func (t *ExcesoDeCantidad) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *ExcesoDeCantidad) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T ExcesoDeCantidad
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type ExcesoDeFrecuencia struct {
 	XMLNs                    string        `xml:"xmlns:ei,attr,omitempty"`
@@ -6491,12 +4918,6 @@ func (t *ExcesoDeFrecuencia) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *ExcesoDeFrecuencia) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T ExcesoDeFrecuencia
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type ExcesoDePeso struct {
@@ -6531,12 +4952,6 @@ func (t *ExcesoDePeso) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	layout.SucursalMoviento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *ExcesoDePeso) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T ExcesoDePeso
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type ExpedicionEnReparto struct {
 	XMLNs                    string        `xml:"xmlns:ei,attr,omitempty"`
@@ -6566,12 +4981,6 @@ func (t *ExpedicionEnReparto) MarshalXML(e *xml.Encoder, start xml.StartElement)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *ExpedicionEnReparto) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T ExpedicionEnReparto
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type ExpedicionEntregada struct {
 	XMLNs                    string        `xml:"xmlns:ei,attr,omitempty"`
@@ -6600,12 +5009,6 @@ func (t *ExpedicionEntregada) MarshalXML(e *xml.Encoder, start xml.StartElement)
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *ExpedicionEntregada) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T ExpedicionEntregada
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type ExpedicionHojaDeRutaCabecera struct {
@@ -6638,12 +5041,6 @@ func (t *ExpedicionHojaDeRutaCabecera) MarshalXML(e *xml.Encoder, start xml.Star
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	layout.SucursalQueExpide.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *ExpedicionHojaDeRutaCabecera) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T ExpedicionHojaDeRutaCabecera
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type ExpedicionHojaDeRutaDeViaje struct {
@@ -6682,12 +5079,6 @@ func (t *ExpedicionHojaDeRutaDeViaje) MarshalXML(e *xml.Encoder, start xml.Start
 	layout.SucursalQueRecibe.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *ExpedicionHojaDeRutaDeViaje) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T ExpedicionHojaDeRutaDeViaje
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type FaltaDocumentacionIIBB struct {
 	XMLNs                    string        `xml:"xmlns:in,attr,omitempty"`
@@ -6717,12 +5108,6 @@ func (t *FaltaDocumentacionIIBB) MarshalXML(e *xml.Encoder, start xml.StartEleme
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *FaltaDocumentacionIIBB) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T FaltaDocumentacionIIBB
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type FaltaOrdenDeCompra struct {
 	XMLNs              string   `xml:"xmlns:pr,attr,omitempty"`
@@ -6737,19 +5122,6 @@ type FaltaOrdenDeCompra struct {
 	PosiblesRespuestas string   `xml:"pr:posiblesRespuestas,omitempty"`
 	EsParaCliente      bool     `xml:"pr:esParaCliente,omitempty"`
 	Topic              _anon331 `xml:"pr:topic"`
-}
-
-func (t *FaltaOrdenDeCompra) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T FaltaOrdenDeCompra
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *FaltaOrdenDeCompra) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T FaltaOrdenDeCompra
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type FaltaRemito struct {
@@ -6780,12 +5152,6 @@ func (t *FaltaRemito) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *FaltaRemito) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T FaltaRemito
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type FaltanBultos struct {
 	XMLNs                    string        `xml:"xmlns:in,attr,omitempty"`
@@ -6814,12 +5180,6 @@ func (t *FaltanBultos) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *FaltanBultos) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T FaltanBultos
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type FaltanBultosYRemitos struct {
@@ -6850,31 +5210,12 @@ func (t *FaltanBultosYRemitos) MarshalXML(e *xml.Encoder, start xml.StartElement
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *FaltanBultosYRemitos) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T FaltanBultosYRemitos
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type FechaPactada struct {
 	XMLNs     string   `xml:"xmlns:dr,attr,omitempty"`
 	Fecha     *xsdDate `xml:"dr:fecha,omitempty"`
 	HoraDesde *xsdTime `xml:"dr:horaDesde,omitempty"`
 	HoraHasta *xsdTime `xml:"dr:horaHasta,omitempty"`
-}
-
-func (t *FechaPactada) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T FechaPactada
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *FechaPactada) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T FechaPactada
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type FeriadoLocal struct {
@@ -6904,12 +5245,6 @@ func (t *FeriadoLocal) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *FeriadoLocal) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T FeriadoLocal
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type FinCustodiaEnSucursal struct {
@@ -6945,12 +5280,6 @@ func (t *FinCustodiaEnSucursal) MarshalXML(e *xml.Encoder, start xml.StartElemen
 	layout.SucursalDeDistribucion.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *FinCustodiaEnSucursal) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T FinCustodiaEnSucursal
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 // May be one of otro, cheque, retenciones, boletaDeDeposito, siniestroPerdido, efectivo
 type FormaDeCobro string
@@ -6983,12 +5312,6 @@ func (t *FueraDeHorarioDeRecepcion) MarshalXML(e *xml.Encoder, start xml.StartEl
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *FueraDeHorarioDeRecepcion) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T FueraDeHorarioDeRecepcion
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type FueraDeHorarioDeTransmision struct {
 	XMLNs                    string        `xml:"xmlns:in,attr,omitempty"`
@@ -7018,12 +5341,6 @@ func (t *FueraDeHorarioDeTransmision) MarshalXML(e *xml.Encoder, start xml.Start
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *FueraDeHorarioDeTransmision) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T FueraDeHorarioDeTransmision
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type FueraDeTurnoDeEntrega struct {
 	XMLNs              string   `xml:"xmlns:pr,attr,omitempty"`
@@ -7040,19 +5357,6 @@ type FueraDeTurnoDeEntrega struct {
 	Topic              _anon318 `xml:"pr:topic"`
 }
 
-func (t *FueraDeTurnoDeEntrega) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T FueraDeTurnoDeEntrega
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *FueraDeTurnoDeEntrega) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T FueraDeTurnoDeEntrega
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
-
 type GeneracionDeRetiro struct {
 	XMLNs                   string       `xml:"xmlns:ei,attr,omitempty"`
 	Timestamp               *xsdDate     `xml:"ei:timestamp"`
@@ -7067,37 +5371,11 @@ type GeneracionDeRetiro struct {
 	Topic                   _anon124     `xml:"ei:topic"`
 }
 
-func (t *GeneracionDeRetiro) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T GeneracionDeRetiro
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *GeneracionDeRetiro) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T GeneracionDeRetiro
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
-
 type GeoReferencia struct {
 	XMLNs    string  `xml:"xmlns:dr,attr,omitempty"`
 	Latitud  float64 `xml:"dr:latitud,omitempty"`
 	Longitud float64 `xml:"dr:longitud,omitempty"`
 	Altura   float64 `xml:"dr:altura,omitempty"`
-}
-
-func (t *GeoReferencia) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T GeoReferencia
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *GeoReferencia) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T GeoReferencia
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 // Must be at least 1 items long
@@ -7136,12 +5414,6 @@ func (t *GestionCobranza) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 	layout.ComponentesDeCobro.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *GestionCobranza) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T GestionCobranza
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type GestionCobranzaAnulada struct {
 	XMLNs                    string        `xml:"xmlns:in,attr,omitempty"`
@@ -7170,12 +5442,6 @@ func (t *GestionCobranzaAnulada) MarshalXML(e *xml.Encoder, start xml.StartEleme
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *GestionCobranzaAnulada) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T GestionCobranzaAnulada
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type GestionCobranzaImporteModificado struct {
@@ -7206,12 +5472,6 @@ func (t *GestionCobranzaImporteModificado) MarshalXML(e *xml.Encoder, start xml.
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *GestionCobranzaImporteModificado) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T GestionCobranzaImporteModificado
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type GestionCobranzaReembolsoCobrado struct {
 	XMLNs                    string        `xml:"xmlns:in,attr,omitempty"`
@@ -7240,12 +5500,6 @@ func (t *GestionCobranzaReembolsoCobrado) MarshalXML(e *xml.Encoder, start xml.S
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *GestionCobranzaReembolsoCobrado) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T GestionCobranzaReembolsoCobrado
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type GestionCobranzaReembolsoNoCobrado struct {
@@ -7276,12 +5530,6 @@ func (t *GestionCobranzaReembolsoNoCobrado) MarshalXML(e *xml.Encoder, start xml
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *GestionCobranzaReembolsoNoCobrado) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T GestionCobranzaReembolsoNoCobrado
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type GestionDeCoordinacion struct {
 	XMLNs              string   `xml:"xmlns:pr,attr,omitempty"`
@@ -7296,19 +5544,6 @@ type GestionDeCoordinacion struct {
 	PosiblesRespuestas string   `xml:"pr:posiblesRespuestas,omitempty"`
 	EsParaCliente      bool     `xml:"pr:esParaCliente,omitempty"`
 	Topic              _anon319 `xml:"pr:topic"`
-}
-
-func (t *GestionDeCoordinacion) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T GestionDeCoordinacion
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *GestionDeCoordinacion) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T GestionDeCoordinacion
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type GestionTelefonica struct {
@@ -7343,12 +5578,6 @@ func (t *GestionTelefonica) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *GestionTelefonica) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T GestionTelefonica
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type GestionarEnvio struct {
 	XMLNs          string   `xml:"xmlns:re,attr,omitempty"`
@@ -7364,19 +5593,6 @@ type GestionarEnvio struct {
 	CierraPregunta bool     `xml:"re:cierraPregunta,omitempty"`
 	EsParaCliente  bool     `xml:"re:esParaCliente,omitempty"`
 	Topic          Topic    `xml:"re:topic"`
-}
-
-func (t *GestionarEnvio) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T GestionarEnvio
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *GestionarEnvio) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T GestionarEnvio
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type GestionarRetiro struct {
@@ -7395,19 +5611,6 @@ type GestionarRetiro struct {
 	Topic          _anon365 `xml:"re:topic"`
 }
 
-func (t *GestionarRetiro) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T GestionarRetiro
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *GestionarRetiro) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T GestionarRetiro
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
-
 type GsinDeHojaDeRutaCreado struct {
 	XMLNs         string   `xml:"xmlns:ei,attr,omitempty"`
 	Timestamp     *xsdDate `xml:"ei:timestamp"`
@@ -7419,19 +5622,6 @@ type GsinDeHojaDeRutaCreado struct {
 	Topic         _anon166 `xml:"ei:topic"`
 }
 
-func (t *GsinDeHojaDeRutaCreado) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T GsinDeHojaDeRutaCreado
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *GsinDeHojaDeRutaCreado) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T GsinDeHojaDeRutaCreado
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
-
 type GsinFinDeDistribucion struct {
 	XMLNs         string   `xml:"xmlns:ei,attr,omitempty"`
 	Timestamp     *xsdDate `xml:"ei:timestamp"`
@@ -7441,19 +5631,6 @@ type GsinFinDeDistribucion struct {
 	Vencimiento   *xsdDate `xml:"ei:vencimiento,omitempty"`
 	Numero        string   `xml:"ei:numero"`
 	Topic         _anon167 `xml:"ei:topic"`
-}
-
-func (t *GsinFinDeDistribucion) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T GsinFinDeDistribucion
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *GsinFinDeDistribucion) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T GsinFinDeDistribucion
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type HojaDeRutaDeDistribucionCreada struct {
@@ -7481,12 +5658,6 @@ func (t *HojaDeRutaDeDistribucionCreada) MarshalXML(e *xml.Encoder, start xml.St
 	layout.Donde.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *HojaDeRutaDeDistribucionCreada) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T HojaDeRutaDeDistribucionCreada
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type HojaDeRutaDigitalizada struct {
 	XMLNs                 string        `xml:"xmlns:ei,attr,omitempty"`
@@ -7508,12 +5679,6 @@ func (t *HojaDeRutaDigitalizada) MarshalXML(e *xml.Encoder, start xml.StartEleme
 	layout.T = (*T)(t)
 	layout.SucursalQueDigitaliza.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *HojaDeRutaDigitalizada) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T HojaDeRutaDigitalizada
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type ImportacionDeDatosAdicionales struct {
@@ -7544,12 +5709,6 @@ func (t *ImportacionDeDatosAdicionales) MarshalXML(e *xml.Encoder, start xml.Sta
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *ImportacionDeDatosAdicionales) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T ImportacionDeDatosAdicionales
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type ImportacionRealizada struct {
 	XMLNs                       string   `xml:"xmlns:ei,attr,omitempty"`
@@ -7565,19 +5724,6 @@ type ImportacionRealizada struct {
 	Contrato                    string   `xml:"ei:contrato"`
 	RetiroDeRecibo              string   `xml:"ei:retiroDeRecibo,omitempty"`
 	SucursalDeImportacion       int      `xml:"ei:sucursalDeImportacion"`
-}
-
-func (t *ImportacionRealizada) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T ImportacionRealizada
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *ImportacionRealizada) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T ImportacionRealizada
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type Impresion struct {
@@ -7609,12 +5755,6 @@ func (t *Impresion) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	layout.Donde.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *Impresion) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T Impresion
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type ImpresionDeRemitoDeImposicion struct {
@@ -7650,12 +5790,6 @@ func (t *ImpresionDeRemitoDeImposicion) MarshalXML(e *xml.Encoder, start xml.Sta
 	layout.Sucursal.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *ImpresionDeRemitoDeImposicion) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T ImpresionDeRemitoDeImposicion
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type IncorporarMarcaDeCustodia struct {
 	XMLNs                    string        `xml:"xmlns:ei,attr,omitempty"`
@@ -7687,30 +5821,11 @@ func (t *IncorporarMarcaDeCustodia) MarshalXML(e *xml.Encoder, start xml.StartEl
 	layout.SucursalDeCustodia.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *IncorporarMarcaDeCustodia) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T IncorporarMarcaDeCustodia
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type InformacionDeServicio struct {
 	XMLNs        string `xml:"xmlns:di,attr,omitempty"`
 	Timestamp    string `xml:"di:timestamp"`
 	Destinatario string `xml:"di:destinatario,omitempty"`
-}
-
-func (t *InformacionDeServicio) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T InformacionDeServicio
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *InformacionDeServicio) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T InformacionDeServicio
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type InformeDeRendicionDigitalizadoDisponible struct {
@@ -7734,12 +5849,6 @@ func (t *InformeDeRendicionDigitalizadoDisponible) MarshalXML(e *xml.Encoder, st
 	layout.Linking.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	layout.Documentos.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *InformeDeRendicionDigitalizadoDisponible) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T InformeDeRendicionDigitalizadoDisponible
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type IngresoDeConservadoraACamara struct {
@@ -7769,12 +5878,6 @@ func (t *IngresoDeConservadoraACamara) MarshalXML(e *xml.Encoder, start xml.Star
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *IngresoDeConservadoraACamara) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T IngresoDeConservadoraACamara
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type InicioCicloDeRendicion struct {
@@ -7810,12 +5913,6 @@ func (t *InicioCicloDeRendicion) MarshalXML(e *xml.Encoder, start xml.StartEleme
 	layout.Contrato.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *InicioCicloDeRendicion) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T InicioCicloDeRendicion
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type InicioEtapaDeGestionTelefonica struct {
 	XMLNs                    string               `xml:"xmlns:ei,attr,omitempty"`
@@ -7850,12 +5947,6 @@ func (t *InicioEtapaDeGestionTelefonica) MarshalXML(e *xml.Encoder, start xml.St
 	layout.NuevaSucursal.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *InicioEtapaDeGestionTelefonica) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T InicioEtapaDeGestionTelefonica
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type IntroduccionDeMotivo struct {
 	XMLNs                    string        `xml:"xmlns:ei,attr,omitempty"`
@@ -7887,12 +5978,6 @@ func (t *IntroduccionDeMotivo) MarshalXML(e *xml.Encoder, start xml.StartElement
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *IntroduccionDeMotivo) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T IntroduccionDeMotivo
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type InversionEnBultoCerrado struct {
 	XMLNs                    string        `xml:"xmlns:in,attr,omitempty"`
@@ -7922,12 +6007,6 @@ func (t *InversionEnBultoCerrado) MarshalXML(e *xml.Encoder, start xml.StartElem
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *InversionEnBultoCerrado) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T InversionEnBultoCerrado
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type LineaEnHojaDeRutaDigitalizada struct {
 	XMLNs                   string        `xml:"xmlns:ei,attr,omitempty"`
@@ -7951,12 +6030,6 @@ func (t *LineaEnHojaDeRutaDigitalizada) MarshalXML(e *xml.Encoder, start xml.Sta
 	layout.SucursalQueDigitaliza.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *LineaEnHojaDeRutaDigitalizada) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T LineaEnHojaDeRutaDigitalizada
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type LiquidacionDeAbono struct {
 	XMLNs            string       `xml:"xmlns:ei,attr,omitempty"`
@@ -7971,19 +6044,6 @@ type LiquidacionDeAbono struct {
 	CodigoDeContrato string       `xml:"ei:codigoDeContrato"`
 	PeriodoAbonado   string       `xml:"ei:periodoAbonado"`
 	Tarifa           float32      `xml:"ei:tarifa"`
-}
-
-func (t *LiquidacionDeAbono) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T LiquidacionDeAbono
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *LiquidacionDeAbono) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T LiquidacionDeAbono
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type LiquidacionFacturada struct {
@@ -8003,12 +6063,6 @@ func (t *LiquidacionFacturada) MarshalXML(e *xml.Encoder, start xml.StartElement
 	layout.T = (*T)(t)
 	layout.Liquidacion.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *LiquidacionFacturada) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T LiquidacionFacturada
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type LiquidacionNoFacturada struct {
@@ -8030,29 +6084,10 @@ func (t *LiquidacionNoFacturada) MarshalXML(e *xml.Encoder, start xml.StartEleme
 	layout.Liquidacion.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *LiquidacionNoFacturada) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T LiquidacionNoFacturada
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type ListaDeConceptosTarifados struct {
 	XMLNs              string                    `xml:"xmlns:dr,attr,omitempty"`
 	ConceptosTarifados []DetalleConceptoTarifado `xml:"dr:conceptosTarifados"`
-}
-
-func (t *ListaDeConceptosTarifados) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T ListaDeConceptosTarifados
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *ListaDeConceptosTarifados) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T ListaDeConceptosTarifados
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type ListaDeDatosPersonales struct {
@@ -8060,35 +6095,9 @@ type ListaDeDatosPersonales struct {
 	Persona []DatosPersonales `xml:"dr:persona"`
 }
 
-func (t *ListaDeDatosPersonales) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T ListaDeDatosPersonales
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *ListaDeDatosPersonales) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T ListaDeDatosPersonales
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
-
 type ListaDeDetalleDeEnvios struct {
 	XMLNs string                   `xml:"xmlns:dr,attr,omitempty"`
 	Envio []DetalleDeEnvioTarifado `xml:"dr:envio"`
-}
-
-func (t *ListaDeDetalleDeEnvios) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T ListaDeDetalleDeEnvios
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *ListaDeDetalleDeEnvios) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T ListaDeDetalleDeEnvios
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type ListaDeDetalleDeEnviosSinConceptos struct {
@@ -8096,35 +6105,9 @@ type ListaDeDetalleDeEnviosSinConceptos struct {
 	Envios []DetalleDeEnvio `xml:"dr:envios"`
 }
 
-func (t *ListaDeDetalleDeEnviosSinConceptos) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T ListaDeDetalleDeEnviosSinConceptos
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *ListaDeDetalleDeEnviosSinConceptos) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T ListaDeDetalleDeEnviosSinConceptos
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
-
 type ListaDeDetallesDeAbono struct {
 	XMLNs  string           `xml:"xmlns:dr,attr,omitempty"`
 	Abonos []DetalleDeAbono `xml:"dr:abonos,omitempty"`
-}
-
-func (t *ListaDeDetallesDeAbono) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T ListaDeDetallesDeAbono
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *ListaDeDetallesDeAbono) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T ListaDeDetallesDeAbono
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type ListaDeDetallesDeCobro struct {
@@ -8132,35 +6115,9 @@ type ListaDeDetallesDeCobro struct {
 	Cobro []DetallaDelCobro `xml:"dr:cobro,omitempty"`
 }
 
-func (t *ListaDeDetallesDeCobro) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T ListaDeDetallesDeCobro
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *ListaDeDetallesDeCobro) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T ListaDeDetallesDeCobro
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
-
 type ListaDeEntidadesRetiradas struct {
 	XMLNs     string            `xml:"xmlns:dr,attr,omitempty"`
 	Entidades []EntidadRetirada `xml:"dr:entidades,omitempty"`
-}
-
-func (t *ListaDeEntidadesRetiradas) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T ListaDeEntidadesRetiradas
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *ListaDeEntidadesRetiradas) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T ListaDeEntidadesRetiradas
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type ListaDeLugares struct {
@@ -8168,35 +6125,9 @@ type ListaDeLugares struct {
 	Lugar []LugarDeRetiroEntrega `xml:"dr:lugar"`
 }
 
-func (t *ListaDeLugares) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T ListaDeLugares
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *ListaDeLugares) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T ListaDeLugares
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
-
 type ListaDeObjetos struct {
 	XMLNs   string   `xml:"xmlns:dr,attr,omitempty"`
 	Objetos []string `xml:"dr:objetos,omitempty"`
-}
-
-func (t *ListaDeObjetos) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T ListaDeObjetos
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *ListaDeObjetos) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T ListaDeObjetos
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type ListaDePaquetes struct {
@@ -8204,35 +6135,9 @@ type ListaDePaquetes struct {
 	DetalleInformadoDelPaquete []DetalleDePaquete `xml:"dr:detalleInformadoDelPaquete,omitempty"`
 }
 
-func (t *ListaDePaquetes) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T ListaDePaquetes
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *ListaDePaquetes) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T ListaDePaquetes
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
-
 type ListaDePropiedades struct {
 	XMLNs     string     `xml:"xmlns:dr,attr,omitempty"`
 	Matadatos []Metadato `xml:"dr:matadatos,omitempty"`
-}
-
-func (t *ListaDePropiedades) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T ListaDePropiedades
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *ListaDePropiedades) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T ListaDePropiedades
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type ListaDePropiedadesAdicionales struct {
@@ -8240,35 +6145,9 @@ type ListaDePropiedadesAdicionales struct {
 	Propiedad []Propiedad `xml:"dr:propiedad,omitempty"`
 }
 
-func (t *ListaDePropiedadesAdicionales) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T ListaDePropiedadesAdicionales
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *ListaDePropiedadesAdicionales) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T ListaDePropiedadesAdicionales
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
-
 type ListaDeTelefonos struct {
 	XMLNs     string     `xml:"xmlns:dr,attr,omitempty"`
 	Telefonos []Telefono `xml:"dr:telefonos"`
-}
-
-func (t *ListaDeTelefonos) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T ListaDeTelefonos
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *ListaDeTelefonos) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T ListaDeTelefonos
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type LlamarADestinatarioParaConfirmar struct {
@@ -8287,19 +6166,6 @@ type LlamarADestinatarioParaConfirmar struct {
 	Topic          _anon346 `xml:"re:topic"`
 }
 
-func (t *LlamarADestinatarioParaConfirmar) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T LlamarADestinatarioParaConfirmar
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *LlamarADestinatarioParaConfirmar) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T LlamarADestinatarioParaConfirmar
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
-
 type LugarDeRetiroEntrega struct {
 	XMLNs         string        `xml:"xmlns:dr,attr,omitempty"`
 	CodigoPostal  string        `xml:"dr:codigoPostal,omitempty"`
@@ -8312,37 +6178,11 @@ type LugarDeRetiroEntrega struct {
 	Pais          string        `xml:"dr:pais,omitempty"`
 }
 
-func (t *LugarDeRetiroEntrega) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T LugarDeRetiroEntrega
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *LugarDeRetiroEntrega) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T LugarDeRetiroEntrega
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
-
 type LugarDeRetiroOEntrega struct {
 	XMLNs       string        `xml:"xmlns:dr,attr,omitempty"`
 	Postal      Direccion     `xml:"dr:postal,omitempty"`
 	Sucursal    DatosSucursal `xml:"dr:sucursal,omitempty"`
 	Coordenadas GeoReferencia `xml:"dr:coordenadas,omitempty"`
-}
-
-func (t *LugarDeRetiroOEntrega) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T LugarDeRetiroOEntrega
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *LugarDeRetiroOEntrega) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T LugarDeRetiroOEntrega
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type MensajeConPayload struct {
@@ -8356,19 +6196,6 @@ type MensajeConPayload struct {
 	Content       string   `xml:"ei:content"`
 }
 
-func (t *MensajeConPayload) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T MensajeConPayload
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *MensajeConPayload) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T MensajeConPayload
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
-
 type MensajeWorkflowNumeracion struct {
 	XMLNs           string   `xml:"xmlns:ei,attr,omitempty"`
 	Timestamp       *xsdDate `xml:"ei:timestamp"`
@@ -8377,19 +6204,6 @@ type MensajeWorkflowNumeracion struct {
 	NumeroDeOrden   string   `xml:"ei:numeroDeOrden,omitempty"`
 	Vencimiento     *xsdDate `xml:"ei:vencimiento,omitempty"`
 	NumeroDeIntento int      `xml:"ei:numeroDeIntento"`
-}
-
-func (t *MensajeWorkflowNumeracion) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T MensajeWorkflowNumeracion
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *MensajeWorkflowNumeracion) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T MensajeWorkflowNumeracion
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type MercaderiaAControlar struct {
@@ -8420,12 +6234,6 @@ func (t *MercaderiaAControlar) MarshalXML(e *xml.Encoder, start xml.StartElement
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *MercaderiaAControlar) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T MercaderiaAControlar
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type MercaderiaOEmpaqueEnMalEstado struct {
 	XMLNs                    string        `xml:"xmlns:in,attr,omitempty"`
@@ -8455,12 +6263,6 @@ func (t *MercaderiaOEmpaqueEnMalEstado) MarshalXML(e *xml.Encoder, start xml.Sta
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *MercaderiaOEmpaqueEnMalEstado) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T MercaderiaOEmpaqueEnMalEstado
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type MercaderiaSinPreparar struct {
 	XMLNs              string   `xml:"xmlns:pr,attr,omitempty"`
@@ -8477,36 +6279,10 @@ type MercaderiaSinPreparar struct {
 	Topic              _anon343 `xml:"pr:topic"`
 }
 
-func (t *MercaderiaSinPreparar) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T MercaderiaSinPreparar
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *MercaderiaSinPreparar) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T MercaderiaSinPreparar
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
-
 type Metadato struct {
 	XMLNs     string `xml:"xmlns:dr,attr,omitempty"`
 	Meta      string `xml:"dr:meta"`
 	Contenido string `xml:"dr:contenido,omitempty"`
-}
-
-func (t *Metadato) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T Metadato
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *Metadato) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T Metadato
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type NoPoseeRemito struct {
@@ -8522,19 +6298,6 @@ type NoPoseeRemito struct {
 	PosiblesRespuestas string   `xml:"pr:posiblesRespuestas,omitempty"`
 	EsParaCliente      bool     `xml:"pr:esParaCliente,omitempty"`
 	Topic              _anon344 `xml:"pr:topic"`
-}
-
-func (t *NoPoseeRemito) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T NoPoseeRemito
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *NoPoseeRemito) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T NoPoseeRemito
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type NoSonCondicionesPactadas struct {
@@ -8565,12 +6328,6 @@ func (t *NoSonCondicionesPactadas) MarshalXML(e *xml.Encoder, start xml.StartEle
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *NoSonCondicionesPactadas) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T NoSonCondicionesPactadas
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 // Must be at least 1 items long
 type NombreDeFantasia string
@@ -8588,19 +6345,6 @@ type NotificacionElectronica struct {
 	Concepto      string       `xml:"ei:concepto"`
 }
 
-func (t *NotificacionElectronica) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T NotificacionElectronica
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *NotificacionElectronica) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T NotificacionElectronica
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
-
 type NotificacionMobile struct {
 	XMLNs         string   `xml:"xmlns:ei,attr,omitempty"`
 	Timestamp     *xsdDate `xml:"ei:timestamp"`
@@ -8611,19 +6355,6 @@ type NotificacionMobile struct {
 	Topic         _anon141 `xml:"ei:topic"`
 	Success       string   `xml:"ei:success,omitempty"`
 	Id            int      `xml:"ei:id"`
-}
-
-func (t *NotificacionMobile) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T NotificacionMobile
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *NotificacionMobile) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T NotificacionMobile
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type NovedadConEnvioEnCourier struct {
@@ -8659,12 +6390,6 @@ func (t *NovedadConEnvioEnCourier) MarshalXML(e *xml.Encoder, start xml.StartEle
 	layout.DatosAdicionales.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *NovedadConEnvioEnCourier) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T NovedadConEnvioEnCourier
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type NovedadEnContrato struct {
 	XMLNs         string   `xml:"xmlns:ei,attr,omitempty"`
@@ -8682,12 +6407,6 @@ func (t *NovedadEnContrato) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 	layout.T = (*T)(t)
 	layout.Contrato.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *NovedadEnContrato) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T NovedadEnContrato
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type NovedadEnDireccion struct {
@@ -8707,12 +6426,6 @@ func (t *NovedadEnDireccion) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 	layout.T = (*T)(t)
 	layout.Domicilio.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *NovedadEnDireccion) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T NovedadEnDireccion
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type NovedadEnDistribuidor struct {
@@ -8734,12 +6447,6 @@ func (t *NovedadEnDistribuidor) MarshalXML(e *xml.Encoder, start xml.StartElemen
 	layout.Linking.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *NovedadEnDistribuidor) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T NovedadEnDistribuidor
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type NovedadEnEnvio struct {
 	XMLNs         string         `xml:"xmlns:ei,attr,omitempty"`
@@ -8757,12 +6464,6 @@ func (t *NovedadEnEnvio) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	layout.T = (*T)(t)
 	layout.Envio.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *NovedadEnEnvio) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T NovedadEnEnvio
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type NovedadEnEnvioEventoTemporario struct {
@@ -8793,12 +6494,6 @@ func (t *NovedadEnEnvioEventoTemporario) MarshalXML(e *xml.Encoder, start xml.St
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *NovedadEnEnvioEventoTemporario) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T NovedadEnEnvioEventoTemporario
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type NovedadEnLiquidacion struct {
 	XMLNs         string                      `xml:"xmlns:ei,attr,omitempty"`
@@ -8816,12 +6511,6 @@ func (t *NovedadEnLiquidacion) MarshalXML(e *xml.Encoder, start xml.StartElement
 	layout.T = (*T)(t)
 	layout.Liquidacion.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *NovedadEnLiquidacion) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T NovedadEnLiquidacion
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type NovedadEnOrdenDeRetiro struct {
@@ -8842,12 +6531,6 @@ func (t *NovedadEnOrdenDeRetiro) MarshalXML(e *xml.Encoder, start xml.StartEleme
 	layout.Linking.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *NovedadEnOrdenDeRetiro) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T NovedadEnOrdenDeRetiro
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type NovedadEnPedidoDeAlmacen struct {
 	XMLNs         string          `xml:"xmlns:ea,attr,omitempty"`
@@ -8866,12 +6549,6 @@ func (t *NovedadEnPedidoDeAlmacen) MarshalXML(e *xml.Encoder, start xml.StartEle
 	layout.Pedido.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *NovedadEnPedidoDeAlmacen) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T NovedadEnPedidoDeAlmacen
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type NovedadEnSucursal struct {
 	XMLNs         string        `xml:"xmlns:ei,attr,omitempty"`
@@ -8889,12 +6566,6 @@ func (t *NovedadEnSucursal) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 	layout.T = (*T)(t)
 	layout.DatosSucursal.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *NovedadEnSucursal) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T NovedadEnSucursal
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type NuevaFechaDeEntregaPactada struct {
@@ -8927,12 +6598,6 @@ func (t *NuevaFechaDeEntregaPactada) MarshalXML(e *xml.Encoder, start xml.StartE
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *NuevaFechaDeEntregaPactada) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T NuevaFechaDeEntregaPactada
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 // Must be at least 1 items long
 type Numero string
@@ -8950,19 +6615,6 @@ type OrdenDeEnvioCancelada struct {
 	NumeroDeOrdenDeEnvio string   `xml:"ei:numeroDeOrdenDeEnvio,omitempty"`
 	NumeroDeEnvio        string   `xml:"ei:numeroDeEnvio,omitempty"`
 	Topic                _anon156 `xml:"ei:topic"`
-}
-
-func (t *OrdenDeEnvioCancelada) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T OrdenDeEnvioCancelada
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *OrdenDeEnvioCancelada) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T OrdenDeEnvioCancelada
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type OrdenDeEnvioCreada struct {
@@ -8997,12 +6649,6 @@ func (t *OrdenDeEnvioCreada) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 	layout.Linking.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *OrdenDeEnvioCreada) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T OrdenDeEnvioCreada
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type OrdenDeEnvioRechazada struct {
 	XMLNs                    string                `xml:"xmlns:ei,attr,omitempty"`
@@ -9035,12 +6681,6 @@ func (t *OrdenDeEnvioRechazada) MarshalXML(e *xml.Encoder, start xml.StartElemen
 	layout.DatosDeLaOrden.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *OrdenDeEnvioRechazada) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T OrdenDeEnvioRechazada
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type OrdenDeEnvioSolicitada struct {
 	XMLNs                    string                `xml:"xmlns:ei,attr,omitempty"`
@@ -9072,12 +6712,6 @@ func (t *OrdenDeEnvioSolicitada) MarshalXML(e *xml.Encoder, start xml.StartEleme
 	layout.DatosDeLaOrden.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *OrdenDeEnvioSolicitada) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T OrdenDeEnvioSolicitada
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type OrdenDeRetiroActualizada struct {
 	XMLNs         string             `xml:"xmlns:ei,attr,omitempty"`
@@ -9098,12 +6732,6 @@ func (t *OrdenDeRetiroActualizada) MarshalXML(e *xml.Encoder, start xml.StartEle
 	layout.Linking.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *OrdenDeRetiroActualizada) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T OrdenDeRetiroActualizada
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type OrdenDeRetiroCreada struct {
 	XMLNs         string             `xml:"xmlns:ei,attr,omitempty"`
@@ -9123,12 +6751,6 @@ func (t *OrdenDeRetiroCreada) MarshalXML(e *xml.Encoder, start xml.StartElement)
 	layout.T = (*T)(t)
 	layout.Linking.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *OrdenDeRetiroCreada) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T OrdenDeRetiroCreada
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 // May be one of undefined, P, D
@@ -9157,12 +6779,6 @@ func (t *PaqueteCompletado) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 	layout.T = (*T)(t)
 	layout.Linking.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *PaqueteCompletado) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T PaqueteCompletado
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type PasajeDeExcedenteAIngresada struct {
@@ -9193,12 +6809,6 @@ func (t *PasajeDeExcedenteAIngresada) MarshalXML(e *xml.Encoder, start xml.Start
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *PasajeDeExcedenteAIngresada) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T PasajeDeExcedenteAIngresada
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type PasarACtaCteYEntregar struct {
 	XMLNs          string   `xml:"xmlns:re,attr,omitempty"`
@@ -9214,19 +6824,6 @@ type PasarACtaCteYEntregar struct {
 	CierraPregunta bool     `xml:"re:cierraPregunta,omitempty"`
 	EsParaCliente  bool     `xml:"re:esParaCliente,omitempty"`
 	Topic          _anon353 `xml:"re:topic"`
-}
-
-func (t *PasarACtaCteYEntregar) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T PasarACtaCteYEntregar
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *PasarACtaCteYEntregar) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T PasarACtaCteYEntregar
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type PedidoAcondicionado struct {
@@ -9248,19 +6845,6 @@ type PedidoAcondicionado struct {
 	Topic                      _anon8   `xml:"ea:topic"`
 }
 
-func (t *PedidoAcondicionado) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T PedidoAcondicionado
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *PedidoAcondicionado) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T PedidoAcondicionado
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
-
 type PedidoAsignado struct {
 	XMLNs                      string   `xml:"xmlns:ea,attr,omitempty"`
 	Timestamp                  *xsdDate `xml:"http://integracion.andreani.com/eventosDeIntegracion timestamp"`
@@ -9278,19 +6862,6 @@ type PedidoAsignado struct {
 	CodigoClienteInterno       string   `xml:"ea:codigoClienteInterno,omitempty"`
 	IdentificadorUnicoDePedido string   `xml:"ea:identificadorUnicoDePedido,omitempty"`
 	Topic                      _anon9   `xml:"ea:topic"`
-}
-
-func (t *PedidoAsignado) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T PedidoAsignado
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *PedidoAsignado) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T PedidoAsignado
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type PedidoCancelado struct {
@@ -9312,19 +6883,6 @@ type PedidoCancelado struct {
 	Topic                      _anon10  `xml:"ea:topic"`
 }
 
-func (t *PedidoCancelado) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T PedidoCancelado
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *PedidoCancelado) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T PedidoCancelado
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
-
 type PedidoComienzoAcondicionamiento struct {
 	XMLNs                      string   `xml:"xmlns:ea,attr,omitempty"`
 	Timestamp                  *xsdDate `xml:"http://integracion.andreani.com/eventosDeIntegracion timestamp"`
@@ -9342,19 +6900,6 @@ type PedidoComienzoAcondicionamiento struct {
 	CodigoClienteInterno       string   `xml:"ea:codigoClienteInterno,omitempty"`
 	IdentificadorUnicoDePedido string   `xml:"ea:identificadorUnicoDePedido,omitempty"`
 	Topic                      _anon7   `xml:"ea:topic"`
-}
-
-func (t *PedidoComienzoAcondicionamiento) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T PedidoComienzoAcondicionamiento
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *PedidoComienzoAcondicionamiento) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T PedidoComienzoAcondicionamiento
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type PedidoComienzoControl struct {
@@ -9376,19 +6921,6 @@ type PedidoComienzoControl struct {
 	Topic                      Topic    `xml:"ea:topic"`
 }
 
-func (t *PedidoComienzoControl) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T PedidoComienzoControl
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *PedidoComienzoControl) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T PedidoComienzoControl
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
-
 type PedidoComienzoDeTraza struct {
 	XMLNs                      string   `xml:"xmlns:ea,attr,omitempty"`
 	Timestamp                  *xsdDate `xml:"http://integracion.andreani.com/eventosDeIntegracion timestamp"`
@@ -9406,19 +6938,6 @@ type PedidoComienzoDeTraza struct {
 	CodigoClienteInterno       string   `xml:"ea:codigoClienteInterno,omitempty"`
 	IdentificadorUnicoDePedido string   `xml:"ea:identificadorUnicoDePedido,omitempty"`
 	Topic                      _anon5   `xml:"ea:topic"`
-}
-
-func (t *PedidoComienzoDeTraza) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T PedidoComienzoDeTraza
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *PedidoComienzoDeTraza) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T PedidoComienzoDeTraza
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type PedidoConPiezaLanzada struct {
@@ -9440,19 +6959,6 @@ type PedidoConPiezaLanzada struct {
 	Topic                      _anon11  `xml:"ea:topic"`
 }
 
-func (t *PedidoConPiezaLanzada) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T PedidoConPiezaLanzada
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *PedidoConPiezaLanzada) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T PedidoConPiezaLanzada
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
-
 type PedidoControlado struct {
 	XMLNs                      string   `xml:"xmlns:ea,attr,omitempty"`
 	Timestamp                  *xsdDate `xml:"http://integracion.andreani.com/eventosDeIntegracion timestamp"`
@@ -9471,19 +6977,6 @@ type PedidoControlado struct {
 	IdentificadorUnicoDePedido string   `xml:"ea:identificadorUnicoDePedido,omitempty"`
 	Topic                      _anon3   `xml:"ea:topic"`
 	NumeroDeEnvio              string   `xml:"ea:numeroDeEnvio,omitempty"`
-}
-
-func (t *PedidoControlado) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T PedidoControlado
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *PedidoControlado) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T PedidoControlado
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type PedidoCreado struct {
@@ -9514,12 +7007,6 @@ func (t *PedidoCreado) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	layout.DatosPedido.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *PedidoCreado) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T PedidoCreado
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type PedidoDeAlmacen struct {
 	XMLNs           string               `xml:"xmlns:dr,attr,omitempty"`
@@ -9530,19 +7017,6 @@ type PedidoDeAlmacen struct {
 	FechaDelPedido  string               `xml:"dr:fechaDelPedido,omitempty"`
 	Destinatario    DatosPersonales      `xml:"dr:destinatario,omitempty"`
 	TipoDePedido    string               `xml:"dr:tipoDePedido,omitempty"`
-}
-
-func (t *PedidoDeAlmacen) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T PedidoDeAlmacen
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *PedidoDeAlmacen) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T PedidoDeAlmacen
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type PedidoDeCambioDeDestino struct {
@@ -9564,12 +7038,6 @@ func (t *PedidoDeCambioDeDestino) MarshalXML(e *xml.Encoder, start xml.StartElem
 	layout.NuevoDestino.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *PedidoDeCambioDeDestino) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T PedidoDeCambioDeDestino
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type PedidoDeCancelacionDeOrdenDeEnvio struct {
 	XMLNs                string   `xml:"xmlns:ei,attr,omitempty"`
@@ -9582,19 +7050,6 @@ type PedidoDeCancelacionDeOrdenDeEnvio struct {
 	NumeroDeEnvio        string   `xml:"ei:numeroDeEnvio,omitempty"`
 	Razon                string   `xml:"ei:razon,omitempty"`
 	Topic                _anon155 `xml:"ei:topic"`
-}
-
-func (t *PedidoDeCancelacionDeOrdenDeEnvio) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T PedidoDeCancelacionDeOrdenDeEnvio
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *PedidoDeCancelacionDeOrdenDeEnvio) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T PedidoDeCancelacionDeOrdenDeEnvio
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type PedidoDeDestruccion struct {
@@ -9627,12 +7082,6 @@ func (t *PedidoDeDestruccion) MarshalXML(e *xml.Encoder, start xml.StartElement)
 	layout.SucursalDeDestruccion.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *PedidoDeDestruccion) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T PedidoDeDestruccion
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type PedidoDeFacturacion struct {
 	XMLNs                        string                 `xml:"xmlns:dr,attr,omitempty"`
@@ -9645,19 +7094,6 @@ type PedidoDeFacturacion struct {
 	Abonos                       ListaDeDetallesDeAbono `xml:"dr:abonos,omitempty"`
 	ImporteTotal                 float64                `xml:"dr:importeTotal"`
 	CantidadDeConceptosTarifados int                    `xml:"dr:cantidadDeConceptosTarifados,omitempty"`
-}
-
-func (t *PedidoDeFacturacion) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T PedidoDeFacturacion
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *PedidoDeFacturacion) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T PedidoDeFacturacion
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type PedidoDeSolicitudDeRescate struct {
@@ -9679,12 +7115,6 @@ func (t *PedidoDeSolicitudDeRescate) MarshalXML(e *xml.Encoder, start xml.StartE
 	layout.SucursalDondeSeDebeRescatar.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *PedidoDeSolicitudDeRescate) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T PedidoDeSolicitudDeRescate
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type PedidoDeSolicitudDeRescateRechazado struct {
 	XMLNs              string        `xml:"xmlns:ei,attr,omitempty"`
@@ -9704,12 +7134,6 @@ func (t *PedidoDeSolicitudDeRescateRechazado) MarshalXML(e *xml.Encoder, start x
 	layout.T = (*T)(t)
 	layout.SucursalSolicitada.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *PedidoDeSolicitudDeRescateRechazado) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T PedidoDeSolicitudDeRescateRechazado
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type PedidoExpedidoCompleto struct {
@@ -9731,19 +7155,6 @@ type PedidoExpedidoCompleto struct {
 	Topic                      _anon18  `xml:"ea:topic"`
 }
 
-func (t *PedidoExpedidoCompleto) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T PedidoExpedidoCompleto
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *PedidoExpedidoCompleto) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T PedidoExpedidoCompleto
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
-
 type PedidoLanzado struct {
 	XMLNs                      string   `xml:"xmlns:ea,attr,omitempty"`
 	Timestamp                  *xsdDate `xml:"http://integracion.andreani.com/eventosDeIntegracion timestamp"`
@@ -9761,19 +7172,6 @@ type PedidoLanzado struct {
 	CodigoClienteInterno       string   `xml:"ea:codigoClienteInterno,omitempty"`
 	IdentificadorUnicoDePedido string   `xml:"ea:identificadorUnicoDePedido,omitempty"`
 	Topic                      _anon12  `xml:"ea:topic"`
-}
-
-func (t *PedidoLanzado) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T PedidoLanzado
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *PedidoLanzado) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T PedidoLanzado
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type PedidoNoSeAsigno struct {
@@ -9795,19 +7193,6 @@ type PedidoNoSeAsigno struct {
 	Topic                      _anon13  `xml:"ea:topic"`
 }
 
-func (t *PedidoNoSeAsigno) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T PedidoNoSeAsigno
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *PedidoNoSeAsigno) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T PedidoNoSeAsigno
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
-
 type PedidoParcialmenteAsignado struct {
 	XMLNs                      string   `xml:"xmlns:ea,attr,omitempty"`
 	Timestamp                  *xsdDate `xml:"http://integracion.andreani.com/eventosDeIntegracion timestamp"`
@@ -9825,19 +7210,6 @@ type PedidoParcialmenteAsignado struct {
 	CodigoClienteInterno       string   `xml:"ea:codigoClienteInterno,omitempty"`
 	IdentificadorUnicoDePedido string   `xml:"ea:identificadorUnicoDePedido,omitempty"`
 	Topic                      _anon14  `xml:"ea:topic"`
-}
-
-func (t *PedidoParcialmenteAsignado) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T PedidoParcialmenteAsignado
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *PedidoParcialmenteAsignado) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T PedidoParcialmenteAsignado
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type PedidoParcialmentePreparado struct {
@@ -9859,19 +7231,6 @@ type PedidoParcialmentePreparado struct {
 	Topic                      _anon15  `xml:"ea:topic"`
 }
 
-func (t *PedidoParcialmentePreparado) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T PedidoParcialmentePreparado
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *PedidoParcialmentePreparado) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T PedidoParcialmentePreparado
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
-
 type PedidoPreasignado struct {
 	XMLNs                      string   `xml:"xmlns:ea,attr,omitempty"`
 	Timestamp                  *xsdDate `xml:"http://integracion.andreani.com/eventosDeIntegracion timestamp"`
@@ -9889,19 +7248,6 @@ type PedidoPreasignado struct {
 	CodigoClienteInterno       string   `xml:"ea:codigoClienteInterno,omitempty"`
 	IdentificadorUnicoDePedido string   `xml:"ea:identificadorUnicoDePedido,omitempty"`
 	Topic                      _anon16  `xml:"ea:topic"`
-}
-
-func (t *PedidoPreasignado) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T PedidoPreasignado
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *PedidoPreasignado) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T PedidoPreasignado
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type PedidoPreparadoCompleto struct {
@@ -9925,19 +7271,6 @@ type PedidoPreparadoCompleto struct {
 	NumeroDeFactura            string   `xml:"ea:numeroDeFactura,omitempty"`
 }
 
-func (t *PedidoPreparadoCompleto) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T PedidoPreparadoCompleto
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *PedidoPreparadoCompleto) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T PedidoPreparadoCompleto
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
-
 type PedidoTrazado struct {
 	XMLNs                      string   `xml:"xmlns:ea,attr,omitempty"`
 	Timestamp                  *xsdDate `xml:"http://integracion.andreani.com/eventosDeIntegracion timestamp"`
@@ -9957,19 +7290,6 @@ type PedidoTrazado struct {
 	Topic                      _anon6   `xml:"ea:topic"`
 }
 
-func (t *PedidoTrazado) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T PedidoTrazado
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *PedidoTrazado) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T PedidoTrazado
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
-
 type Pregunta struct {
 	XMLNs              string   `xml:"xmlns:pr,attr,omitempty"`
 	Timestamp          *xsdDate `xml:"http://integracion.andreani.com/eventosDeIntegracion timestamp"`
@@ -9984,19 +7304,6 @@ type Pregunta struct {
 	EsParaCliente      bool     `xml:"pr:esParaCliente,omitempty"`
 }
 
-func (t *Pregunta) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T Pregunta
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *Pregunta) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T Pregunta
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
-
 type Propiedad struct {
 	XMLNs            string             `xml:"xmlns:dr,attr,omitempty"`
 	PropNamespace    string             `xml:"dr:propNamespace,omitempty"`
@@ -10006,19 +7313,6 @@ type Propiedad struct {
 	Descripcion      string             `xml:"dr:descripcion,omitempty"`
 	DatosAdicionales ListaDePropiedades `xml:"dr:datosAdicionales,omitempty"`
 	EsObligatorio    bool               `xml:"dr:esObligatorio,omitempty"`
-}
-
-func (t *Propiedad) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T Propiedad
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *Propiedad) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T Propiedad
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 // May be one of Nothing, Distribution, Resend, Drop, Custody
@@ -10065,12 +7359,6 @@ func (t *ReactivacionDeBolsin) MarshalXML(e *xml.Encoder, start xml.StartElement
 	layout.SucursalDestino.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *ReactivacionDeBolsin) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T ReactivacionDeBolsin
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type RecepcionDeRetiro struct {
 	XMLNs                   string                    `xml:"xmlns:ei,attr,omitempty"`
@@ -10094,12 +7382,6 @@ func (t *RecepcionDeRetiro) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 	layout.T = (*T)(t)
 	layout.EntidadesRetiradas.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *RecepcionDeRetiro) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T RecepcionDeRetiro
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type RecepcionEnSucursalDestino struct {
@@ -10134,12 +7416,6 @@ func (t *RecepcionEnSucursalDestino) MarshalXML(e *xml.Encoder, start xml.StartE
 	layout.SucursalDeRecepcion.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *RecepcionEnSucursalDestino) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T RecepcionEnSucursalDestino
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type RecibidoEnCourier struct {
 	XMLNs                    string             `xml:"xmlns:ei,attr,omitempty"`
@@ -10172,12 +7448,6 @@ func (t *RecibidoEnCourier) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 	layout.DatosAdicionales.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *RecibidoEnCourier) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T RecibidoEnCourier
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type RectificacionDeMotivo struct {
 	XMLNs                    string        `xml:"xmlns:ei,attr,omitempty"`
@@ -10208,12 +7478,6 @@ func (t *RectificacionDeMotivo) MarshalXML(e *xml.Encoder, start xml.StartElemen
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *RectificacionDeMotivo) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T RectificacionDeMotivo
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type RectificacionMobile struct {
@@ -10259,12 +7523,6 @@ func (t *RectificacionMobile) MarshalXML(e *xml.Encoder, start xml.StartElement)
 	layout.Observaciones.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *RectificacionMobile) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T RectificacionMobile
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type ReembolsoCobradoParcial struct {
 	XMLNs                    string        `xml:"xmlns:in,attr,omitempty"`
@@ -10293,12 +7551,6 @@ func (t *ReembolsoCobradoParcial) MarshalXML(e *xml.Encoder, start xml.StartElem
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *ReembolsoCobradoParcial) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T ReembolsoCobradoParcial
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type Reenvio struct {
@@ -10329,12 +7581,6 @@ func (t *Reenvio) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *Reenvio) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T Reenvio
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type RemisionDeEnvio struct {
@@ -10368,12 +7614,6 @@ func (t *RemisionDeEnvio) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 	layout.NuevaSucursalDestino.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *RemisionDeEnvio) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T RemisionDeEnvio
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type RemitenteDesconoceRetiro struct {
 	XMLNs              string   `xml:"xmlns:pr,attr,omitempty"`
@@ -10388,19 +7628,6 @@ type RemitenteDesconoceRetiro struct {
 	PosiblesRespuestas string   `xml:"pr:posiblesRespuestas,omitempty"`
 	EsParaCliente      bool     `xml:"pr:esParaCliente,omitempty"`
 	Topic              _anon341 `xml:"pr:topic"`
-}
-
-func (t *RemitenteDesconoceRetiro) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T RemitenteDesconoceRetiro
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *RemitenteDesconoceRetiro) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T RemitenteDesconoceRetiro
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type RemitenteInformaNuevoDomicilio struct {
@@ -10419,19 +7646,6 @@ type RemitenteInformaNuevoDomicilio struct {
 	Topic          _anon347 `xml:"re:topic"`
 }
 
-func (t *RemitenteInformaNuevoDomicilio) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T RemitenteInformaNuevoDomicilio
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *RemitenteInformaNuevoDomicilio) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T RemitenteInformaNuevoDomicilio
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
-
 type RemitenteSolicitaNuevaVisita struct {
 	XMLNs          string   `xml:"xmlns:re,attr,omitempty"`
 	Timestamp      *xsdDate `xml:"http://integracion.andreani.com/eventosDeIntegracion timestamp"`
@@ -10446,19 +7660,6 @@ type RemitenteSolicitaNuevaVisita struct {
 	CierraPregunta bool     `xml:"re:cierraPregunta,omitempty"`
 	EsParaCliente  bool     `xml:"re:esParaCliente,omitempty"`
 	Topic          _anon348 `xml:"re:topic"`
-}
-
-func (t *RemitenteSolicitaNuevaVisita) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T RemitenteSolicitaNuevaVisita
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *RemitenteSolicitaNuevaVisita) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T RemitenteSolicitaNuevaVisita
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type RemitenteSolicitaRetenerMercaderia struct {
@@ -10489,12 +7690,6 @@ func (t *RemitenteSolicitaRetenerMercaderia) MarshalXML(e *xml.Encoder, start xm
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *RemitenteSolicitaRetenerMercaderia) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T RemitenteSolicitaRetenerMercaderia
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type RemitoDemorado struct {
 	XMLNs                    string        `xml:"xmlns:in,attr,omitempty"`
@@ -10523,12 +7718,6 @@ func (t *RemitoDemorado) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *RemitoDemorado) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T RemitoDemorado
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type RemitoDigitalizado struct {
@@ -10561,12 +7750,6 @@ func (t *RemitoDigitalizado) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *RemitoDigitalizado) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T RemitoDigitalizado
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type RemitoDigitalizadoEnProveedor struct {
 	XMLNs                     string        `xml:"xmlns:ei,attr,omitempty"`
@@ -10598,12 +7781,6 @@ func (t *RemitoDigitalizadoEnProveedor) MarshalXML(e *xml.Encoder, start xml.Sta
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *RemitoDigitalizadoEnProveedor) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T RemitoDigitalizadoEnProveedor
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type RemitoImpreso struct {
 	XMLNs                    string        `xml:"xmlns:in,attr,omitempty"`
@@ -10632,12 +7809,6 @@ func (t *RemitoImpreso) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *RemitoImpreso) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T RemitoImpreso
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type RemitoSuspendido struct {
@@ -10668,12 +7839,6 @@ func (t *RemitoSuspendido) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *RemitoSuspendido) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T RemitoSuspendido
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type RendicionConRemito struct {
 	XMLNs                    string        `xml:"xmlns:ei,attr,omitempty"`
@@ -10702,12 +7867,6 @@ func (t *RendicionConRemito) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *RendicionConRemito) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T RendicionConRemito
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type RendicionDigital struct {
@@ -10738,12 +7897,6 @@ func (t *RendicionDigital) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *RendicionDigital) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T RendicionDigital
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type RendicionLogica struct {
@@ -10776,12 +7929,6 @@ func (t *RendicionLogica) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *RendicionLogica) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T RendicionLogica
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type RepactarFechaEntrega struct {
 	XMLNs          string   `xml:"xmlns:re,attr,omitempty"`
@@ -10799,19 +7946,6 @@ type RepactarFechaEntrega struct {
 	Topic          _anon350 `xml:"re:topic"`
 }
 
-func (t *RepactarFechaEntrega) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T RepactarFechaEntrega
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *RepactarFechaEntrega) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T RepactarFechaEntrega
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
-
 type ReprogramarRetiro struct {
 	XMLNs          string   `xml:"xmlns:re,attr,omitempty"`
 	Timestamp      *xsdDate `xml:"http://integracion.andreani.com/eventosDeIntegracion timestamp"`
@@ -10826,19 +7960,6 @@ type ReprogramarRetiro struct {
 	CierraPregunta bool     `xml:"re:cierraPregunta,omitempty"`
 	EsParaCliente  bool     `xml:"re:esParaCliente,omitempty"`
 	Topic          _anon363 `xml:"re:topic"`
-}
-
-func (t *ReprogramarRetiro) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T ReprogramarRetiro
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *ReprogramarRetiro) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T ReprogramarRetiro
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type Rescate struct {
@@ -10870,12 +7991,6 @@ func (t *Rescate) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *Rescate) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T Rescate
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type Respuesta struct {
 	XMLNs          string   `xml:"xmlns:re,attr,omitempty"`
@@ -10890,19 +8005,6 @@ type Respuesta struct {
 	IdNovedad      string   `xml:"re:idNovedad,omitempty"`
 	CierraPregunta bool     `xml:"re:cierraPregunta,omitempty"`
 	EsParaCliente  bool     `xml:"re:esParaCliente,omitempty"`
-}
-
-func (t *Respuesta) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T Respuesta
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *Respuesta) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T Respuesta
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type RespuestaCadenaDeFrioSinFrecuencia struct {
@@ -10936,12 +8038,6 @@ func (t *RespuestaCadenaDeFrioSinFrecuencia) MarshalXML(e *xml.Encoder, start xm
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *RespuestaCadenaDeFrioSinFrecuencia) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T RespuestaCadenaDeFrioSinFrecuencia
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type RespuestaClienteInformaCambioDomicilio struct {
 	XMLNs                    string        `xml:"xmlns:in,attr,omitempty"`
@@ -10973,12 +8069,6 @@ func (t *RespuestaClienteInformaCambioDomicilio) MarshalXML(e *xml.Encoder, star
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *RespuestaClienteInformaCambioDomicilio) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T RespuestaClienteInformaCambioDomicilio
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type RespuestaClienteInformaNoEsProductoSolicitado struct {
@@ -11012,12 +8102,6 @@ func (t *RespuestaClienteInformaNoEsProductoSolicitado) MarshalXML(e *xml.Encode
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *RespuestaClienteInformaNoEsProductoSolicitado) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T RespuestaClienteInformaNoEsProductoSolicitado
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type RespuestaClienteInformaSinCheques struct {
 	XMLNs                    string        `xml:"xmlns:in,attr,omitempty"`
@@ -11049,12 +8133,6 @@ func (t *RespuestaClienteInformaSinCheques) MarshalXML(e *xml.Encoder, start xml
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *RespuestaClienteInformaSinCheques) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T RespuestaClienteInformaSinCheques
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type RespuestaClienteSolicitaRepactarVisita struct {
@@ -11088,12 +8166,6 @@ func (t *RespuestaClienteSolicitaRepactarVisita) MarshalXML(e *xml.Encoder, star
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *RespuestaClienteSolicitaRepactarVisita) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T RespuestaClienteSolicitaRepactarVisita
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type RespuestaContenidoRotoEpaqueSano struct {
 	XMLNs                    string        `xml:"xmlns:in,attr,omitempty"`
@@ -11125,12 +8197,6 @@ func (t *RespuestaContenidoRotoEpaqueSano) MarshalXML(e *xml.Encoder, start xml.
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *RespuestaContenidoRotoEpaqueSano) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T RespuestaContenidoRotoEpaqueSano
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type RespuestaDevolucionParcialCortoVto struct {
@@ -11164,12 +8230,6 @@ func (t *RespuestaDevolucionParcialCortoVto) MarshalXML(e *xml.Encoder, start xm
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *RespuestaDevolucionParcialCortoVto) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T RespuestaDevolucionParcialCortoVto
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type RespuestaDevolucionRecibidaPlazaInterior struct {
 	XMLNs                    string        `xml:"xmlns:in,attr,omitempty"`
@@ -11201,12 +8261,6 @@ func (t *RespuestaDevolucionRecibidaPlazaInterior) MarshalXML(e *xml.Encoder, st
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *RespuestaDevolucionRecibidaPlazaInterior) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T RespuestaDevolucionRecibidaPlazaInterior
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type RespuestaEnvioConContingenciaSanitaria struct {
@@ -11240,12 +8294,6 @@ func (t *RespuestaEnvioConContingenciaSanitaria) MarshalXML(e *xml.Encoder, star
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *RespuestaEnvioConContingenciaSanitaria) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T RespuestaEnvioConContingenciaSanitaria
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type RespuestaEnvioConDocumentacionFaltante struct {
 	XMLNs                    string        `xml:"xmlns:in,attr,omitempty"`
@@ -11277,12 +8325,6 @@ func (t *RespuestaEnvioConDocumentacionFaltante) MarshalXML(e *xml.Encoder, star
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *RespuestaEnvioConDocumentacionFaltante) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T RespuestaEnvioConDocumentacionFaltante
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type RespuestaEnvioConEntegaParcial struct {
@@ -11316,12 +8358,6 @@ func (t *RespuestaEnvioConEntegaParcial) MarshalXML(e *xml.Encoder, start xml.St
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *RespuestaEnvioConEntegaParcial) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T RespuestaEnvioConEntegaParcial
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type RespuestaEnvioConGestionTelefonica struct {
 	XMLNs                    string        `xml:"xmlns:in,attr,omitempty"`
@@ -11353,12 +8389,6 @@ func (t *RespuestaEnvioConGestionTelefonica) MarshalXML(e *xml.Encoder, start xm
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *RespuestaEnvioConGestionTelefonica) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T RespuestaEnvioConGestionTelefonica
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type RespuestaEnvioConSolicitudDeRetorno struct {
@@ -11392,12 +8422,6 @@ func (t *RespuestaEnvioConSolicitudDeRetorno) MarshalXML(e *xml.Encoder, start x
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *RespuestaEnvioConSolicitudDeRetorno) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T RespuestaEnvioConSolicitudDeRetorno
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type RespuestaEnvioEnCoordinacionEntregaCAC struct {
 	XMLNs                    string        `xml:"xmlns:in,attr,omitempty"`
@@ -11429,12 +8453,6 @@ func (t *RespuestaEnvioEnCoordinacionEntregaCAC) MarshalXML(e *xml.Encoder, star
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *RespuestaEnvioEnCoordinacionEntregaCAC) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T RespuestaEnvioEnCoordinacionEntregaCAC
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type RespuestaEnvioSeRetiraDeSucursal struct {
@@ -11468,12 +8486,6 @@ func (t *RespuestaEnvioSeRetiraDeSucursal) MarshalXML(e *xml.Encoder, start xml.
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *RespuestaEnvioSeRetiraDeSucursal) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T RespuestaEnvioSeRetiraDeSucursal
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type RespuestaEnvioSinTurnoDeSucursal struct {
 	XMLNs                    string        `xml:"xmlns:in,attr,omitempty"`
@@ -11505,12 +8517,6 @@ func (t *RespuestaEnvioSinTurnoDeSucursal) MarshalXML(e *xml.Encoder, start xml.
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *RespuestaEnvioSinTurnoDeSucursal) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T RespuestaEnvioSinTurnoDeSucursal
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type RespuestaFaltaDocumentacionIIBB struct {
@@ -11544,12 +8550,6 @@ func (t *RespuestaFaltaDocumentacionIIBB) MarshalXML(e *xml.Encoder, start xml.S
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *RespuestaFaltaDocumentacionIIBB) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T RespuestaFaltaDocumentacionIIBB
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type RespuestaFaltaOrdenDeCompra struct {
 	XMLNs                    string        `xml:"xmlns:in,attr,omitempty"`
@@ -11581,12 +8581,6 @@ func (t *RespuestaFaltaOrdenDeCompra) MarshalXML(e *xml.Encoder, start xml.Start
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *RespuestaFaltaOrdenDeCompra) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T RespuestaFaltaOrdenDeCompra
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type RespuestaFaltaRemito struct {
@@ -11620,12 +8614,6 @@ func (t *RespuestaFaltaRemito) MarshalXML(e *xml.Encoder, start xml.StartElement
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *RespuestaFaltaRemito) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T RespuestaFaltaRemito
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type RespuestaFaltanBultos struct {
 	XMLNs                    string        `xml:"xmlns:in,attr,omitempty"`
@@ -11657,12 +8645,6 @@ func (t *RespuestaFaltanBultos) MarshalXML(e *xml.Encoder, start xml.StartElemen
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *RespuestaFaltanBultos) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T RespuestaFaltanBultos
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type RespuestaFaltanBultosYRemitos struct {
@@ -11696,12 +8678,6 @@ func (t *RespuestaFaltanBultosYRemitos) MarshalXML(e *xml.Encoder, start xml.Sta
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *RespuestaFaltanBultosYRemitos) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T RespuestaFaltanBultosYRemitos
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type RespuestaFueraDeHorarioDeRecepcion struct {
 	XMLNs                    string        `xml:"xmlns:in,attr,omitempty"`
@@ -11733,12 +8709,6 @@ func (t *RespuestaFueraDeHorarioDeRecepcion) MarshalXML(e *xml.Encoder, start xm
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *RespuestaFueraDeHorarioDeRecepcion) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T RespuestaFueraDeHorarioDeRecepcion
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type RespuestaIngresoDeConservadoraACamara struct {
@@ -11772,12 +8742,6 @@ func (t *RespuestaIngresoDeConservadoraACamara) MarshalXML(e *xml.Encoder, start
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *RespuestaIngresoDeConservadoraACamara) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T RespuestaIngresoDeConservadoraACamara
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type RespuestaInversionEnBultoCerrado struct {
 	XMLNs                    string        `xml:"xmlns:in,attr,omitempty"`
@@ -11809,12 +8773,6 @@ func (t *RespuestaInversionEnBultoCerrado) MarshalXML(e *xml.Encoder, start xml.
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *RespuestaInversionEnBultoCerrado) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T RespuestaInversionEnBultoCerrado
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type RespuestaNoSonCondicionesPactadas struct {
@@ -11848,12 +8806,6 @@ func (t *RespuestaNoSonCondicionesPactadas) MarshalXML(e *xml.Encoder, start xml
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *RespuestaNoSonCondicionesPactadas) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T RespuestaNoSonCondicionesPactadas
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type RespuestaRoturaParcial struct {
 	XMLNs                    string        `xml:"xmlns:in,attr,omitempty"`
@@ -11885,12 +8837,6 @@ func (t *RespuestaRoturaParcial) MarshalXML(e *xml.Encoder, start xml.StartEleme
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *RespuestaRoturaParcial) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T RespuestaRoturaParcial
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type RespuestaRoturaTotal struct {
@@ -11924,12 +8870,6 @@ func (t *RespuestaRoturaTotal) MarshalXML(e *xml.Encoder, start xml.StartElement
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *RespuestaRoturaTotal) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T RespuestaRoturaTotal
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type RespuestaSePierdeTurnoDeEntrega struct {
 	XMLNs                    string        `xml:"xmlns:in,attr,omitempty"`
@@ -11961,12 +8901,6 @@ func (t *RespuestaSePierdeTurnoDeEntrega) MarshalXML(e *xml.Encoder, start xml.S
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *RespuestaSePierdeTurnoDeEntrega) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T RespuestaSePierdeTurnoDeEntrega
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type RespuestaSinFrecuenciaDeViaje struct {
@@ -12000,12 +8934,6 @@ func (t *RespuestaSinFrecuenciaDeViaje) MarshalXML(e *xml.Encoder, start xml.Sta
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *RespuestaSinFrecuenciaDeViaje) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T RespuestaSinFrecuenciaDeViaje
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type RespuestaSobraRemito struct {
 	XMLNs                    string        `xml:"xmlns:in,attr,omitempty"`
@@ -12037,12 +8965,6 @@ func (t *RespuestaSobraRemito) MarshalXML(e *xml.Encoder, start xml.StartElement
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *RespuestaSobraRemito) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T RespuestaSobraRemito
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type RespuestaSobranBultos struct {
@@ -12076,12 +8998,6 @@ func (t *RespuestaSobranBultos) MarshalXML(e *xml.Encoder, start xml.StartElemen
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *RespuestaSobranBultos) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T RespuestaSobranBultos
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type RespuestaSobranBultosYRemitos struct {
 	XMLNs                    string        `xml:"xmlns:in,attr,omitempty"`
@@ -12113,12 +9029,6 @@ func (t *RespuestaSobranBultosYRemitos) MarshalXML(e *xml.Encoder, start xml.Sta
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *RespuestaSobranBultosYRemitos) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T RespuestaSobranBultosYRemitos
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type RespuestaSolicitudDeRetorno struct {
@@ -12152,12 +9062,6 @@ func (t *RespuestaSolicitudDeRetorno) MarshalXML(e *xml.Encoder, start xml.Start
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *RespuestaSolicitudDeRetorno) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T RespuestaSolicitudDeRetorno
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type RespuestaUnidadesSobrantesBultosCerrados struct {
 	XMLNs                    string        `xml:"xmlns:in,attr,omitempty"`
@@ -12189,12 +9093,6 @@ func (t *RespuestaUnidadesSobrantesBultosCerrados) MarshalXML(e *xml.Encoder, st
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *RespuestaUnidadesSobrantesBultosCerrados) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T RespuestaUnidadesSobrantesBultosCerrados
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type RespuestaVerificarDomicilio struct {
@@ -12228,12 +9126,6 @@ func (t *RespuestaVerificarDomicilio) MarshalXML(e *xml.Encoder, start xml.Start
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *RespuestaVerificarDomicilio) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T RespuestaVerificarDomicilio
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type RespuestaVisita struct {
 	XMLNs                    string        `xml:"xmlns:in,attr,omitempty"`
@@ -12265,12 +9157,6 @@ func (t *RespuestaVisita) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *RespuestaVisita) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T RespuestaVisita
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type RespuestaZonaDeRiesgo struct {
@@ -12304,12 +9190,6 @@ func (t *RespuestaZonaDeRiesgo) MarshalXML(e *xml.Encoder, start xml.StartElemen
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *RespuestaZonaDeRiesgo) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T RespuestaZonaDeRiesgo
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type RetiroNoRealizado struct {
 	XMLNs                    string        `xml:"xmlns:ei,attr,omitempty"`
@@ -12338,12 +9218,6 @@ func (t *RetiroNoRealizado) MarshalXML(e *xml.Encoder, start xml.StartElement) e
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *RetiroNoRealizado) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T RetiroNoRealizado
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type RetiroProcesado struct {
@@ -12375,12 +9249,6 @@ func (t *RetiroProcesado) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *RetiroProcesado) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T RetiroProcesado
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type RetiroProcesoFinalizado struct {
 	XMLNs                    string        `xml:"xmlns:ei,attr,omitempty"`
@@ -12409,12 +9277,6 @@ func (t *RetiroProcesoFinalizado) MarshalXML(e *xml.Encoder, start xml.StartElem
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *RetiroProcesoFinalizado) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T RetiroProcesoFinalizado
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type RetiroRechazado struct {
@@ -12445,12 +9307,6 @@ func (t *RetiroRechazado) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *RetiroRechazado) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T RetiroRechazado
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type RoturaDeUnidadDeTransporte struct {
 	XMLNs                    string        `xml:"xmlns:in,attr,omitempty"`
@@ -12479,12 +9335,6 @@ func (t *RoturaDeUnidadDeTransporte) MarshalXML(e *xml.Encoder, start xml.StartE
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *RoturaDeUnidadDeTransporte) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T RoturaDeUnidadDeTransporte
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type RoturaParcial struct {
@@ -12515,12 +9365,6 @@ func (t *RoturaParcial) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *RoturaParcial) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T RoturaParcial
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type RoturaTotal struct {
 	XMLNs                    string        `xml:"xmlns:in,attr,omitempty"`
@@ -12550,12 +9394,6 @@ func (t *RoturaTotal) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *RoturaTotal) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T RoturaTotal
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type SeCargaronDatosAdicionales struct {
 	XMLNs         string       `xml:"xmlns:ei,attr,omitempty"`
@@ -12566,19 +9404,6 @@ type SeCargaronDatosAdicionales struct {
 	Vencimiento   *xsdDate     `xml:"ei:vencimiento,omitempty"`
 	QuienFactura  QuienFactura `xml:"ei:quienFactura"`
 	Topic         _anon31      `xml:"ei:topic"`
-}
-
-func (t *SeCargaronDatosAdicionales) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T SeCargaronDatosAdicionales
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *SeCargaronDatosAdicionales) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T SeCargaronDatosAdicionales
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type SeDectectoDemoraOperativa struct {
@@ -12609,12 +9434,6 @@ func (t *SeDectectoDemoraOperativa) MarshalXML(e *xml.Encoder, start xml.StartEl
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *SeDectectoDemoraOperativa) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T SeDectectoDemoraOperativa
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type SeDectectoDemoraViaje struct {
 	XMLNs                    string        `xml:"xmlns:in,attr,omitempty"`
@@ -12643,12 +9462,6 @@ func (t *SeDectectoDemoraViaje) MarshalXML(e *xml.Encoder, start xml.StartElemen
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *SeDectectoDemoraViaje) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T SeDectectoDemoraViaje
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type SeEnviaNotificacionADestinatario struct {
@@ -12679,12 +9492,6 @@ func (t *SeEnviaNotificacionADestinatario) MarshalXML(e *xml.Encoder, start xml.
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *SeEnviaNotificacionADestinatario) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T SeEnviaNotificacionADestinatario
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type SePierdeTurnoDeEntrega struct {
 	XMLNs                    string        `xml:"xmlns:in,attr,omitempty"`
@@ -12713,12 +9520,6 @@ func (t *SePierdeTurnoDeEntrega) MarshalXML(e *xml.Encoder, start xml.StartEleme
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *SePierdeTurnoDeEntrega) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T SePierdeTurnoDeEntrega
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type SeProduceCasoFuerzaMayor struct {
@@ -12749,12 +9550,6 @@ func (t *SeProduceCasoFuerzaMayor) MarshalXML(e *xml.Encoder, start xml.StartEle
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *SeProduceCasoFuerzaMayor) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T SeProduceCasoFuerzaMayor
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type SeProduceNovedadEnRuta struct {
 	XMLNs                    string        `xml:"xmlns:in,attr,omitempty"`
@@ -12783,12 +9578,6 @@ func (t *SeProduceNovedadEnRuta) MarshalXML(e *xml.Encoder, start xml.StartEleme
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *SeProduceNovedadEnRuta) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T SeProduceNovedadEnRuta
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type SeProduceNovedadEnSucursal struct {
@@ -12819,12 +9608,6 @@ func (t *SeProduceNovedadEnSucursal) MarshalXML(e *xml.Encoder, start xml.StartE
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *SeProduceNovedadEnSucursal) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T SeProduceNovedadEnSucursal
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type SeRealizoCierreConservadora struct {
 	XMLNs                    string        `xml:"xmlns:in,attr,omitempty"`
@@ -12853,12 +9636,6 @@ func (t *SeRealizoCierreConservadora) MarshalXML(e *xml.Encoder, start xml.Start
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *SeRealizoCierreConservadora) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T SeRealizoCierreConservadora
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type SeRechazaChequeErrorConfeccion struct {
@@ -12889,12 +9666,6 @@ func (t *SeRechazaChequeErrorConfeccion) MarshalXML(e *xml.Encoder, start xml.St
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *SeRechazaChequeErrorConfeccion) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T SeRechazaChequeErrorConfeccion
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type SeRechazaRemito struct {
 	XMLNs                    string        `xml:"xmlns:in,attr,omitempty"`
@@ -12923,12 +9694,6 @@ func (t *SeRechazaRemito) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *SeRechazaRemito) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T SeRechazaRemito
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type SeReemplazaRefrigeranteConservadora struct {
@@ -12959,12 +9724,6 @@ func (t *SeReemplazaRefrigeranteConservadora) MarshalXML(e *xml.Encoder, start x
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *SeReemplazaRefrigeranteConservadora) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T SeReemplazaRefrigeranteConservadora
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type SeRetiraEnvio struct {
 	XMLNs          string   `xml:"xmlns:re,attr,omitempty"`
@@ -12980,19 +9739,6 @@ type SeRetiraEnvio struct {
 	CierraPregunta bool     `xml:"re:cierraPregunta,omitempty"`
 	EsParaCliente  bool     `xml:"re:esParaCliente,omitempty"`
 	Topic          _anon357 `xml:"re:topic"`
-}
-
-func (t *SeRetiraEnvio) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T SeRetiraEnvio
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *SeRetiraEnvio) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T SeRetiraEnvio
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 // Must be at least 1 items long
@@ -13015,12 +9761,6 @@ func (t *ShotCerrado) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	layout.T = (*T)(t)
 	layout.Envio.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *ShotCerrado) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T ShotCerrado
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type SinFrecuenciaDeViaje struct {
@@ -13051,12 +9791,6 @@ func (t *SinFrecuenciaDeViaje) MarshalXML(e *xml.Encoder, start xml.StartElement
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *SinFrecuenciaDeViaje) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T SinFrecuenciaDeViaje
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type SinStockParaDespachar struct {
 	XMLNs                    string        `xml:"xmlns:in,attr,omitempty"`
@@ -13086,12 +9820,6 @@ func (t *SinStockParaDespachar) MarshalXML(e *xml.Encoder, start xml.StartElemen
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *SinStockParaDespachar) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T SinStockParaDespachar
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type SinTurnoDeEntrega struct {
 	XMLNs              string   `xml:"xmlns:pr,attr,omitempty"`
@@ -13106,19 +9834,6 @@ type SinTurnoDeEntrega struct {
 	PosiblesRespuestas string   `xml:"pr:posiblesRespuestas,omitempty"`
 	EsParaCliente      bool     `xml:"pr:esParaCliente,omitempty"`
 	Topic              _anon321 `xml:"pr:topic"`
-}
-
-func (t *SinTurnoDeEntrega) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T SinTurnoDeEntrega
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *SinTurnoDeEntrega) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T SinTurnoDeEntrega
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type Siniestro struct {
@@ -13152,12 +9867,6 @@ func (t *Siniestro) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *Siniestro) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T Siniestro
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type SobraRemito struct {
 	XMLNs                    string        `xml:"xmlns:in,attr,omitempty"`
@@ -13186,12 +9895,6 @@ func (t *SobraRemito) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *SobraRemito) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T SobraRemito
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type SobranBultos struct {
@@ -13222,12 +9925,6 @@ func (t *SobranBultos) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *SobranBultos) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T SobranBultos
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type SobranBultosYRemitos struct {
 	XMLNs                    string        `xml:"xmlns:in,attr,omitempty"`
@@ -13257,12 +9954,6 @@ func (t *SobranBultosYRemitos) MarshalXML(e *xml.Encoder, start xml.StartElement
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *SobranBultosYRemitos) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T SobranBultosYRemitos
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type SolicitarNuevaVisita struct {
 	XMLNs          string   `xml:"xmlns:re,attr,omitempty"`
@@ -13278,19 +9969,6 @@ type SolicitarNuevaVisita struct {
 	CierraPregunta bool     `xml:"re:cierraPregunta,omitempty"`
 	EsParaCliente  bool     `xml:"re:esParaCliente,omitempty"`
 	Topic          _anon355 `xml:"re:topic"`
-}
-
-func (t *SolicitarNuevaVisita) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T SolicitarNuevaVisita
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *SolicitarNuevaVisita) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T SolicitarNuevaVisita
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type SolicitudDeFacturacion struct {
@@ -13310,12 +9988,6 @@ func (t *SolicitudDeFacturacion) MarshalXML(e *xml.Encoder, start xml.StartEleme
 	layout.T = (*T)(t)
 	layout.Pedido.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *SolicitudDeFacturacion) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T SolicitudDeFacturacion
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type SolicitudDeRescate struct {
@@ -13349,30 +10021,11 @@ func (t *SolicitudDeRescate) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 	layout.SucursalDondeSeRescata.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *SolicitudDeRescate) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T SolicitudDeRescate
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type Telefono struct {
 	XMLNs  string `xml:"xmlns:dr,attr,omitempty"`
 	Tipo   Tipo   `xml:"dr:tipo"`
 	Numero string `xml:"dr:numero"`
-}
-
-func (t *Telefono) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T Telefono
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *Telefono) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T Telefono
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type TelefonoDeContactoErroneo struct {
@@ -13388,19 +10041,6 @@ type TelefonoDeContactoErroneo struct {
 	PosiblesRespuestas string   `xml:"pr:posiblesRespuestas,omitempty"`
 	EsParaCliente      bool     `xml:"pr:esParaCliente,omitempty"`
 	Topic              _anon330 `xml:"pr:topic"`
-}
-
-func (t *TelefonoDeContactoErroneo) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T TelefonoDeContactoErroneo
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *TelefonoDeContactoErroneo) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T TelefonoDeContactoErroneo
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 // May be one of trabajo, celular, casa, otro
@@ -13428,19 +10068,6 @@ type TitularAusenteEnDomicilio struct {
 	PosiblesRespuestas string   `xml:"pr:posiblesRespuestas,omitempty"`
 	EsParaCliente      bool     `xml:"pr:esParaCliente,omitempty"`
 	Topic              _anon340 `xml:"pr:topic"`
-}
-
-func (t *TitularAusenteEnDomicilio) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T TitularAusenteEnDomicilio
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *TitularAusenteEnDomicilio) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T TitularAusenteEnDomicilio
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 // May be one of Envios/Respuesta/GestionarEnvio
@@ -13481,12 +10108,6 @@ func (t *TrazaAltaDeEnvio) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 	layout.Contrato.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *TrazaAltaDeEnvio) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T TrazaAltaDeEnvio
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type TrazabilidadFarmaConDiscrepancia struct {
 	XMLNs                    string        `xml:"xmlns:in,attr,omitempty"`
@@ -13515,12 +10136,6 @@ func (t *TrazabilidadFarmaConDiscrepancia) MarshalXML(e *xml.Encoder, start xml.
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *TrazabilidadFarmaConDiscrepancia) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T TrazabilidadFarmaConDiscrepancia
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type TrazabilidadFarmaEnGestion struct {
@@ -13551,12 +10166,6 @@ func (t *TrazabilidadFarmaEnGestion) MarshalXML(e *xml.Encoder, start xml.StartE
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *TrazabilidadFarmaEnGestion) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T TrazabilidadFarmaEnGestion
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type UnidadDeTransporteDemorada struct {
 	XMLNs                    string        `xml:"xmlns:in,attr,omitempty"`
@@ -13585,12 +10194,6 @@ func (t *UnidadDeTransporteDemorada) MarshalXML(e *xml.Encoder, start xml.StartE
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *UnidadDeTransporteDemorada) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T UnidadDeTransporteDemorada
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type UnidadesFaltantesBultosCerrados struct {
@@ -13621,12 +10224,6 @@ func (t *UnidadesFaltantesBultosCerrados) MarshalXML(e *xml.Encoder, start xml.S
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *UnidadesFaltantesBultosCerrados) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T UnidadesFaltantesBultosCerrados
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type UnidadesSobrantesBultosCerrados struct {
 	XMLNs                    string        `xml:"xmlns:in,attr,omitempty"`
@@ -13656,12 +10253,6 @@ func (t *UnidadesSobrantesBultosCerrados) MarshalXML(e *xml.Encoder, start xml.S
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *UnidadesSobrantesBultosCerrados) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T UnidadesSobrantesBultosCerrados
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type ValoresRendidosAlRemitente struct {
 	XMLNs                    string        `xml:"xmlns:ei,attr,omitempty"`
@@ -13690,12 +10281,6 @@ func (t *ValoresRendidosAlRemitente) MarshalXML(e *xml.Encoder, start xml.StartE
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *ValoresRendidosAlRemitente) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T ValoresRendidosAlRemitente
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type VerificadoDeImagen struct {
@@ -13727,12 +10312,6 @@ func (t *VerificadoDeImagen) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *VerificadoDeImagen) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T VerificadoDeImagen
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type VerificarDomicilio struct {
 	XMLNs                    string        `xml:"xmlns:in,attr,omitempty"`
@@ -13762,12 +10341,6 @@ func (t *VerificarDomicilio) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *VerificarDomicilio) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T VerificarDomicilio
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type VerificarDomicilioDestinatario struct {
 	XMLNs              string   `xml:"xmlns:pr,attr,omitempty"`
@@ -13784,19 +10357,6 @@ type VerificarDomicilioDestinatario struct {
 	Topic              Topic    `xml:"pr:topic"`
 }
 
-func (t *VerificarDomicilioDestinatario) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T VerificarDomicilioDestinatario
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *VerificarDomicilioDestinatario) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T VerificarDomicilioDestinatario
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
-
 type VerificarDomicilioRetiro struct {
 	XMLNs              string   `xml:"xmlns:pr,attr,omitempty"`
 	Timestamp          *xsdDate `xml:"http://integracion.andreani.com/eventosDeIntegracion timestamp"`
@@ -13810,19 +10370,6 @@ type VerificarDomicilioRetiro struct {
 	PosiblesRespuestas string   `xml:"pr:posiblesRespuestas,omitempty"`
 	EsParaCliente      bool     `xml:"pr:esParaCliente,omitempty"`
 	Topic              _anon342 `xml:"pr:topic"`
-}
-
-func (t *VerificarDomicilioRetiro) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
-	type T VerificarDomicilioRetiro
-	var layout struct{ *T }
-	layout.T = (*T)(t)
-	return e.EncodeElement(layout, start)
-}
-func (t *VerificarDomicilioRetiro) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T VerificarDomicilioRetiro
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type Visita struct {
@@ -13860,12 +10407,6 @@ func (t *Visita) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	layout.Donde.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	layout.DatosAdicionales.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *Visita) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T Visita
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 type VisitaMobile struct {
@@ -13911,12 +10452,6 @@ func (t *VisitaMobile) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	layout.Observaciones.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
 }
-func (t *VisitaMobile) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T VisitaMobile
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
-}
 
 type ZonaDeRiesgo struct {
 	XMLNs                    string        `xml:"xmlns:in,attr,omitempty"`
@@ -13945,12 +10480,6 @@ func (t *ZonaDeRiesgo) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	layout.T = (*T)(t)
 	layout.SucursalAsociadaAlEvento.XMLNs = "http://integracion.andreani.com/datosDeReferencia/"
 	return e.EncodeElement(layout, start)
-}
-func (t *ZonaDeRiesgo) UnmarshalXML(d *xml.Decoder, start xml.StartElement) error {
-	type T ZonaDeRiesgo
-	var overlay struct{ *T }
-	overlay.T = (*T)(t)
-	return d.DecodeElement(&overlay, &start)
 }
 
 // Must be at least 1 items long

@@ -8,13 +8,10 @@ import (
 	"time"
 )
 
+var namespaces map[string]string
+
 func init() {
-
-}
-
-//GetEvento devuelve el xml del evento a partir de la estructura. Permite la opcion de devolver el evento indentado
-func GetEvento(d interface{}, indent ...bool) (string, error) {
-	namespaces := map[string]string{
+	namespaces = map[string]string{
 		"ei": "http://integracion.andreani.com/eventosDeIntegracion",
 		"dr": "http://integracion.andreani.com/datosDeReferencia/",
 		"ea": "http://integracion.andreani.com/eventosDeAlmacenes/",
@@ -23,6 +20,11 @@ func GetEvento(d interface{}, indent ...bool) (string, error) {
 		"pr": "http://integracion.andreani.com/preguntas",
 		"re": "http://integracion.andreani.com/respuestas",
 	}
+
+}
+
+//GetEvento devuelve el xml del evento a partir de la estructura. Permite la opcion de devolver el evento indentado
+func GetEvento(d interface{}, indent ...bool) (string, error) {
 
 	field, valid := reflect.TypeOf(d).Elem().FieldByName("XMLNs")
 	if valid != true {
