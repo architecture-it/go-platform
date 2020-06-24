@@ -8,8 +8,8 @@ import (
 )
 
 func TestErrores(t *testing.T) {
-	errores := PedidoIncorrecto.Default("detalle", nil)
-	if errores.Detail != "detalle" || errores.Fields != nil {
+	_, errores := PedidoIncorrecto.Default("detalle", nil)
+	if errores.Detail != "detalle" || errores.Errors != nil {
 		t.Errorf("Fallo la funcion PedidoIncorrecto")
 	}
 }
@@ -26,7 +26,7 @@ func TestErrores2List(t *testing.T) {
 		panic(err)
 	}
 
-	assert.Equal(t, string(out), `[{"name":"numero","description":"bool"},{"name":"numero","description":"string"}]`)
+	assert.Equal(t, string(out), `[{"name":"numero","message":"bool"},{"name":"numero","message":"string"}]`)
 }
 
 type errJSON struct {
@@ -39,7 +39,20 @@ func TestDefault(t *testing.T) {
 	err1 := json.Unmarshal([]byte(`{"numero":true}`), &errJSON)
 	err2 := json.Unmarshal([]byte(`{"numero":1}`), &errJSON)
 
-	errVal := ErrorServidorInterno.Default("Default", err1, err2)
+	_, errVal := ErrorServidorInterno.Default("Default", err1, err2)
 
-	assert.Equal(t, errVal.Fields[0].Message, "bool")
+	assert.Equal(t, errVal.Errors[0].Message, "bool")
+}
+
+func TestVariosAll(t *testing.T) {
+	var errJSON errJSON
+
+	err1 := json.Unmarshal([]byte(`{"numero":true}`), &errJSON)
+	err2 := json.Unmarshal([]byte(`{"numero":1}`), &errJSON)
+
+	ErrorServidorInterno.All("Tipo", "Titulo", "Detalle", 200, err1, err2)
+	_, errVal := ErrorServidorInterno.Default("Este es un ejemplo")
+
+	assert.Equal(t, errVal.Title, "Error en la Respuesta")
+
 }
