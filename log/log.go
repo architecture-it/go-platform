@@ -57,9 +57,9 @@ func Benchmark(fmtt string, args ...string) func() {
 }
 
 // Pipeline ..
-func (l *Logger) Pipeline(m string) {
+func (l *Logger) Pipeline(mensaje string) string {
 	var s []string
-	l.Message = m
+	l.Message = mensaje
 	e := reflect.ValueOf(l).Elem()
 
 	for i := 0; i < e.NumField(); i++ {
@@ -67,13 +67,15 @@ func (l *Logger) Pipeline(m string) {
 	}
 
 	fmt.Println(strings.Join(s, " | "))
+	return strings.Join(s, " | ")
 }
 
 // JSON ..
-func (l *Logger) JSON(m string) {
-	l.Message = m
+func (l *Logger) JSON(mensaje string) string {
+	l.Message = mensaje
 	e, _ := json.Marshal(l)
 	fmt.Println(string(e))
+	return string(e)
 }
 
 func getFileName() string {
