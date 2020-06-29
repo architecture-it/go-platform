@@ -54,7 +54,7 @@ func (q Queue) Put(data string) error {
 		res, err := resty.R().
 			SetBody(data).
 			Put(url)
-		if res.StatusCode() != 200 {
+		if res.StatusCode() != http.StatusOK {
 			err = errors.New("API Bridge falla al publicar el mensaje")
 		}
 		return err
@@ -129,7 +129,7 @@ func (t Topic) Publish(data string) error {
 		res, err := resty.R().
 			SetBody(data).
 			Post(url)
-		if res.StatusCode() != 200 {
+		if res.StatusCode() != http.StatusOK {
 			err = errors.New("API Bridge falla al publicar el mensaje")
 		}
 		return err
