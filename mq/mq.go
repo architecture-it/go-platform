@@ -51,9 +51,12 @@ func (q Queue) Put(data string) error {
 
 	url := fmt.Sprintf("%s/queues/%s", q.api, q.name)
 	return circuitBreaker.Run(func() error {
-		_, err := resty.R().
+		res, err := resty.R().
 			SetBody(data).
 			Put(url)
+		if res.StatusCode() != http.StatusOK {
+			err = errors.New("API Bridge falla al publicar el mensaje")
+		}
 		return err
 	})
 
@@ -123,9 +126,12 @@ func (t Topic) Publish(data string) error {
 
 	url := fmt.Sprintf("%s/topics/%s", t.api, t.name)
 	return circuitBreaker.Run(func() error {
-		_, err := resty.R().
+		res, err := resty.R().
 			SetBody(data).
 			Post(url)
+		if res.StatusCode() != http.StatusOK {
+			err = errors.New("API Bridge falla al publicar el mensaje")
+		}
 		return err
 	})
 }
