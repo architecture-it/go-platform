@@ -10,6 +10,7 @@ require (
 	github.com/go-playground/validator/v10 v10.3.0 // indirect
 	github.com/jinzhu/gorm v1.9.12
 	github.com/prometheus/client_golang v1.6.0 // indirect
+	github.com/rs/zerolog v1.19.0 // indirect
 	github.com/sirupsen/logrus v1.6.0 // indirect
 	github.com/stretchr/testify v1.4.0
 	github.com/zsais/go-gin-prometheus v0.1.0
