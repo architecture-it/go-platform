@@ -8,59 +8,60 @@ import (
 )
 
 var (
-	ErrorResponse        *ErrorRequest
-	PedidoIncorrecto     *ErrorRequest
-	RecursoNoEncontrado  *ErrorRequest
-	ServicioNoDisponible *ErrorRequest
+	PedidoIncorrecto     ErrorResponse
+	RecursoNoEncontrado  ErrorResponse
+	ErrorServidorInterno ErrorResponse
+	ServicioNoDisponible ErrorResponse
 )
 
-// ErrorRequest Estructura genérica para errores de Andreani S.A.
-type ErrorRequest struct {
-	Type   string  `json:"type"`
+// ErrorResponse Estructura genérica para errores de Andreani S.A.
+type ErrorResponse struct {
+	Type   string  `json:"type" default1:"about:blank"`
 	Title  string  `json:"title"`
 	Detail string  `json:"detail"`
 	Status int     `json:"status"`
-	List   []Field `json:"errors"`
+	Errors []Error `json:"errors"`
 }
 
-// Field Exportable para desarrollos a medida
-type Field struct {
-	Name        string `json:"name"`
-	Description string `json:"description"`
+// Error Exportable para desarrollos a medida
+type Error struct {
+	Name    string `json:"name"`
+	Message string `json:"message"`
 }
 
 func init() {
-	ErrorResponse = &ErrorRequest{Type: "about:blank", Title: "Error en la Respuesta", Status: 500}
-	PedidoIncorrecto = &ErrorRequest{Type: "about:blank", Title: "Error en la validacion de su pedido", Status: 400}
-	RecursoNoEncontrado = &ErrorRequest{Type: "about:blank", Title: "Recurso no encontrado", Status: 404}
-	ServicioNoDisponible = &ErrorRequest{Type: "about:blank", Title: "Servicio no disponible momentaneamete, intente nuevamente", Status: 503}
+	PedidoIncorrecto = ErrorResponse{Type: "about:blank", Title: "Error en la validacion de su pedido", Status: 400}
+	RecursoNoEncontrado = ErrorResponse{Type: "about:blank", Title: "Recurso no encontrado", Status: 404}
+	ErrorServidorInterno = ErrorResponse{Type: "about:blank", Title: "Error en la Respuesta", Status: 500}
+	ServicioNoDisponible = ErrorResponse{Type: "about:blank", Title: "Servicio no disponible momentaneamete, intente nuevamente", Status: 503}
 }
 
 // Default - Permite settear solo el detalle y los errores del campo List
-func (er *ErrorRequest) Default(d string, e ...error) ErrorRequest {
-	er.Detail = d
-	er.List = errores2List(e)
-	return *er
+func (er ErrorResponse) Default(detalle string, errores ...error) (int, *ErrorResponse) {
+	per := &er
+	per.Detail = detalle
+	per.Errors = *errores2List(errores)
+	return er.Status, per
 }
 
 // All - Permite settear todos los valores del error
-func (er *ErrorRequest) All(t string, ti string, d string, s int, e ...error) ErrorRequest {
-	er.Type = t
-	er.Title = ti
-	er.Detail = d
-	er.Status = s
-	er.List = errores2List(e)
-	return *er
+func (er ErrorResponse) All(tipo string, titulo string, detalle string, status int, errores ...error) (int, *ErrorResponse) {
+	per := &er
+	per.Type = tipo
+	per.Title = titulo
+	per.Detail = detalle
+	per.Status = status
+	per.Errors = *errores2List(errores)
+	return er.Status, per
 }
 
-func errores2List(errs []error) []Field {
-	var fieldList []Field
-
+func errores2List(errs []error) *[]Error {
+	var fieldList []Error
 	for _, err := range errs {
-		var field Field
+		var field Error
 		if ute, ok := err.(*json.UnmarshalTypeError); ok {
 			field.Name = strings.ToLower(ute.Field)
-			field.Description = ute.Value
+			field.Message = ute.Value
 			fieldList = append(fieldList, field)
 		}
 
@@ -68,15 +69,15 @@ func errores2List(errs []error) []Field {
 			for _, e := range validatorErrors {
 				field.Name = strings.ToLower(e.Field())
 				if e.Param() != "" {
-					field.Description = e.Tag() + ": " + e.Param()
+					field.Message = e.Tag() + ": " + e.Param()
 				} else {
-					field.Description = e.Tag()
+					field.Message = e.Tag()
 				}
 				fieldList = append(fieldList, field)
 			}
 		}
 	}
 
-	return fieldList
+	return &fieldList
 
 }
