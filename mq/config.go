@@ -27,12 +27,12 @@ func ReadConfigFromEnv() Config {
 func ReadConfigFromVault(v vault.Vault) Config {
 	mq, err := v.Get(MQ_API_CONFIG_KEY)
 	if err != nil {
-		log.Fatal.Printf("can't read vault. key:%s. error:%s. Trying to read form env..", MQ_API_CONFIG_KEY, err)
+		log.SugarLogger.Errorf("can't read vault. key:%s. error:%s. Trying to read form env..", MQ_API_CONFIG_KEY, err)
 		return ReadConfigFromEnv()
 	}
 	queue, err := v.Get(QUEUE_NAME_KEY)
 	if err != nil {
-		log.Fatal.Printf("can't read vault. key:%s. error:%s. Trying to read form env..", QUEUE_NAME_KEY, err)
+		log.SugarLogger.Errorf("can't read vault. key:%s. error:%s. Trying to read form env..", QUEUE_NAME_KEY, err)
 		return ReadConfigFromEnv()
 	}
 	return Config{

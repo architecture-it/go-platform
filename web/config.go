@@ -26,6 +26,6 @@ func ReadConfigFromEnv() Config {
 	if port != "" {
 		config.Port = port
 	}
-	log.Info.Println("Puerto: " + config.Port)
+	log.Logger.Info("Puerto: " + config.Port)
 	return config
 }

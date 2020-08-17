@@ -3,7 +3,9 @@ Helpers para montar servicios de APIs usando [gin-gonic](https://github.com/gin-
 
 ## Uso
 
-``` go get github.com/architecture-it/go-platform/web ``` 
+```sh
+go get github.com/architecture-it/go-platform/web
+``` 
 
 ## Ejemplos
 
@@ -20,11 +22,9 @@ func main() {
     server:= web.NewServer(web.ReadConfigFromEnv()) 
     server.AddMetrics() // /metrics de los requests en formato prometheus 
     server.AddCorsAllOrigins()
-    
-    //AddHealth(health.NewRedisHealthChecker(redisHealthChecker.Config{}),
-    //			health.NewMySqlHealthChecker(mySqlHealthChecker.Config{}),
-    //			...func())
-    server.AddHealth(web.HealthAlwaysUp) // pone un endpoint en /health
+
+    //Agrego los HealthCheckers que necesito
+    server.AddHealth(health.IbmMQHealthChecker, health.MysqlHealthChecker, ...)
 
     // apidocs con la documentacion de openApi que se especifique
     server.AddApiDocs("https://raw.githubusercontent.com/architecture-it/proyecto/openapi.yaml")

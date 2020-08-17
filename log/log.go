@@ -1,91 +1,64 @@
 package log
 
 import (
-	"encoding/json"
-	"fmt"
 	"os"
 	"path/filepath"
-	"reflect"
-	"runtime"
-	"strconv"
-	"strings"
 	"time"
-)
 
-var currentTime = time.Now().Format("2006-01-02 15:04:05.000")
+	"go.uber.org/zap"
+	"go.uber.org/zap/zapcore"
+)
 
 var (
-	Trace   = &Logger{Date: currentTime, Level: "-1", Local: os.Args[0], Name: "TRACE", Path: getFileName()}
-	Debug   = &Logger{Date: currentTime, Level: "0", Local: os.Args[0], Name: "DEBUG", Path: getFileName()}
-	Info    = &Logger{Date: currentTime, Level: "1", Local: os.Args[0], Name: "INFO", Path: getFileName()}
-	Warning = &Logger{Date: currentTime, Level: "2", Local: os.Args[0], Name: "WARN", Path: getFileName()}
-	Error   = &Logger{Date: currentTime, Level: "3", Local: os.Args[0], Name: "ERROR", Path: getFileName()}
-	Fatal   = &Logger{Date: currentTime, Level: "4", Local: os.Args[0], Name: "FATAL", Path: getFileName()}
-	Panic   = &Logger{Date: currentTime, Level: "5", Local: os.Args[0], Name: "PANIC", Path: getFileName()}
+	Logger *zap.Logger
+	// SugarLogger es un wrapper del Logger común.
+	// Es más flexible ya que permite imprimir con formato, como un Printf().
+	// Debido a esto, es un poco más lento que el Logger.
+	SugarLogger *zap.SugaredLogger
 )
 
-// Logger estructura a Loggear
-type Logger struct {
-	// Date es la fecha del Log
-	Date string
-
-	// Level cuanto más alta más relevante el Log
-	Level string
-
-	// Local nombre del ejecutable
-	Local string
-
-	// Nombre del Log
-	Name string
-
-	// Path de la ubicación del Log
-	Path string
-
-	// Message principal del Log
-	Message string
+func init() {
+	Logger, SugarLogger = configureLogger()
 }
 
-// Benchmark imprime el tiempo que transcurrio en el logger Trace.
-// Ejemplo:
-//  defer Benchmarkf("paso el %s","tiempo")
-//  imprime: 2019/06/11 17:38:21 log.go:22: paso el tiempo: 1.2121ms
-func Benchmark(fmtt string, args ...string) func() {
-	started := time.Now()
-	return func() {
-		Trace.Pipeline(fmt.Sprintf(fmtt, args) + ": " + string(time.Since(started)))
+func configureLogger() (*zap.Logger, *zap.SugaredLogger) {
+	logEncoder := os.Getenv("LOG_ENCODING")
+	if logEncoder == "" {
+		logEncoder = "console"
 	}
-}
-
-// Pipeline ..
-func (l *Logger) Pipeline(mensaje string) string {
-	var s []string
-	l.Message = mensaje
-	e := reflect.ValueOf(l).Elem()
-
-	for i := 0; i < e.NumField(); i++ {
-		s = append(s, e.Field(i).String())
-	}
-
-	fmt.Println(strings.Join(s, " | "))
-	return strings.Join(s, " | ")
-}
-
-// JSON ..
-func (l *Logger) JSON(mensaje string) string {
-	l.Message = mensaje
-	e, _ := json.Marshal(l)
-	fmt.Println(string(e))
-	return string(e)
-}
-
-func getFileName() string {
-	_, file, line, ok := runtime.Caller(1)
-	if !ok {
-		file = "???"
-		line = 0
+	config := zap.NewDevelopmentConfig()
+	config.Encoding = logEncoder
+	config.EncoderConfig.EncodeTime = ELKLogTimeEncoder
+	if logEncoder == "json" {
+		config.EncoderConfig.CallerKey = "context"
+		config.EncoderConfig.TimeKey = "timestamp"
+		config.EncoderConfig.MessageKey = "message"
+		config.EncoderConfig.LevelKey = "severity"
+		config.EncoderConfig.StacktraceKey = "" //Oculto el stacktrace
 	} else {
-		file = filepath.Base(file)
+		config.EncoderConfig.EncodeLevel = ConsoleLevelEncoder
+		config.EncoderConfig.EncodeCaller = ConsoleCallerEncoder
+		//TODO: Descomentar con el próximo release de la librería go.uber.org/zap
+		//config.EncoderConfig.ConsoleSeparator = "|"
 	}
-
-	return file + ":" + strconv.Itoa(line)
+	Logger, _ = config.Build()
+	if logEncoder == "json" {
+		Logger = Logger.With(zap.Int("threadId", 0), zap.String("applicationName", filepath.Base(os.Args[0])))
+	}
+	return Logger, Logger.Sugar()
 }
+
+func ELKLogTimeEncoder(t time.Time, enc zapcore.PrimitiveArrayEncoder) {
+	enc.AppendString(t.Format("2006-01-02 15:04:05.000"))
+}
+
+func ConsoleLevelEncoder(level zapcore.Level, enc zapcore.PrimitiveArrayEncoder) {
+	enc.AppendString(" | 0 | " + level.CapitalString() + " | " + filepath.Base(os.Args[0]))
+}
+
+func ConsoleCallerEncoder(caller zapcore.EntryCaller, enc zapcore.PrimitiveArrayEncoder) {
+	// TODO: consider using a byte-oriented API to save an allocation.
+	enc.AppendString("| " + caller.TrimmedPath() + " |")
+}
+
+//2020-08-11 23:55:42,522 | 89 | INFO  | Andreani.Tracking.CollectorManager.exe | TrackingWorker-7 | Processing Message Worker #7
