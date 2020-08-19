@@ -5,12 +5,23 @@ Actualmente, estamos usando el stack de Elastic o ELK, con lo cual, nos basamos 
 
 ## Console o JSON? 🔧
 
-Usando la variable de entorno **LOG_ENCODING** podemos configurar si queremos que nuestros logs se visualicen en forma de consola con sus campos separados por pipes (|) o en json.
+Usando la variable de entorno **LOG_CONFIG** podemos configurar si queremos que nuestros logs se visualicen en forma de consola con sus campos separados por pipes (|) o en json, y las keys de los diferentes campos de ese JSON.
 
-* PD 1: Los valores admitidos por esta variable son:
-    * console
-    * json
-* PD 2: Si nos olvidamos de setear dicha variable de entorno, el valor por defecto será **console**.
+### Estándares de configuracion
+
+#### Console
+
+```sh
+export LOG_CONFIG = "{\"level\":\"debug\",\"encoding\":\"console\",\"development\":true,\"outputPaths\":[\"stderr\"],\"errorOutputPaths\":[\"stderr\"],\"encoderConfig\":{\"callerKey\":\"context\",\"timeKey\":\"timestamp\",\"messageKey\":\"message\",\"levelKey\":\"severity\",\"stacktraceKey\":\"\"}}"
+```
+
+#### JSON
+
+```sh
+export LOG_CONFIG = "{\"level\":\"debug\",\"encoding\":\"json\",\"development\":true,\"outputPaths\":[\"stderr\"],\"errorOutputPaths\":[\"stderr\"],\"encoderConfig\":{\"callerKey\":\"context\",\"timeKey\":\"timestamp\",\"messageKey\":\"message\",\"levelKey\":\"severity\",\"stacktraceKey\":\"\"}}"
+```
+
+* PD: Si nos olvidamos de setear dicha variable de entorno, el logger se configurará con una salida en formato **console**
 
 ## Acceso
 

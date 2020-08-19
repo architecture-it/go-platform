@@ -1,6 +1,7 @@
 package log
 
 import (
+	"encoding/json"
 	"os"
 	"path/filepath"
 	"time"
@@ -22,30 +23,44 @@ func init() {
 }
 
 func configureLogger() (*zap.Logger, *zap.SugaredLogger) {
-	logEncoder := os.Getenv("LOG_ENCODING")
-	if logEncoder == "" {
-		logEncoder = "console"
+	jsonLogConfig := os.Getenv("LOG_CONFIG")
+	if jsonLogConfig != "" {
+		var cfg zap.Config
+		if err := json.Unmarshal([]byte(jsonLogConfig), &cfg); err != nil {
+			panic(err)
+		}
+		if cfg.Encoding == "console" { //Agrego los campos adicionales para la consola.
+			cfg.EncoderConfig.EncodeLevel = ConsoleLevelEncoder
+			cfg.EncoderConfig.EncodeCaller = ConsoleCallerEncoder
+		} else {
+			camposAdicionales := make(map[string]interface{})
+			camposAdicionales["threadId"] = 0
+			camposAdicionales["applicationName"] = filepath.Base(os.Args[0])
+			cfg.InitialFields = camposAdicionales
+			cfg.EncoderConfig.EncodeLevel = zapcore.CapitalLevelEncoder
+			cfg.EncoderConfig.EncodeCaller = zapcore.ShortCallerEncoder
+		}
+		cfg.EncoderConfig.EncodeTime = ELKLogTimeEncoder
+		cfg.EncoderConfig.LineEnding = zapcore.DefaultLineEnding
+		cfg.EncoderConfig.EncodeDuration = zapcore.StringDurationEncoder
+
+		logger, err := cfg.Build()
+		if err != nil {
+			panic("Ocurió un error al crear el Logger a partir de la configuración. Revise la variable de entorno LOG_CONFIG.")
+		}
+		return logger, logger.Sugar()
 	}
+
+	//Creo una configuración por defecto
 	config := zap.NewDevelopmentConfig()
-	config.Encoding = logEncoder
 	config.EncoderConfig.EncodeTime = ELKLogTimeEncoder
-	if logEncoder == "json" {
-		config.EncoderConfig.CallerKey = "context"
-		config.EncoderConfig.TimeKey = "timestamp"
-		config.EncoderConfig.MessageKey = "message"
-		config.EncoderConfig.LevelKey = "severity"
-		config.EncoderConfig.StacktraceKey = "" //Oculto el stacktrace
-	} else {
-		config.EncoderConfig.EncodeLevel = ConsoleLevelEncoder
-		config.EncoderConfig.EncodeCaller = ConsoleCallerEncoder
-		//TODO: Descomentar con el próximo release de la librería go.uber.org/zap
-		//config.EncoderConfig.ConsoleSeparator = "|"
-	}
-	Logger, _ = config.Build()
-	if logEncoder == "json" {
-		Logger = Logger.With(zap.Int("threadId", 0), zap.String("applicationName", filepath.Base(os.Args[0])))
-	}
-	return Logger, Logger.Sugar()
+	config.EncoderConfig.EncodeLevel = ConsoleLevelEncoder
+	config.EncoderConfig.EncodeCaller = ConsoleCallerEncoder
+	//TODO: Descomentar con el próximo release de la librería go.uber.org/zap
+	//config.EncoderConfig.ConsoleSeparator = "|"
+	logger, _ := config.Build()
+
+	return logger, logger.Sugar()
 }
 
 func ELKLogTimeEncoder(t time.Time, enc zapcore.PrimitiveArrayEncoder) {
