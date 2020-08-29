@@ -5,20 +5,63 @@ Actualmente, estamos usando el stack de Elastic o ELK, con lo cual, nos basamos 
 
 ## Console o JSON? 🔧
 
-Usando la variable de entorno **LOG_CONFIG** podemos configurar si queremos que nuestros logs se visualicen en forma de consola con sus campos separados por pipes (|) o en json, y las keys de los diferentes campos de ese JSON.
+Usaremos la variable de entorno **LOG_CONFIG_PATH** para configurar la ruta del archivo .json de configuracion que permitirá parametrizar nuestro logger.
+
+### Una buena pregunta... ❓
+
+- "Estoy trabajando con Openshift, estoy OBLIGADO a subir un archivo .json?? 😨 O sea que cada vez que quiera cambiar la configuración del log tengo que commitear, pushear, buildear y generar un deploy? 😨😨"
+
+- No! Afortunadamente no. Claramente sería una locura laburar de esa manera. La mejor alternativa en ese caso, es crear un [ConfigMap](https://docs.openshift.com/container-platform/3.11/dev_guide/configmaps.html#:~:text=The%20ConfigMap%20object%20provides%20mechanisms,configuration%20files%20or%20JSON%20blobs.) y montarlo en el punto de entrada o ruta que vos prefieras.
 
 ### Estándares de configuracion
 
+En dicho archivo .json, podremos configurar si queremos que nuestros logs se visualicen en forma de consola con sus campos separados por pipes (|) o en json, y las keys de los diferentes campos de ese JSON.
+Debajo dejamos archivos de configuración listos para utilizar en nuestros proyectos.
+
 #### Console
 
-```sh
-export LOG_CONFIG = "{\"level\":\"debug\",\"encoding\":\"console\",\"development\":true,\"outputPaths\":[\"stderr\"],\"errorOutputPaths\":[\"stderr\"],\"encoderConfig\":{\"callerKey\":\"context\",\"timeKey\":\"timestamp\",\"messageKey\":\"message\",\"levelKey\":\"severity\",\"stacktraceKey\":\"\"}}"
+```json
+{
+	"level": "debug",
+	"encoding": "console",
+	"development": true,
+	"outputPaths": [
+		"stderr"
+	],
+	"errorOutputPaths": [
+		"stderr"
+	],
+	"encoderConfig": {
+		"callerKey": "context",
+		"timeKey": "timestamp",
+		"messageKey": "message",
+		"levelKey": "severity",
+		"stacktraceKey": "" //Asignamos un valor vacío para que la stracktrace no se imprima en la consola, evitando que se salga del estándar
+	}
+}
 ```
 
 #### JSON
 
-```sh
-export LOG_CONFIG = "{\"level\":\"debug\",\"encoding\":\"json\",\"development\":true,\"outputPaths\":[\"stderr\"],\"errorOutputPaths\":[\"stderr\"],\"encoderConfig\":{\"callerKey\":\"context\",\"timeKey\":\"timestamp\",\"messageKey\":\"message\",\"levelKey\":\"severity\",\"stacktraceKey\":\"\"}}"
+```json
+{
+	"level": "debug",
+	"encoding": "json",
+	"development": true,
+	"outputPaths": [
+		"stderr"
+	],
+	"errorOutputPaths": [
+		"stderr"
+	],
+	"encoderConfig": {
+		"callerKey": "context",
+		"timeKey": "timestamp",
+		"messageKey": "message",
+		"levelKey": "severity",
+		"stacktraceKey": "" //Asignamos un valor vacío para que la stracktrace no se imprima en la consola, evitando que se salga del estándar
+	}
+}
 ```
 
 * PD: Si nos olvidamos de setear dicha variable de entorno, el logger se configurará con una salida en formato **console**
@@ -35,9 +78,9 @@ El paquete dispone dos variables globales que permiten loguear:
 En caso de que no queramos estar concatenando para obtener un parámetro único de String, podemos optar por **SugarLogger**, que si bien es un poco más lento que el **Logger** resuelve ciertas cosas por nosotros, es decir, imprime más al estilo de un printf(), por ejemplo:
 
 ```go
-    log.SugarLogger.Infof("La conexión a la BD %s se realizó sin problemas!", "BD_PROD_01")
-    // o bien
-    log.SugarLogger.Error("Error al leer la respuesta desde la API.", err)
+log.SugarLogger.Infof("La conexión a la BD %s se realizó sin problemas!", "BD_PROD_01")
+// o bien
+log.SugarLogger.Error("Error al leer la respuesta desde la API.", err)
 ```
 
 ## Niveles de Logueo 🤓

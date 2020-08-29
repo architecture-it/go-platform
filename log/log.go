@@ -2,6 +2,8 @@ package log
 
 import (
 	"encoding/json"
+	"fmt"
+	"io/ioutil"
 	"os"
 	"path/filepath"
 	"time"
@@ -23,34 +25,36 @@ func init() {
 }
 
 func configureLogger() (*zap.Logger, *zap.SugaredLogger) {
-	jsonLogConfig := os.Getenv("LOG_CONFIG")
-	if jsonLogConfig != "" {
+	logConfigPath := os.Getenv("LOG_CONFIG_PATH")
+	if logConfigPath != "" {
 		var cfg zap.Config
-		if err := json.Unmarshal([]byte(jsonLogConfig), &cfg); err != nil {
-			panic(err)
-		}
-		if cfg.Encoding == "console" { //Agrego los campos adicionales para la consola.
-			cfg.EncoderConfig.EncodeLevel = ConsoleLevelEncoder
-			cfg.EncoderConfig.EncodeCaller = ConsoleCallerEncoder
-		} else {
-			camposAdicionales := make(map[string]interface{})
-			camposAdicionales["threadId"] = 0
-			camposAdicionales["applicationName"] = filepath.Base(os.Args[0])
-			cfg.InitialFields = camposAdicionales
-			cfg.EncoderConfig.EncodeLevel = zapcore.CapitalLevelEncoder
-			cfg.EncoderConfig.EncodeCaller = zapcore.ShortCallerEncoder
-		}
-		cfg.EncoderConfig.EncodeTime = ELKLogTimeEncoder
-		cfg.EncoderConfig.LineEnding = zapcore.DefaultLineEnding
-		cfg.EncoderConfig.EncodeDuration = zapcore.StringDurationEncoder
+		data, err := ioutil.ReadFile(logConfigPath)
+		if err == nil {
+			if err = json.Unmarshal(data, &cfg); err == nil {
+				if cfg.Encoding == "console" { //Agrego los campos adicionales para la consola.
+					cfg.EncoderConfig.EncodeLevel = ConsoleLevelEncoder
+					cfg.EncoderConfig.EncodeCaller = ConsoleCallerEncoder
+				} else {
+					camposAdicionales := make(map[string]interface{})
+					camposAdicionales["threadId"] = 0
+					camposAdicionales["applicationName"] = filepath.Base(os.Args[0])
+					cfg.InitialFields = camposAdicionales
+					cfg.EncoderConfig.EncodeLevel = zapcore.CapitalLevelEncoder
+					cfg.EncoderConfig.EncodeCaller = zapcore.ShortCallerEncoder
+				}
+				cfg.EncoderConfig.EncodeTime = ELKLogTimeEncoder
+				cfg.EncoderConfig.LineEnding = zapcore.DefaultLineEnding
+				cfg.EncoderConfig.EncodeDuration = zapcore.StringDurationEncoder
 
-		logger, err := cfg.Build()
-		if err != nil {
-			panic("Ocurió un error al crear el Logger a partir de la configuración. Revise la variable de entorno LOG_CONFIG.")
+				logger, err := cfg.Build()
+				if err != nil {
+					panic("Ocurió un error al crear el Logger a partir de la configuración. Revise la variable de entorno LOG_CONFIG.")
+				}
+				return logger, logger.Sugar()
+			}
 		}
-		return logger, logger.Sugar()
+		fmt.Println("Error al leer el archivo de configuración. Se usará la configuración por defecto.", err)
 	}
-
 	//Creo una configuración por defecto
 	config := zap.NewDevelopmentConfig()
 	config.EncoderConfig.EncodeTime = ELKLogTimeEncoder
@@ -59,7 +63,6 @@ func configureLogger() (*zap.Logger, *zap.SugaredLogger) {
 	//TODO: Descomentar con el próximo release de la librería go.uber.org/zap
 	//config.EncoderConfig.ConsoleSeparator = "|"
 	logger, _ := config.Build()
-
 	return logger, logger.Sugar()
 }
 
@@ -72,7 +75,6 @@ func ConsoleLevelEncoder(level zapcore.Level, enc zapcore.PrimitiveArrayEncoder)
 }
 
 func ConsoleCallerEncoder(caller zapcore.EntryCaller, enc zapcore.PrimitiveArrayEncoder) {
-	// TODO: consider using a byte-oriented API to save an allocation.
 	enc.AppendString("| " + caller.TrimmedPath() + " |")
 }
 
