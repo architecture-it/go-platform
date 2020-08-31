@@ -12,6 +12,7 @@ import (
 
 	yaml "gopkg.in/yaml.v3"
 
+	"github.com/architecture-it/go-platform/health"
 	"github.com/architecture-it/go-platform/log"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
@@ -40,12 +41,12 @@ func serveJSONFromFile(c *gin.Context) {
 	var d interface{}
 	file, err := os.Open("docs/swagger.json")
 	if err != nil {
-		log.Fatal.Println(err)
+		log.Logger.Error(err.Error())
 	}
 	defer file.Close()
 	b, _ := ioutil.ReadAll(file)
 	if err := json.Unmarshal(b, &d); err != nil {
-		log.Fatal.Println(err)
+		log.Logger.Error(err.Error())
 	}
 	c.JSON(200, &d)
 }
@@ -54,12 +55,12 @@ func serveYAMLFromFile(c *gin.Context) {
 	var d interface{}
 	file, err := os.Open("docs/swagger.yaml")
 	if err != nil {
-		log.Fatal.Println(err)
+		log.Logger.Error(err.Error())
 	}
 	defer file.Close()
 	b, _ := ioutil.ReadAll(file)
 	if err := yaml.Unmarshal(b, &d); err != nil {
-		log.Fatal.Println(err)
+		log.Logger.Error(err.Error())
 	}
 	c.YAML(200, &d)
 }
@@ -105,18 +106,20 @@ func (s *Server) AddMetrics() *ginprometheus.Prometheus {
 //			health.NewMySqlHealthChecker(mySqlHealthChecker.Config{}),
 //			...func())
 
-func (s *Server) AddHealth(fs ...func() Status) {
+func (s *Server) AddHealth(fs ...func() health.Checker) {
 	s.r.GET("/health", func(c *gin.Context) {
-		result := make([]Status, len(fs))
+		generalHealth := health.HealthAlwaysUp()
+		result := make(map[string]interface{})
 		statusCode := http.StatusOK
-		for i, f := range fs {
+		for _, f := range fs {
 			check := f()
-			result[i] = check
-			if check.Result != UP {
-				statusCode = http.StatusNotFound
+			result[check.Name] = check.Health
+			if check.Health.Status.Code != health.UP {
+				generalHealth.Status.Code = health.DOWN
 			}
 		}
-		c.JSON(statusCode, result)
+		generalHealth.Details = result
+		c.JSON(statusCode, generalHealth)
 	})
 }
 
@@ -132,7 +135,7 @@ func (s *Server) ListenAndServe() {
 
 	go func() {
 		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
-			log.Fatal.Printf("listen: %s\n", err)
+			log.SugarLogger.Errorf("listen: %s\n", err.Error())
 			os.Exit(1)
 		}
 	}()
@@ -142,14 +145,14 @@ func (s *Server) ListenAndServe() {
 	signal.Notify(quit, os.Interrupt) //(1) que nos notifique en el channel quit @SIGINT
 	signal.Notify(quit, os.Kill)
 	<-quit //Esto se queda bloqueado aca hasta que (1) no sucede
-	log.Info.Println("Shutting down server...")
+	log.Logger.Info("Shutting down server...")
 
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 	if err := srv.Shutdown(ctx); err != nil {
-		log.Fatal.Printf("Shutting down server: %s", err)
+		log.SugarLogger.Errorf("Shutting down server: %s", err.Error())
 	}
-	log.Info.Println("Farewell")
+	log.Logger.Info("Farewell")
 
 }
 
