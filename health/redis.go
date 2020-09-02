@@ -12,15 +12,13 @@ var client *redis.Client
 
 func init() {
 	db, err := strconv.Atoi(os.Getenv("REDIS_DB"))
-	if err != nil {
-		panic("No se encontró la variable de entorno REDIS_DB.")
+	if err == nil && os.Getenv("REDIS_ADDR") != "" {
+		client = redis.NewClient(&redis.Options{
+			Addr:     os.Getenv("REDIS_ADDR"),
+			Password: os.Getenv("REDIS_PASS"),
+			DB:       db,
+		})
 	}
-
-	client = redis.NewClient(&redis.Options{
-		Addr:     os.Getenv("REDIS_ADDR"),
-		Password: os.Getenv("REDIS_PASS"),
-		DB:       db,
-	})
 }
 
 func RedisHealthChecker() Checker {

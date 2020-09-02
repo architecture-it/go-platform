@@ -12,14 +12,15 @@ var db *gorm.DB
 
 func init() {
 	args := os.Getenv("SQL_CONNECTION")
-	conn, err := gorm.Open("mssql", args)
-	if err != nil {
-		log.Logger.Error(err.Error())
-	} else {
-		db = conn
-		log.Logger.Info("Se ha conectado exitosamente.")
+	if args != "" {
+		conn, err := gorm.Open("mssql", args)
+		if err != nil {
+			log.Logger.Error(err.Error())
+		} else {
+			db = conn
+			log.Logger.Info("Se ha conectado exitosamente.")
+		}
 	}
-
 }
 
 // GetDB return the database connection
