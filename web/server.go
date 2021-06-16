@@ -75,27 +75,31 @@ func (s *Server) AddApiDocs() {
 	})
 }
 
+// GroupUrl recibe los distintos parametros por los que se quiere agrupar
+func GroupUrl(parameters ...string) []string {
+	return parameters
+}
+
 // AddMetrics agrega un endpoint /metrics con las metricas de Prometheus para los requests
-func (s *Server) AddMetrics() *ginprometheus.Prometheus {
+func (s *Server) AddMetrics(fs ...func(parameters ...string) []string) *ginprometheus.Prometheus {
 	p := ginprometheus.NewPrometheus("gin")
 
-	//Esta funcion es para que se contabilicen agrupadas las metricas en cada endpoint mas alla de como cambie el ultimo elemento del path (el nombre de la cola o del topic)
-	p.ReqCntURLLabelMappingFn = func(c *gin.Context) string {
-		url := c.Request.URL.String()
-		for _, p := range c.Params {
-			if p.Key == "name" {
-				url = strings.Replace(url, p.Value, ":name", 1)
-				break
+	//Esta funcion es para que se contabilicen agrupadas las metricas en cada endpoint mas alla de como cambie el ultimo elemento del path
+	if fs != nil {
+		p.ReqCntURLLabelMappingFn = func(c *gin.Context) string {
+			url := c.Request.URL.String()
+			for _, p := range c.Params {
+				for _, parameter := range fs[0]() {
+					if p.Key == parameter {
+						url = strings.Replace(url, p.Value, ":"+parameter, 1)
+						break
+					}
+				}
 			}
-			if p.Key == "topic" {
-				url = strings.Replace(url, p.Value, ":topic", 1)
-				break
-			}
+			return url
 		}
-		return url
 	}
 	p.Use(s.r)
-
 	return p
 }
 
