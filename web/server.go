@@ -75,13 +75,8 @@ func (s *Server) AddApiDocs() {
 	})
 }
 
-// GroupUrl recibe los distintos parametros por los que se quiere agrupar
-func GroupUrl(parameters ...string) []string {
-	return parameters
-}
-
 // AddMetrics agrega un endpoint /metrics con las metricas de Prometheus para los requests
-func (s *Server) AddMetrics(fs ...func(parameters ...string) []string) *ginprometheus.Prometheus {
+func (s *Server) AddMetrics(fs ...func() []string) *ginprometheus.Prometheus {
 	p := ginprometheus.NewPrometheus("gin")
 
 	//Esta funcion es para que se contabilicen agrupadas las metricas en cada endpoint mas alla de como cambie el ultimo elemento del path
