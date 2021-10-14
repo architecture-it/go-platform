@@ -13,10 +13,10 @@ require (
 	github.com/onsi/ginkgo v1.14.0 // indirect
 	github.com/prometheus/client_golang v1.6.0 // indirect
 	github.com/sirupsen/logrus v1.6.0 // indirect
-	github.com/stretchr/testify v1.4.0
+	github.com/stretchr/testify v1.7.0
 	github.com/zsais/go-gin-prometheus v0.1.0
-	go.uber.org/zap v1.15.0
+	go.uber.org/zap v1.19.1
 	gopkg.in/eapache/go-resiliency.v1 v1.2.0
 	gopkg.in/resty.v1 v1.12.0
-	gopkg.in/yaml.v3 v3.0.0-20200602154603-c1a7af8cc6cd
+	gopkg.in/yaml.v3 v3.0.0-20210107192922-496545a6307b
 )
