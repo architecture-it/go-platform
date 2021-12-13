@@ -1,6 +1,7 @@
 package health
 
 import (
+	"fmt"
 	"os"
 	"strconv"
 	"strings"
@@ -21,7 +22,7 @@ func init() {
 	}
 }
 
-func RedisHealthChecker() Checker {
+func RedisHealthChecker(fn RedisKeyCheck, key string) Checker {
 	status := UP
 	_, err := client.Ping().Result()
 	if err != nil {
@@ -34,6 +35,9 @@ func RedisHealthChecker() Checker {
 	result["version"] = info["redis_version"]
 	result["usedMemory"] = info["used_memory_human"]
 	result["totalMemory"] = info["total_system_memory_human"]
+	if fn != nil {
+		result["dataOfKey"] = fn(key)
+	}
 	return Checker{Health: Health{Status: Status{Code: status, Description: ""}, Details: result}, Name: "redisHealthIndicator"}
 }
 
@@ -47,6 +51,19 @@ func parseInfo(in string) map[string]string {
 		if len(values) > 1 {
 			info[values[0]] = values[1]
 		}
+	}
+	return info
+}
+
+type RedisKeyCheck func(clave string) interface{}
+
+func CheckLenQueue(clave string) interface{} {
+	result := client.LLen(clave)
+	fmt.Println("RESULTADO == ", result)
+	val, err := result.Result()
+	info := map[string]interface{}{"key": clave,
+		"len":   val,
+		"extra": err,
 	}
 	return info
 }
