@@ -105,13 +105,13 @@ func (s *Server) AddMetrics(fs ...func() []string) *ginprometheus.Prometheus {
 //			health.NewMySqlHealthChecker(mySqlHealthChecker.Config{}),
 //			...func())
 
-func (s *Server) AddHealth(fs ...func() health.Checker) {
+func (s *Server) AddHealth(fs ...func(fn health.RedisKeyCheck, key string) health.Checker) {
 	s.r.GET("/health", func(c *gin.Context) {
 		generalHealth := health.HealthAlwaysUp()
 		result := make(map[string]interface{})
 		statusCode := http.StatusOK
 		for _, f := range fs {
-			check := f()
+			check := f(fn health.RedisKeyCheck, key string)
 			result[check.Name] = check.Health
 			if check.Health.Status.Code != health.UP {
 				generalHealth.Status.Code = health.DOWN
