@@ -22,7 +22,7 @@ func init() {
 	}
 }
 
-func RedisHealthChecker(fn RedisKeyCheck, key string) Checker {
+func RedisHealthChecker() Checker {
 	status := UP
 	_, err := client.Ping().Result()
 	if err != nil {
@@ -35,9 +35,6 @@ func RedisHealthChecker(fn RedisKeyCheck, key string) Checker {
 	result["version"] = info["redis_version"]
 	result["usedMemory"] = info["used_memory_human"]
 	result["totalMemory"] = info["total_system_memory_human"]
-	if fn != nil {
-		result["dataOfKey"] = fn(key)
-	}
 	return Checker{Health: Health{Status: Status{Code: status, Description: ""}, Details: result}, Name: "redisHealthIndicator"}
 }
 
@@ -55,15 +52,13 @@ func parseInfo(in string) map[string]string {
 	return info
 }
 
-type RedisKeyCheck func(clave string) interface{}
-
-func CheckLenQueue(clave string) interface{} {
-	result := client.LLen(clave)
+func RedisCheckLenQueue(key string) Checker {
+	result := client.LLen(key)
 	fmt.Println("RESULTADO == ", result)
 	val, err := result.Result()
-	info := map[string]interface{}{"key": clave,
+	info := map[string]interface{}{"key": key,
 		"len":   val,
 		"extra": err,
 	}
-	return info
+	return Checker{Health: Health{Details: info}, Name: "redisCheckLenQueue"}
 }
