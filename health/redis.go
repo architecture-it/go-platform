@@ -52,13 +52,15 @@ func parseInfo(in string) map[string]string {
 	return info
 }
 
-func RedisCheckLenQueue(key string) Checker {
-	result := client.LLen(key)
-	fmt.Println("RESULTADO == ", result)
-	val, err := result.Result()
-	info := map[string]interface{}{"key": key,
-		"len":   val,
-		"extra": err,
+func RedisCheckLenQueue(key string) func() Checker {
+	return func() Checker {
+		result := client.LLen(key)
+		fmt.Println("RESULTADO == ", result)
+		val, err := result.Result()
+		info := map[string]interface{}{"key": key,
+			"len":   val,
+			"extra": err,
+		}
+		return Checker{Health: Health{Details: info}, Name: "redisCheckLenQueue"}
 	}
-	return Checker{Health: Health{Details: info}, Name: "redisCheckLenQueue"}
 }
