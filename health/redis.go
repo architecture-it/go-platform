@@ -1,7 +1,6 @@
 package health
 
 import (
-	"fmt"
 	"os"
 	"strconv"
 	"strings"
@@ -22,20 +21,25 @@ func init() {
 	}
 }
 
-func RedisHealthChecker() Checker {
-	status := UP
-	_, err := client.Ping().Result()
-	if err != nil {
-		status = DOWN
+func RedisHealthChecker(queue string) func() Checker {
+	return func() Checker {
+		status := UP
+		_, err := client.Ping().Result()
+		if err != nil {
+			status = DOWN
+		}
+		infoResponse, err := client.Info().Result()
+		info := parseInfo(infoResponse)
+		result := make(map[string]interface{})
+		result["address"] = client.Options().Addr
+		result["version"] = info["redis_version"]
+		result["usedMemory"] = info["used_memory_human"]
+		result["totalMemory"] = info["total_system_memory_human"]
+		if queue != "" {
+			result["Queue "+queue] = RedisCheckLenQueue(queue)
+		}
+		return Checker{Health: Health{Status: Status{Code: status, Description: ""}, Details: result}, Name: "redisHealthIndicator"}
 	}
-	infoResponse, err := client.Info().Result()
-	info := parseInfo(infoResponse)
-	result := make(map[string]interface{})
-	result["address"] = client.Options().Addr
-	result["version"] = info["redis_version"]
-	result["usedMemory"] = info["used_memory_human"]
-	result["totalMemory"] = info["total_system_memory_human"]
-	return Checker{Health: Health{Status: Status{Code: status, Description: ""}, Details: result}, Name: "redisHealthIndicator"}
 }
 
 func parseInfo(in string) map[string]string {
@@ -52,15 +56,12 @@ func parseInfo(in string) map[string]string {
 	return info
 }
 
-func RedisCheckLenQueue(key string) func() Checker {
-	return func() Checker {
-		result := client.LLen(key)
-		fmt.Println("RESULTADO == ", result)
-		val, err := result.Result()
-		info := map[string]interface{}{"key": key,
-			"len":   val,
-			"extra": err,
-		}
-		return Checker{Health: Health{Details: info}, Name: "redisCheckLenQueue"}
+func RedisCheckLenQueue(key string) interface{} {
+	result := client.LLen(key)
+	val, err := result.Result()
+	info := map[string]interface{}{"key": key,
+		"len":   val,
+		"extra": err,
 	}
+	return info
 }
