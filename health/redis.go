@@ -21,7 +21,7 @@ func init() {
 	}
 }
 
-func RedisHealthChecker(queue string) func() Checker {
+func RedisHealthChecker(keys ...string) func() Checker {
 	return func() Checker {
 		status := UP
 		_, err := client.Ping().Result()
@@ -35,8 +35,8 @@ func RedisHealthChecker(queue string) func() Checker {
 		result["version"] = info["redis_version"]
 		result["usedMemory"] = info["used_memory_human"]
 		result["totalMemory"] = info["total_system_memory_human"]
-		if queue != "" {
-			result["Queue "+queue] = RedisCheckLenQueue(queue)
+		if keys[0] != "" {
+			result["Queue "+keys[0]] = RedisCheckLenQueue(keys[0])
 		}
 		return Checker{Health: Health{Status: Status{Code: status, Description: ""}, Details: result}, Name: "redisHealthIndicator"}
 	}
