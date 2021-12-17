@@ -21,8 +21,8 @@ func init() {
 	}
 }
 
-func RedisHealthChecker(keys ...string) func(keys ...string) Checker {
-	return func(keys ...string) Checker {
+func RedisHealthChecker(keys []string) func(keys []string) Checker {
+	return func(keys []string) Checker {
 		status := UP
 		_, err := client.Ping().Result()
 		if err != nil {
