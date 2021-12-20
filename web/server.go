@@ -105,7 +105,7 @@ func (s *Server) AddMetrics(fs ...func() []string) *ginprometheus.Prometheus {
 //			health.NewMySqlHealthChecker(mySqlHealthChecker.Config{}),
 //			...func())
 
-func (s *Server) AddHealth(fs ...func(...string) health.Checker) {
+func (s *Server) AddHealth(fs ...func(keys ...string) health.Checker) {
 	s.r.GET("/health", func(c *gin.Context) {
 		generalHealth := health.HealthAlwaysUp()
 		result := make(map[string]interface{})
