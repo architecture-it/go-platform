@@ -115,6 +115,7 @@ func (s *Server) AddHealth(fs ...func(k ...string) health.Checker) {
 		result := make(map[string]interface{})
 		statusCode := http.StatusOK
 		fmt.Println(c.Params[1].Value)
+		fmt.Println(fs[1])
 		for i, _ := range fs {
 			fmt.Println(fs[i])
 			f := fs[i]

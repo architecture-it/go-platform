@@ -22,8 +22,8 @@ func init() {
 	}
 }
 
-func RedisHealthChecker(key string) func(keys string) Checker {
-	return func(key string) Checker {
+func RedisHealthChecker(keys ...string) func(keys ...string) Checker {
+	return func(key ...string) Checker {
 		status := UP
 		var p Profundidad
 		_, err := client.Ping().Result()
@@ -38,9 +38,9 @@ func RedisHealthChecker(key string) func(keys string) Checker {
 		result["usedMemory"] = info["used_memory_human"]
 		result["totalMemory"] = info["total_system_memory_human"]
 		fmt.Println("KEYS ", key)
-		if key != "" {
-			fmt.Println("RESPONSE ", p.RedisCheckLenQueue(key))
-			result["queue "+key] = p.RedisCheckLenQueue(key)
+		if len(key) > 1 {
+			fmt.Println("RESPONSE ", p.RedisCheckLenQueue(key[1]))
+			result["queue "+key[1]] = p.RedisCheckLenQueue(key[1])
 		}
 		return Checker{Health: Health{Status: Status{Code: status, Description: ""}, Details: result}, Name: "redisHealthIndicator"}
 	}
