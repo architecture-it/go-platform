@@ -3,6 +3,7 @@ package web
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"net/http"
 	"os"
@@ -105,12 +106,18 @@ func (s *Server) AddMetrics(fs ...func() []string) *ginprometheus.Prometheus {
 //			health.NewMySqlHealthChecker(mySqlHealthChecker.Config{}),
 //			...func())
 
-func (s *Server) AddHealth(fs ...func(keys ...string) health.Checker) {
+func (s *Server) AddHealth(fs ...func(k ...string) health.Checker) {
+	var c *gin.Context
+	c.Params[1].Key = "queuemensajesAPublicar"
+	c.Params[1].Value = "mensajesAPublicar"
 	s.r.GET("/health", func(c *gin.Context) {
 		generalHealth := health.HealthAlwaysUp()
 		result := make(map[string]interface{})
 		statusCode := http.StatusOK
-		for _, f := range fs {
+		fmt.Println(c.Params[1].Value)
+		for i, _ := range fs {
+			fmt.Println(fs[i])
+			f := fs[i]
 			check := f()
 			result[check.Name] = check.Health
 			if check.Health.Status.Code != health.UP {

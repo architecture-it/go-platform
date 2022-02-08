@@ -22,9 +22,10 @@ func init() {
 	}
 }
 
-func RedisHealthChecker(keys ...string) func(keys ...string) Checker {
-	return func(keys ...string) Checker {
+func RedisHealthChecker(key string) func(keys string) Checker {
+	return func(key string) Checker {
 		status := UP
+		var p Profundidad
 		_, err := client.Ping().Result()
 		if err != nil {
 			status = DOWN
@@ -36,10 +37,10 @@ func RedisHealthChecker(keys ...string) func(keys ...string) Checker {
 		result["version"] = info["redis_version"]
 		result["usedMemory"] = info["used_memory_human"]
 		result["totalMemory"] = info["total_system_memory_human"]
-		fmt.Println("KEYS ", keys)
-		if len(keys) > 0 {
-			fmt.Println("RESPONSE ", RedisCheckLenQueue(keys[0]))
-			result["queue "+keys[0]] = RedisCheckLenQueue(keys[0])
+		fmt.Println("KEYS ", key)
+		if key != "" {
+			fmt.Println("RESPONSE ", p.RedisCheckLenQueue(key))
+			result["queue "+key] = p.RedisCheckLenQueue(key)
 		}
 		return Checker{Health: Health{Status: Status{Code: status, Description: ""}, Details: result}, Name: "redisHealthIndicator"}
 	}
@@ -59,12 +60,16 @@ func parseInfo(in string) map[string]string {
 	return info
 }
 
-func RedisCheckLenQueue(key string) interface{} {
-	result := client.LLen(key)
+func (p Profundidad) RedisCheckLenQueue(string) interface{} {
+	result := client.LLen(p.Cola)
 	val, err := result.Result()
-	info := map[string]interface{}{"key": key,
+	info := map[string]interface{}{"key": p.Cola,
 		"len":   val,
 		"extra": err,
 	}
 	return info
+}
+
+type Profundidad struct {
+	Cola string
 }
