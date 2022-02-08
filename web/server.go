@@ -118,7 +118,7 @@ func (s *Server) AddHealth(fs ...func(k ...string) health.Checker) {
 		statusCode := http.StatusOK
 		// fmt.Println(c.Params[1].Value)
 		// fmt.Println(k)
-		fmt.Println(fs[1])
+		// fmt.Println(fs[0])
 		for _, f := range fs {
 			fmt.Println(fs)
 			check := f(queue)
