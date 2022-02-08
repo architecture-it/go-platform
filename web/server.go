@@ -107,19 +107,21 @@ func (s *Server) AddMetrics(fs ...func() []string) *ginprometheus.Prometheus {
 //			...func())
 
 func (s *Server) AddHealth(fs ...func(k ...string) health.Checker) {
-	var c *gin.Context
-	c.Params[1].Key = "queuemensajesAPublicar"
-	c.Params[1].Value = "mensajesAPublicar"
+	// var c *gin.Context
+	// c.Params[1].Key = "queuemensajesAPublicar"
+	// c.Params[1].Value = "mensajesAPublicar"
+	// fmt.Println(k)
 	s.r.GET("/health", func(c *gin.Context) {
+		queue := os.Getenv("KEY_QUEUE_CHECK")
 		generalHealth := health.HealthAlwaysUp()
 		result := make(map[string]interface{})
 		statusCode := http.StatusOK
-		fmt.Println(c.Params[1].Value)
+		// fmt.Println(c.Params[1].Value)
+		// fmt.Println(k)
 		fmt.Println(fs[1])
-		for i, _ := range fs {
-			fmt.Println(fs[i])
-			f := fs[i]
-			check := f()
+		for _, f := range fs {
+			fmt.Println(fs)
+			check := f(queue)
 			result[check.Name] = check.Health
 			if check.Health.Status.Code != health.UP {
 				generalHealth.Status.Code = health.DOWN
