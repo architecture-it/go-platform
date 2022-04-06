@@ -112,7 +112,6 @@ func (s *Server) AddHealth(fs ...func(k ...string) health.Checker) {
 	// c.Params[1].Value = "mensajesAPublicar"
 	// fmt.Println(k)
 	s.r.GET("/health", func(c *gin.Context) {
-		queue := os.Getenv("KEY_QUEUE_CHECK")
 		generalHealth := health.HealthAlwaysUp()
 		result := make(map[string]interface{})
 		statusCode := http.StatusOK
@@ -121,7 +120,7 @@ func (s *Server) AddHealth(fs ...func(k ...string) health.Checker) {
 		// fmt.Println(fs[0])
 		for _, f := range fs {
 			fmt.Println(fs)
-			check := f(queue)
+			check := f()
 			result[check.Name] = check.Health
 			if check.Health.Status.Code != health.UP {
 				generalHealth.Status.Code = health.DOWN
