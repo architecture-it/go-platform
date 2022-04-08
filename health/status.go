@@ -22,6 +22,6 @@ type Checker struct {
 	Name   string
 }
 
-func HealthAlwaysUp() Health {
-	return Health{Status: Status{Code: UP, Description: "AlwaysUpEndpoint"}, Details: ""}
+func HealthAlwaysUp(queueName ...string) Health {
+	return Health{Status: Status{Code: UP, Description: "AlwaysUpEndpoint"}, Details: "", QueueToCheck: queueName[0]}
 }

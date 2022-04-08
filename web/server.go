@@ -107,17 +107,10 @@ func (s *Server) AddMetrics(fs ...func() []string) *ginprometheus.Prometheus {
 //			...func())
 
 func (s *Server) AddHealth(fs ...func(k ...string) health.Checker) {
-	// var c *gin.Context
-	// c.Params[1].Key = "queuemensajesAPublicar"
-	// c.Params[1].Value = "mensajesAPublicar"
-	// fmt.Println(k)
 	s.r.GET("/health", func(c *gin.Context) {
 		generalHealth := health.HealthAlwaysUp()
 		result := make(map[string]interface{})
 		statusCode := http.StatusOK
-		// fmt.Println(c.Params[1].Value)
-		// fmt.Println(k)
-		// fmt.Println(fs[0])
 		for _, f := range fs {
 			fmt.Println(fs)
 			check := f()
