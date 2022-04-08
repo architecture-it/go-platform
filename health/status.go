@@ -14,7 +14,7 @@ type Status struct {
 type Health struct {
 	Status       Status      `json:"status"`
 	Details      interface{} `json:"details"`
-	QueueToCheck string      `json:"queue_to_check"`
+	QueueToCheck string
 }
 
 type Checker struct {

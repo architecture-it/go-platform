@@ -1,7 +1,6 @@
 package health
 
 import (
-	"fmt"
 	"os"
 	"strconv"
 	"strings"
@@ -25,7 +24,6 @@ func init() {
 func (h Health) RedisHealthChecker(keys ...string) func(keys ...string) Checker {
 	return func(key ...string) Checker {
 		status := UP
-		var p Profundidad
 		_, err := client.Ping().Result()
 		if err != nil {
 			status = DOWN
@@ -37,10 +35,8 @@ func (h Health) RedisHealthChecker(keys ...string) func(keys ...string) Checker 
 		result["version"] = info["redis_version"]
 		result["usedMemory"] = info["used_memory_human"]
 		result["totalMemory"] = info["total_system_memory_human"]
-		fmt.Println("KEYS ", h.QueueToCheck)
 		if h.QueueToCheck != "" {
-			fmt.Println("RESPONSE ", p.RedisCheckLenQueue(h.QueueToCheck))
-			result["queue "+h.QueueToCheck] = p.RedisCheckLenQueue(h.QueueToCheck)
+			result["queue "+h.QueueToCheck] = RedisCheckLenQueue(h.QueueToCheck)
 		}
 		return Checker{Health: Health{Status: Status{Code: status, Description: ""}, Details: result}, Name: "redisHealthIndicator"}
 	}
@@ -60,16 +56,12 @@ func parseInfo(in string) map[string]string {
 	return info
 }
 
-func (p Profundidad) RedisCheckLenQueue(string) interface{} {
-	result := client.LLen(p.Cola)
+func RedisCheckLenQueue(queueName string) interface{} {
+	result := client.LLen(queueName)
 	val, err := result.Result()
-	info := map[string]interface{}{"key": p.Cola,
+	info := map[string]interface{}{"key": queueName,
 		"len":   val,
 		"extra": err,
 	}
 	return info
-}
-
-type Profundidad struct {
-	Cola string
 }
