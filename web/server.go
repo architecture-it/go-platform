@@ -3,7 +3,6 @@ package web
 import (
 	"context"
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"net/http"
 	"os"
@@ -112,7 +111,6 @@ func (s *Server) AddHealth(fs ...func(k ...string) health.Checker) {
 		result := make(map[string]interface{})
 		statusCode := http.StatusOK
 		for _, f := range fs {
-			fmt.Println(fs)
 			check := f()
 			result[check.Name] = check.Health
 			if check.Health.Status.Code != health.UP {
