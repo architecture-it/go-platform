@@ -1,6 +1,7 @@
 package health
 
 import (
+	"fmt"
 	"os"
 	"strconv"
 	"strings"
@@ -35,8 +36,9 @@ func (h Health) RedisHealthChecker(keys ...string) func(keys ...string) Checker 
 		result["version"] = info["redis_version"]
 		result["usedMemory"] = info["used_memory_human"]
 		result["totalMemory"] = info["total_system_memory_human"]
-		if h.QueueToCheck != "" {
-			result["queue "+h.QueueToCheck] = RedisCheckLenQueue(h.QueueToCheck)
+		fmt.Println("DETAILS === ", h.Details)
+		if h.Details != "" {
+			result["queue "+h.QueueToCheck] = RedisCheckLenQueue("")
 		}
 		return Checker{Health: Health{Status: Status{Code: status, Description: ""}, Details: result}, Name: "redisHealthIndicator"}
 	}
