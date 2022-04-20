@@ -25,11 +25,10 @@ func init() {
 func (h Health) RedisHealthChecker() func() Checker {
 	return func() Checker {
 		status := UP
-		_, err := client.Ping().Result()
-		if err != nil {
+		if _, err := client.Ping().Result(); err != nil {
 			status = DOWN
 		}
-		infoResponse, err := client.Info().Result()
+		infoResponse, _ := client.Info().Result()
 		info := parseInfo(infoResponse)
 		result := make(map[string]interface{})
 		queueToCheck := fmt.Sprintf("%v", h.Details)
@@ -61,7 +60,8 @@ func parseInfo(in string) map[string]string {
 func RedisCheckLenQueue(queueName string) interface{} {
 	result := client.LLen(queueName)
 	val, err := result.Result()
-	info := map[string]interface{}{"key": queueName,
+	info := map[string]interface{}{
+		"key":   queueName,
 		"len":   val,
 		"extra": err,
 	}
