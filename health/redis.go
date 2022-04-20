@@ -22,24 +22,26 @@ func init() {
 	}
 }
 
-func (h Health) RedisHealthChecker() Checker {
-	status := UP
-	_, err := client.Ping().Result()
-	if err != nil {
-		status = DOWN
+func (h Health) RedisHealthChecker() func() Checker {
+	return func() Checker {
+		status := UP
+		_, err := client.Ping().Result()
+		if err != nil {
+			status = DOWN
+		}
+		infoResponse, err := client.Info().Result()
+		info := parseInfo(infoResponse)
+		result := make(map[string]interface{})
+		queueToCheck := fmt.Sprintf("%v", h.Details)
+		result["address"] = client.Options().Addr
+		result["version"] = info["redis_version"]
+		result["usedMemory"] = info["used_memory_human"]
+		result["totalMemory"] = info["total_system_memory_human"]
+		if queueToCheck != "" {
+			result["queue "+queueToCheck] = RedisCheckLenQueue(queueToCheck)
+		}
+		return Checker{Health: Health{Status: Status{Code: status, Description: ""}, Details: result}, Name: "redisHealthIndicator"}
 	}
-	infoResponse, err := client.Info().Result()
-	info := parseInfo(infoResponse)
-	result := make(map[string]interface{})
-	queueToCheck := fmt.Sprintf("%v", h.Details)
-	result["address"] = client.Options().Addr
-	result["version"] = info["redis_version"]
-	result["usedMemory"] = info["used_memory_human"]
-	result["totalMemory"] = info["total_system_memory_human"]
-	if queueToCheck != "" {
-		result["queue "+queueToCheck] = RedisCheckLenQueue(queueToCheck)
-	}
-	return Checker{Health: Health{Status: Status{Code: status, Description: ""}, Details: result}, Name: "redisHealthIndicator"}
 }
 
 func parseInfo(in string) map[string]string {
