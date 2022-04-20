@@ -38,7 +38,7 @@ func (h Health) RedisHealthChecker(keys ...string) func(keys ...string) Checker 
 		result["totalMemory"] = info["total_system_memory_human"]
 		fmt.Println("DETAILS === ", h.Details)
 		if h.Details != "" {
-			result["queue "+h.QueueToCheck] = RedisCheckLenQueue("")
+			result["queue "] = RedisCheckLenQueue("")
 		}
 		return Checker{Health: Health{Status: Status{Code: status, Description: ""}, Details: result}, Name: "redisHealthIndicator"}
 	}
