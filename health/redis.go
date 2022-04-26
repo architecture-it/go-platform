@@ -1,6 +1,7 @@
 package health
 
 import (
+	"fmt"
 	"os"
 	"strconv"
 	"strings"
@@ -21,20 +22,25 @@ func init() {
 	}
 }
 
-func RedisHealthChecker() Checker {
-	status := UP
-	_, err := client.Ping().Result()
-	if err != nil {
-		status = DOWN
+func (h Health) RedisHealthChecker() func() Checker {
+	return func() Checker {
+		status := UP
+		if _, err := client.Ping().Result(); err != nil {
+			status = DOWN
+		}
+		infoResponse, _ := client.Info().Result()
+		info := parseInfo(infoResponse)
+		result := make(map[string]interface{})
+		queueToCheck := fmt.Sprintf("%v", h.Details)
+		result["address"] = client.Options().Addr
+		result["version"] = info["redis_version"]
+		result["usedMemory"] = info["used_memory_human"]
+		result["totalMemory"] = info["total_system_memory_human"]
+		if queueToCheck != "" {
+			result["queue "+queueToCheck] = RedisCheckLenQueue(queueToCheck)
+		}
+		return Checker{Health: Health{Status: Status{Code: status, Description: ""}, Details: result}, Name: "redisHealthIndicator"}
 	}
-	infoResponse, err := client.Info().Result()
-	info := parseInfo(infoResponse)
-	result := make(map[string]interface{})
-	result["address"] = client.Options().Addr
-	result["version"] = info["redis_version"]
-	result["usedMemory"] = info["used_memory_human"]
-	result["totalMemory"] = info["total_system_memory_human"]
-	return Checker{Health: Health{Status: Status{Code: status, Description: ""}, Details: result}, Name: "redisHealthIndicator"}
 }
 
 func parseInfo(in string) map[string]string {
@@ -47,6 +53,17 @@ func parseInfo(in string) map[string]string {
 		if len(values) > 1 {
 			info[values[0]] = values[1]
 		}
+	}
+	return info
+}
+
+func RedisCheckLenQueue(queueName string) interface{} {
+	result := client.LLen(queueName)
+	val, err := result.Result()
+	info := map[string]interface{}{
+		"key":   queueName,
+		"len":   val,
+		"extra": err,
 	}
 	return info
 }
