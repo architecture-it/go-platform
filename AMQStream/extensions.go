@@ -4,9 +4,9 @@ import (
 	"errors"
 	"fmt"
 	"os"
-	"strconv"
 
-	"github.com/architecture-it/ARQ.Common-SettingsGO/extensions"
+	extension "github.com/architecture-it/go-platform/config"
+	"github.com/architecture-it/go-platform/log"
 	"github.com/confluentinc/confluent-kafka-go/kafka"
 	"github.com/mitchellh/mapstructure"
 )
@@ -16,6 +16,7 @@ var configurations = make(map[string]string)
 func AddKafka() (*Config, error) {
 	config, err := bindConfiguration()
 	if err != nil {
+		log.Logger.DPanic(err.Error())
 		panic(err)
 	}
 
@@ -26,21 +27,15 @@ func AddKafka() (*Config, error) {
 		"ssl.certificate.location":            config.SslCertificateLocation,
 		"message.max.bytes":                   config.MessageMaxBytes,
 		"enable.ssl.certificate.verification": false,
+		"auto.offset.reset":                   config.AutoOffsetReset,
 		// "application.id": config.ApplicationName,
 	}
 	return &Config{cfg: kafkaConfig}, nil
 }
 
 func bindConfiguration() (*KafkaOption, error) {
-	configuration := extensions.GetConfiguration("enviroment.yaml")
+	configuration := extension.GetConfiguration("enviroment.yaml")
 	mapstructure.Decode(configuration["Kafka"], &configurations)
-
-	messageMaxBytes, errorConversion := strconv.Atoi(configurations[MessageMaxBytes])
-
-	if errorConversion != nil {
-
-		return nil, errorConversion
-	}
 
 	err := validRequired()
 
@@ -50,18 +45,18 @@ func bindConfiguration() (*KafkaOption, error) {
 	}
 
 	result := KafkaOption{
-		BootstrapServers:            getOrDefaultString(BootstrapServers, configurations[BootstrapServers]),
-		GroupId:                     getOrDefaultString(GroupId, configurations[GroupId]),
-		SessionTimeoutMs:            getOrDefaultInt(SessionTimeoutMs, 60000),
-		SecurityProtocol:            getOrDefaultString(SecurityProtocol, configurations[SecurityProtocol]),
-		AutoOffsetReset:             getOrDefaultString(AutoOffsetReset, "Earlitest"),
-		SslCertificateLocation:      getOrDefaultString(SslCertificateLocation, configurations[SslCertificateLocation]),
-		MillisecondsTimeout:         getOrDefaultInt(MillisecondsTimeout, 10000),
-		ConsumerDebug:               getOrDefaultString(ConsumerDebug, ""),
-		MaxRetry:                    getOrDefaultInt(MaxRetry, 3),
-		AutoRegisterSchemas:         getOrDefaultBool(AutoRegisterSchemas, true),
-		MessageMaxBytes:             getOrDefaultInt(MessageMaxBytes, messageMaxBytes),
-		PartitionAssignmentStrategy: getOrDefaultString(ConsumerDebug, "CooperativeSticky"),
+		BootstrapServers:            getOrDefaultString(configurations, BootstrapServers, configurations[BootstrapServers]),
+		GroupId:                     getOrDefaultString(configurations, GroupId, ""),
+		SessionTimeoutMs:            getOrDefaultInt(configurations, SessionTimeoutMs, 60000),
+		SecurityProtocol:            getOrDefaultString(configurations, SecurityProtocol, "plaintext"),
+		AutoOffsetReset:             getOrDefaultString(configurations, AutoOffsetReset, "earliest"),
+		SslCertificateLocation:      getOrDefaultString(configurations, SslCertificateLocation, ""),
+		MillisecondsTimeout:         getOrDefaultInt(configurations, MillisecondsTimeout, 10000),
+		ConsumerDebug:               getOrDefaultString(configurations, ConsumerDebug, ""),
+		MaxRetry:                    getOrDefaultInt(configurations, MaxRetry, 3),
+		AutoRegisterSchemas:         getOrDefaultBool(configurations, AutoRegisterSchemas, true),
+		PartitionAssignmentStrategy: getOrDefaultString(configurations, ConsumerDebug, "CooperativeSticky"),
+		MessageMaxBytes:             getOrDefaultInt(configurations, MessageMaxBytes, 100000),
 		// ApplicationName: getOrDefaultString(ApplicationName, configurations[ApplicationName]),
 	}
 	return &result, nil
@@ -70,15 +65,15 @@ func bindConfiguration() (*KafkaOption, error) {
 func validRequired() error {
 	boopstrapServer := os.Getenv(BootstrapServers)
 	if boopstrapServer == "" && configurations[BootstrapServers] == "" {
-		return errors.New("The BootstrapServer is requiered")
+		return errors.New("the bootstrapServer is requiered")
 	}
 	applicationName := os.Getenv(ApplicationName)
 	if applicationName == "" && configurations[ApplicationName] == "" {
-		return errors.New("The ApplicationName is requiered")
+		return errors.New("the applicationName is requiered")
 	}
 	schemaUrl := os.Getenv(SchemaUrl)
 	if schemaUrl == "" && configurations[SchemaUrl] == "" {
-		return errors.New("The SchemaUrl is requiered")
+		return errors.New("the schemaUrl is requiered")
 	}
 	return nil
 }
@@ -125,6 +120,7 @@ func (c *Config) Build() {
 				for {
 					err := c.Consumer(suscriber.event, suscriber.topic)
 					if err != nil {
+						log.Logger.Error(err.Error())
 						return err
 					}
 				}

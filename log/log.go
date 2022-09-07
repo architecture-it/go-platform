@@ -48,7 +48,7 @@ func configureLogger() (*zap.Logger, *zap.SugaredLogger) {
 
 				logger, err := cfg.Build()
 				if err != nil {
-					panic("Ocurió un error al crear el Logger a partir de la configuración. Revise la variable de entorno LOG_CONFIG.")
+					panic("Ocurrió un error al crear el Logger a partir de la configuración. Revise la variable de entorno LOG_CONFIG.")
 				}
 				return logger, logger.Sugar()
 			}

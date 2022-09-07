@@ -1,27 +1,26 @@
 package AMQStream
 
 import (
-	"os"
 	"strconv"
 )
 
-func getOrDefaultString(key, _default string) string {
-	value := os.Getenv(key)
+func getOrDefaultString(config map[string]string, key, _default string) string {
+	value := config[key]
 	if value == "" {
 		return _default
 	}
 	return value
 }
-func getOrDefaultInt(key string, _default int) int {
-	value := os.Getenv(key)
+func getOrDefaultInt(config map[string]string, key string, _default int) int {
+	value := config[key]
 	if value == "" {
 		return _default
 	}
 	v, _ := strconv.Atoi(value)
 	return v
 }
-func getOrDefaultBool(key string, _default bool) bool {
-	value := os.Getenv(key)
+func getOrDefaultBool(config map[string]string, key string, _default bool) bool {
+	value := config[key]
 	if value == "" {
 		return _default
 	}
