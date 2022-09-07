@@ -4,9 +4,8 @@ import (
 	"errors"
 	"fmt"
 	"os"
-	"strconv"
 
-	extensions "github.com/architecture-it/ARQ.Common-SettingsGO/Extensions"
+	extension "github.com/architecture-it/go-platform/config"
 	"github.com/architecture-it/go-platform/log"
 	"github.com/confluentinc/confluent-kafka-go/kafka"
 	"github.com/mitchellh/mapstructure"
@@ -35,14 +34,8 @@ func AddKafka() (*Config, error) {
 }
 
 func bindConfiguration() (*KafkaOption, error) {
-	configuration := extensions.GetConfiguration("enviroment.yaml")
+	configuration := extension.GetConfiguration("enviroment.yaml")
 	mapstructure.Decode(configuration["Kafka"], &configurations)
-	var messageMaxBytes int
-	if configurations[MessageMaxBytes] != "" {
-		messageMaxBytes, _ = strconv.Atoi(configurations[MessageMaxBytes])
-	} else {
-		messageMaxBytes = 100000
-	}
 
 	err := validRequired()
 
@@ -52,18 +45,18 @@ func bindConfiguration() (*KafkaOption, error) {
 	}
 
 	result := KafkaOption{
-		BootstrapServers:            getOrDefaultString(BootstrapServers, configurations[BootstrapServers]),
-		GroupId:                     getOrDefaultString(GroupId, configurations[GroupId]),
-		SessionTimeoutMs:            getOrDefaultInt(SessionTimeoutMs, 60000),
-		SecurityProtocol:            getOrDefaultString(SecurityProtocol, configurations[SecurityProtocol]),
-		AutoOffsetReset:             getOrDefaultString(AutoOffsetReset, configurations[AutoOffsetReset]),
-		SslCertificateLocation:      getOrDefaultString(SslCertificateLocation, configurations[SslCertificateLocation]),
-		MillisecondsTimeout:         getOrDefaultInt(MillisecondsTimeout, 10000),
-		ConsumerDebug:               getOrDefaultString(ConsumerDebug, ""),
-		MaxRetry:                    getOrDefaultInt(MaxRetry, 3),
-		AutoRegisterSchemas:         getOrDefaultBool(AutoRegisterSchemas, true),
-		PartitionAssignmentStrategy: getOrDefaultString(ConsumerDebug, "CooperativeSticky"),
-		MessageMaxBytes:             getOrDefaultInt(MessageMaxBytes, messageMaxBytes),
+		BootstrapServers:            getOrDefaultString(configurations, BootstrapServers, configurations[BootstrapServers]),
+		GroupId:                     getOrDefaultString(configurations, GroupId, ""),
+		SessionTimeoutMs:            getOrDefaultInt(configurations, SessionTimeoutMs, 60000),
+		SecurityProtocol:            getOrDefaultString(configurations, SecurityProtocol, "plaintext"),
+		AutoOffsetReset:             getOrDefaultString(configurations, AutoOffsetReset, "earliest"),
+		SslCertificateLocation:      getOrDefaultString(configurations, SslCertificateLocation, ""),
+		MillisecondsTimeout:         getOrDefaultInt(configurations, MillisecondsTimeout, 10000),
+		ConsumerDebug:               getOrDefaultString(configurations, ConsumerDebug, ""),
+		MaxRetry:                    getOrDefaultInt(configurations, MaxRetry, 3),
+		AutoRegisterSchemas:         getOrDefaultBool(configurations, AutoRegisterSchemas, true),
+		PartitionAssignmentStrategy: getOrDefaultString(configurations, ConsumerDebug, "CooperativeSticky"),
+		MessageMaxBytes:             getOrDefaultInt(configurations, MessageMaxBytes, 100000),
 		// ApplicationName: getOrDefaultString(ApplicationName, configurations[ApplicationName]),
 	}
 	return &result, nil
@@ -132,6 +125,7 @@ func (c *Config) Build() {
 					}
 				}
 
+				return nil
 			}()
 			fmt.Println(indexj)
 		}
