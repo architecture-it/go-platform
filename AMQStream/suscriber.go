@@ -1,11 +1,11 @@
 package AMQStream
 
 import (
-	"fmt"
 	"os"
 	"os/signal"
 	"syscall"
 
+	"github.com/architecture-it/go-platform/log"
 	"github.com/confluentinc/confluent-kafka-go/kafka"
 	"github.com/linkedin/goavro/v2"
 	"github.com/mitchellh/mapstructure"
@@ -13,14 +13,13 @@ import (
 
 func (c *Config) NotifyToSubscriber(event ISpecificRecord, topic string, metadata ConsumerMetadata) error {
 
-	for index, element := range c.consumers {
+	for _, element := range c.consumers {
 		subscription := element.subscriptions[event.SchemaName()]
 
 		if subscription.topic == topic {
 			subscription.subscriptor.Handler(event, metadata)
 		}
 
-		fmt.Println(index)
 	}
 
 	return nil
@@ -35,41 +34,39 @@ func (k *Config) Consumer(event ISpecificRecord, topic string) error {
 	sigchan := make(chan os.Signal, 1)
 	signal.Notify(sigchan, syscall.SIGINT, syscall.SIGTERM)
 
-	fmt.Println(k.cfg)
+	log.SugarLogger.Infof("%v", k.cfg)
 
 	c, err := kafka.NewConsumer(k.cfg)
 
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Failed to create consumer: %s\n", err)
+		log.SugarLogger.Errorf("Failed to create consumer: %s\n", err.Error())
 		os.Exit(1)
 	}
-
-	fmt.Printf("Created Consumer %v\n", c)
 
 	var topics []string
 	topics = append(topics, topic)
 
 	err = c.SubscribeTopics(topics, nil)
 
+	if err != nil {
+		return nil
+	}
 	run := true
 
 	for run {
 		select {
 		case sig := <-sigchan:
-			fmt.Printf("Caught signal %v: terminating\n", sig)
+			log.SugarLogger.Infof("Caught signal %v: terminating\n", sig)
 			run = false
 		default:
-			ev := c.Poll(30)
+			ev := c.Poll(100)
 			if ev == nil {
 				continue
 			}
 
 			switch e := ev.(type) {
 			case *kafka.Message:
-				fmt.Printf("%% Message on %s:\n%s\n",
-					e.TopicPartition, string(e.Value))
 				if e.Headers != nil {
-					fmt.Printf("%% Headers: %v\n", e.Headers)
 					metadata.Header = e.Headers
 					metadata.Key = string(e.Key)
 					metadata.Timestamp = e.Timestamp
@@ -78,37 +75,32 @@ func (k *Config) Consumer(event ISpecificRecord, topic string) error {
 				result = e.Value
 				run = false
 			case kafka.Error:
-				fmt.Fprintf(os.Stderr, "%% Error: %v: %v\n", e.Code(), e)
+				log.SugarLogger.Errorf("%% Error: %v: %v\n", e.Code(), e)
 				if e.Code() == kafka.ErrAllBrokersDown {
 					run = false
 				}
 			default:
-				fmt.Printf("Ignored %v\n", e)
+				log.SugarLogger.Infof("Ignored %v\n", e)
 			}
 		}
 	}
 
-	fmt.Printf("Closing consumer\n")
 	c.Close()
 
 	codec, errr := goavro.NewCodec(eventSchema)
 
 	if errr != nil {
-		fmt.Println(errr)
+		return errr
 	}
 
 	decoded, _, errr := codec.NativeFromBinary(result[5:])
 	if errr != nil {
-		fmt.Println(errr)
+		return errr
 	}
-
-	fmt.Println(fmt.Sprintf("%s", decoded))
 
 	mapstructure.Decode(decoded, &event)
 
-	resultEvent := k.NotifyToSubscriber(event, topic, metadata)
-
-	fmt.Println(resultEvent)
+	k.NotifyToSubscriber(event, topic, metadata)
 
 	return nil
 }

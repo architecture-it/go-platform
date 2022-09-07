@@ -2,63 +2,52 @@ package AMQStream
 
 import (
 	"encoding/json"
-	"fmt"
 	"os"
 	"time"
 
+	"github.com/architecture-it/go-platform/log"
 	"github.com/confluentinc/confluent-kafka-go/kafka"
 	"github.com/linkedin/goavro/v2"
 )
 
 func (c *Config) To(event ISpecificRecord, key string) error {
 
-	for index, element := range c.producers {
-		for indej, topic := range element.ToPublish[event.SchemaName()] {
+	for _, element := range c.producers {
+		for _, topic := range element.ToPublish[event.SchemaName()] {
 			err := c.Publish(event, key, topic)
 			if err != nil {
+				log.Logger.Error(err.Error())
 				return err
 			}
-			fmt.Println(indej)
 		}
-		fmt.Println(index)
 	}
 
 	return nil
 }
 
 func (c *Config) Publish(event ISpecificRecord, key string, topic string) error {
-	eventBytes, err := event.MarshalJSON()
+	eventBytes, _ := event.MarshalJSON()
 	eventSchema := event.Schema()
 
 	p, err := kafka.NewProducer(c.cfg)
 
 	if err != nil {
-		fmt.Printf("Failed to create producer: %s\n", err)
+		log.SugarLogger.Errorf("Failed to create producer: %s\n", err.Error())
 		os.Exit(1)
 	}
 
-	fmt.Printf("Created Producer %v\n", p)
-
 	deliveryChan := make(chan kafka.Event)
 
-	//Generate Guid identity
-	// id := uuid.New()
-	// uuid := strings.Replace(id.String(), "-", "", -1)
-	byteId, err := json.Marshal(key)
-	fmt.Println(byteId)
+	byteId, _ := json.Marshal(key)
 
 	codec, err := goavro.NewCodec(eventSchema)
 
 	if err != nil {
 		return err
-		// fmt.Println(errr)
 	}
-
-	fmt.Println(codec)
 
 	native, _, err := codec.NativeFromTextual(eventBytes)
 	if err != nil {
-		// fmt.Println(err)
 		return err
 	}
 
@@ -73,9 +62,8 @@ func (c *Config) Publish(event ISpecificRecord, key string, topic string) error 
 		return err
 	}
 
-	for index, element := range binary {
+	for _, element := range binary {
 		bin = append(bin, element)
-		fmt.Println(index)
 	}
 
 	p.Produce(&kafka.Message{
@@ -92,10 +80,7 @@ func (c *Config) Publish(event ISpecificRecord, key string, topic string) error 
 	m := e.(*kafka.Message)
 
 	if m.TopicPartition.Error != nil {
-		fmt.Printf("Delivery failed: %v\n", m.TopicPartition.Error)
-	} else {
-		fmt.Printf("Delivered message to topic %s [%d] at offset %v\n",
-			*m.TopicPartition.Topic, m.TopicPartition.Partition, m.TopicPartition.Offset)
+		return m.TopicPartition.Error
 	}
 
 	close(deliveryChan)
