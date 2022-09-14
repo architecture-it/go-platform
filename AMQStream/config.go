@@ -1,6 +1,7 @@
 package AMQStream
 
 import (
+	"sync"
 	"time"
 
 	"github.com/confluentinc/confluent-kafka-go/kafka"
@@ -10,6 +11,21 @@ type Config struct {
 	cfg       *kafka.ConfigMap
 	consumers []ConsumerOptions
 	producers []ProducerOptions
+}
+
+var lock = &sync.Mutex{}
+var singleInstance *Config
+
+func getInstance() *Config {
+	if singleInstance == nil {
+		lock.Lock()
+		defer lock.Unlock()
+		if singleInstance == nil {
+			singleInstance = &Config{}
+		}
+	}
+
+	return singleInstance
 }
 
 type ConsumerOptions struct {

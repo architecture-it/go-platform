@@ -9,7 +9,6 @@ type ISpecificRecord interface {
 
 type ISuscriber interface {
 	Handler(event ISpecificRecord, metadata ConsumerMetadata)
-	Setup(publisher IPublisher)
 }
 
 type IPublisher interface {

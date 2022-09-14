@@ -20,7 +20,7 @@ func AddKafka() (*Config, error) {
 		panic(err)
 	}
 
-	kafkaConfig := &kafka.ConfigMap{
+	getInstance().cfg = &kafka.ConfigMap{
 		"bootstrap.servers":                   config.BootstrapServers,
 		"group.id":                            config.GroupId,
 		"security.protocol":                   config.SecurityProtocol,
@@ -28,9 +28,9 @@ func AddKafka() (*Config, error) {
 		"message.max.bytes":                   config.MessageMaxBytes,
 		"enable.ssl.certificate.verification": false,
 		"auto.offset.reset":                   config.AutoOffsetReset,
-		// "application.id": config.ApplicationName,
 	}
-	return &Config{cfg: kafkaConfig}, nil
+
+	return getInstance(), nil
 }
 
 func bindConfiguration() (*KafkaOption, error) {
@@ -132,4 +132,5 @@ func (c *Config) Build() {
 
 		fmt.Println(index)
 	}
+
 }

@@ -10,11 +10,11 @@ import (
 	"github.com/linkedin/goavro/v2"
 )
 
-func (c *Config) To(event ISpecificRecord, key string) error {
+func (c *Config) to(event ISpecificRecord, key string) error {
 
 	for _, element := range c.producers {
 		for _, topic := range element.ToPublish[event.SchemaName()] {
-			err := c.Publish(event, key, topic)
+			err := c.publish(event, key, topic)
 			if err != nil {
 				log.Logger.Error(err.Error())
 				return err
@@ -25,7 +25,7 @@ func (c *Config) To(event ISpecificRecord, key string) error {
 	return nil
 }
 
-func (c *Config) Publish(event ISpecificRecord, key string, topic string) error {
+func (c *Config) publish(event ISpecificRecord, key string, topic string) error {
 	eventBytes, _ := event.MarshalJSON()
 	eventSchema := event.Schema()
 
