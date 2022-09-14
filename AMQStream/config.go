@@ -7,21 +7,21 @@ import (
 	"github.com/confluentinc/confluent-kafka-go/kafka"
 )
 
-type Config struct {
+type config struct {
 	cfg       *kafka.ConfigMap
 	consumers []ConsumerOptions
 	producers []ProducerOptions
 }
 
 var lock = &sync.Mutex{}
-var singleInstance *Config
+var singleInstance *config
 
-func getInstance() *Config {
+func getInstance() *config {
 	if singleInstance == nil {
 		lock.Lock()
 		defer lock.Unlock()
 		if singleInstance == nil {
-			singleInstance = &Config{}
+			singleInstance = &config{}
 		}
 	}
 

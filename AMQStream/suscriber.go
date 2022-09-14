@@ -11,7 +11,7 @@ import (
 	"github.com/mitchellh/mapstructure"
 )
 
-func (c *Config) NotifyToSubscriber(event ISpecificRecord, topic string, metadata ConsumerMetadata) error {
+func (c *config) NotifyToSubscriber(event ISpecificRecord, topic string, metadata ConsumerMetadata) error {
 
 	for _, element := range c.consumers {
 		subscription := element.subscriptions[event.SchemaName()]
@@ -25,7 +25,7 @@ func (c *Config) NotifyToSubscriber(event ISpecificRecord, topic string, metadat
 	return nil
 }
 
-func (k *Config) Consumer(event ISpecificRecord, topic string) error {
+func (k *config) Consumer(event ISpecificRecord, topic string) error {
 	eventSchema := event.Schema()
 
 	var result []byte
