@@ -13,14 +13,14 @@ import (
 
 var configurations = make(map[string]string)
 
-func AddKafka() (*Config, error) {
+func AddKafka() (*config, error) {
 	config, err := bindConfiguration()
 	if err != nil {
 		log.Logger.DPanic(err.Error())
 		panic(err)
 	}
 
-	kafkaConfig := &kafka.ConfigMap{
+	getInstance().cfg = &kafka.ConfigMap{
 		"bootstrap.servers":                   config.BootstrapServers,
 		"group.id":                            config.GroupId,
 		"security.protocol":                   config.SecurityProtocol,
@@ -28,9 +28,9 @@ func AddKafka() (*Config, error) {
 		"message.max.bytes":                   config.MessageMaxBytes,
 		"enable.ssl.certificate.verification": false,
 		"auto.offset.reset":                   config.AutoOffsetReset,
-		// "application.id": config.ApplicationName,
 	}
-	return &Config{cfg: kafkaConfig}, nil
+
+	return getInstance(), nil
 }
 
 func bindConfiguration() (*KafkaOption, error) {
@@ -78,7 +78,7 @@ func validRequired() error {
 	return nil
 }
 
-func (c *Config) ToConsumer(suscriber ISuscriber, event ISpecificRecord, topic string) {
+func (c *config) ToConsumer(suscriber ISuscriber, event ISpecificRecord, topic string) {
 	subscriptions := make(map[string]Subscription)
 
 	subcription := Subscription{
@@ -93,7 +93,7 @@ func (c *Config) ToConsumer(suscriber ISuscriber, event ISpecificRecord, topic s
 	})
 }
 
-func (c *Config) ToProducer(event ISpecificRecord, topics []string) {
+func (c *config) ToProducer(event ISpecificRecord, topics []string) {
 	appended := false
 
 	for _, v := range c.producers {
@@ -113,7 +113,7 @@ func (c *Config) ToProducer(event ISpecificRecord, topics []string) {
 	}
 }
 
-func (c *Config) Build() {
+func (c *config) Build() {
 	for index, element := range c.consumers {
 		for indexj, suscriber := range element.subscriptions {
 			go func() error {
@@ -132,4 +132,5 @@ func (c *Config) Build() {
 
 		fmt.Println(index)
 	}
+
 }
