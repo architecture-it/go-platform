@@ -25,8 +25,9 @@ func (c *config) NotifyToSubscriber(event ISpecificRecord, topic string, metadat
 	return nil
 }
 
-func (k *config) Consumer(event ISpecificRecord, topic string) error {
+func (k *config) consumer(event ISpecificRecord, topic string) error {
 	eventSchema := event.Schema()
+	millisecondTimeout := getOrDefaultInt(configurations, MillisecondsTimeout, 10000)
 
 	var result []byte
 	var metadata ConsumerMetadata
@@ -59,7 +60,7 @@ func (k *config) Consumer(event ISpecificRecord, topic string) error {
 			log.SugarLogger.Infof("Caught signal %v: terminating\n", sig)
 			run = false
 		default:
-			ev := c.Poll(100)
+			ev := c.Poll(millisecondTimeout)
 			if ev == nil {
 				continue
 			}
@@ -73,7 +74,20 @@ func (k *config) Consumer(event ISpecificRecord, topic string) error {
 				}
 
 				result = e.Value
-				run = false
+				codec, errr := goavro.NewCodec(eventSchema)
+
+				if errr != nil {
+					return errr
+				}
+
+				decoded, _, errr := codec.NativeFromBinary(result[5:])
+				if errr != nil {
+					return errr
+				}
+
+				mapstructure.Decode(decoded, &event)
+
+				k.NotifyToSubscriber(event, topic, metadata)
 			case kafka.Error:
 				log.SugarLogger.Errorf("%% Error: %v: %v\n", e.Code(), e)
 				if e.Code() == kafka.ErrAllBrokersDown {
@@ -86,21 +100,6 @@ func (k *config) Consumer(event ISpecificRecord, topic string) error {
 	}
 
 	c.Close()
-
-	codec, errr := goavro.NewCodec(eventSchema)
-
-	if errr != nil {
-		return errr
-	}
-
-	decoded, _, errr := codec.NativeFromBinary(result[5:])
-	if errr != nil {
-		return errr
-	}
-
-	mapstructure.Decode(decoded, &event)
-
-	k.NotifyToSubscriber(event, topic, metadata)
 
 	return nil
 }

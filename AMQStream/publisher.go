@@ -28,7 +28,7 @@ func (c *config) to(event ISpecificRecord, key string) error {
 func (c *config) publish(event ISpecificRecord, key string, topic string) error {
 	eventBytes, _ := event.MarshalJSON()
 	eventSchema := event.Schema()
-
+	appName := getOrDefaultString(configurations, ApplicationName, " ")
 	p, err := kafka.NewProducer(c.cfg)
 
 	if err != nil {
@@ -73,7 +73,7 @@ func (c *config) publish(event ISpecificRecord, key string, topic string) error 
 		Timestamp:      time.Time{},
 		TimestampType:  0,
 		Opaque:         nil,
-		Headers:        []kafka.Header{{Key: "remitente", Value: []byte("AMQTest")}},
+		Headers:        []kafka.Header{{Key: "remitente", Value: []byte(appName)}},
 	}, deliveryChan)
 
 	e := <-deliveryChan
