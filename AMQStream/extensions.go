@@ -2,7 +2,6 @@ package AMQStream
 
 import (
 	"errors"
-	"fmt"
 	"os"
 
 	extension "github.com/architecture-it/go-platform/config"
@@ -26,8 +25,11 @@ func AddKafka() (*config, error) {
 		"security.protocol":                   config.SecurityProtocol,
 		"ssl.certificate.location":            config.SslCertificateLocation,
 		"message.max.bytes":                   config.MessageMaxBytes,
-		"enable.ssl.certificate.verification": false,
+		"enable.ssl.certificate.verification": config.EnableSslCertificateVerification,
 		"auto.offset.reset":                   config.AutoOffsetReset,
+		"session.timeout.ms":                  config.SessionTimeoutMs,
+		"debug":                               config.ConsumerDebug,
+		"partition.assignment.strategy":       config.PartitionAssignmentStrategy,
 	}
 
 	return getInstance(), nil
@@ -45,19 +47,18 @@ func bindConfiguration() (*KafkaOption, error) {
 	}
 
 	result := KafkaOption{
-		BootstrapServers:            getOrDefaultString(configurations, BootstrapServers, configurations[BootstrapServers]),
-		GroupId:                     getOrDefaultString(configurations, GroupId, ""),
-		SessionTimeoutMs:            getOrDefaultInt(configurations, SessionTimeoutMs, 60000),
-		SecurityProtocol:            getOrDefaultString(configurations, SecurityProtocol, "plaintext"),
-		AutoOffsetReset:             getOrDefaultString(configurations, AutoOffsetReset, "earliest"),
-		SslCertificateLocation:      getOrDefaultString(configurations, SslCertificateLocation, ""),
-		MillisecondsTimeout:         getOrDefaultInt(configurations, MillisecondsTimeout, 10000),
-		ConsumerDebug:               getOrDefaultString(configurations, ConsumerDebug, ""),
-		MaxRetry:                    getOrDefaultInt(configurations, MaxRetry, 3),
-		AutoRegisterSchemas:         getOrDefaultBool(configurations, AutoRegisterSchemas, true),
-		PartitionAssignmentStrategy: getOrDefaultString(configurations, ConsumerDebug, "CooperativeSticky"),
-		MessageMaxBytes:             getOrDefaultInt(configurations, MessageMaxBytes, 100000),
-		// ApplicationName: getOrDefaultString(ApplicationName, configurations[ApplicationName]),
+		BootstrapServers:                 getOrDefaultString(configurations, BootstrapServers, configurations[BootstrapServers]),
+		GroupId:                          getOrDefaultString(configurations, GroupId, ""),
+		SessionTimeoutMs:                 getOrDefaultInt(configurations, SessionTimeoutMs, 60000),
+		SecurityProtocol:                 getOrDefaultString(configurations, SecurityProtocol, "plaintext"),
+		AutoOffsetReset:                  getOrDefaultString(configurations, AutoOffsetReset, "earliest"),
+		SslCertificateLocation:           getOrDefaultString(configurations, SslCertificateLocation, ""),
+		MillisecondsTimeout:              getOrDefaultInt(configurations, MillisecondsTimeout, 10000),
+		ConsumerDebug:                    getOrDefaultString(configurations, ConsumerDebug, " "),
+		MaxRetry:                         getOrDefaultInt(configurations, MaxRetry, 3),
+		PartitionAssignmentStrategy:      getOrDefaultString(configurations, ConsumerDebug, "sticky"),
+		MessageMaxBytes:                  getOrDefaultInt(configurations, MessageMaxBytes, 100000),
+		EnableSslCertificateVerification: getOrDefaultBool(configurations, EnableSslCertificateVerification, false),
 	}
 	return &result, nil
 }
@@ -114,23 +115,20 @@ func (c *config) ToProducer(event ISpecificRecord, topics []string) {
 }
 
 func (c *config) Build() {
-	for index, element := range c.consumers {
-		for indexj, suscriber := range element.subscriptions {
+	for _, element := range c.consumers {
+		for _, suscriber := range element.subscriptions {
 			go func() error {
 				for {
-					err := c.Consumer(suscriber.event, suscriber.topic)
+					err := c.consumer(suscriber.event, suscriber.topic)
 					if err != nil {
 						log.Logger.Error(err.Error())
 						return err
 					}
 				}
 
-				return nil
 			}()
-			fmt.Println(indexj)
 		}
 
-		fmt.Println(index)
 	}
 
 }

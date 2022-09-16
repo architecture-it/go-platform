@@ -43,19 +43,20 @@ type ProducerOptions struct {
 }
 
 type KafkaOption struct {
-	BootstrapServers            string
-	GroupId                     string
-	SessionTimeoutMs            int
-	SecurityProtocol            string
-	AutoOffsetReset             string
-	SslCertificateLocation      string
-	MillisecondsTimeout         int
-	ConsumerDebug               string
-	MaxRetry                    int
-	AutoRegisterSchemas         bool
-	MessageMaxBytes             int
-	PartitionAssignmentStrategy string
-	ApplicationName             string
+	BootstrapServers                 string
+	GroupId                          string
+	SessionTimeoutMs                 int
+	SecurityProtocol                 string
+	AutoOffsetReset                  string
+	SslCertificateLocation           string
+	MillisecondsTimeout              int
+	ConsumerDebug                    string
+	MaxRetry                         int
+	AutoRegisterSchemas              bool
+	MessageMaxBytes                  int
+	PartitionAssignmentStrategy      string
+	ApplicationName                  string
+	EnableSslCertificateVerification bool
 }
 
 type ConsumerMetadata struct {
