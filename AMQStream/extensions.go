@@ -56,7 +56,7 @@ func bindConfiguration() (*KafkaOption, error) {
 		MillisecondsTimeout:              getOrDefaultInt(configurations, MillisecondsTimeout, 10000),
 		ConsumerDebug:                    getOrDefaultString(configurations, ConsumerDebug, " "),
 		MaxRetry:                         getOrDefaultInt(configurations, MaxRetry, 3),
-		PartitionAssignmentStrategy:      getOrDefaultString(configurations, ConsumerDebug, "sticky"),
+		PartitionAssignmentStrategy:      getOrDefaultString(configurations, PartitionAssignmentStrategy, "cooperative-sticky"),
 		MessageMaxBytes:                  getOrDefaultInt(configurations, MessageMaxBytes, 100000),
 		EnableSslCertificateVerification: getOrDefaultBool(configurations, EnableSslCertificateVerification, false),
 	}
