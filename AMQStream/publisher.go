@@ -13,7 +13,7 @@ import (
 	"github.com/confluentinc/confluent-kafka-go/schemaregistry/serde/avro"
 )
 
-func (c *config) to(event avro.SpecificAvroMessage, key string) error {
+func (c *config) to(event ISpecificRecord, key string) error {
 
 	for _, element := range c.producers {
 		for _, topic := range element.ToPublish[event.Schema()] {
@@ -28,7 +28,7 @@ func (c *config) to(event avro.SpecificAvroMessage, key string) error {
 	return nil
 }
 
-func (c *config) publish(event avro.SpecificAvroMessage, key string, topic string) error {
+func (c *config) publish(event ISpecificRecord, key string, topic string) error {
 	appName := getOrDefaultString(configurations, ApplicationName, " ")
 
 	schemaUrl := os.Getenv(SchemaUrl)
@@ -43,7 +43,11 @@ func (c *config) publish(event avro.SpecificAvroMessage, key string, topic strin
 		os.Exit(1)
 	}
 
-	ser, err := avro.NewSpecificSerializer(client, serde.ValueSerde, avro.NewSerializerConfig())
+	serConfig := avro.NewSerializerConfig()
+
+	ser, err := avro.NewSpecificSerializer(client, serde.ValueSerde, serConfig)
+
+	ser.SubjectNameStrategy = WithoutStrategy
 
 	p, err := kafka.NewProducer(c.cfg)
 
@@ -56,7 +60,7 @@ func (c *config) publish(event avro.SpecificAvroMessage, key string, topic strin
 
 	byteId, _ := json.Marshal(key)
 
-	payload, err := ser.Serialize(topic, event)
+	payload, err := ser.Serialize(event.SchemaName(), event)
 
 	p.Produce(&kafka.Message{
 		TopicPartition: kafka.TopicPartition{Topic: &topic, Partition: kafka.PartitionAny},
@@ -80,4 +84,8 @@ func (c *config) publish(event avro.SpecificAvroMessage, key string, topic strin
 	close(deliveryChan)
 
 	return nil
+}
+
+func WithoutStrategy(topic string, serdeType serde.Type, schema schemaregistry.SchemaInfo) (string, error) {
+	return topic, nil
 }
