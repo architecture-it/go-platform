@@ -1,16 +1,9 @@
 package AMQStream
 
-type ISpecificRecord interface {
-	Schema() string
-	SchemaName() string
-	MarshalJSON() ([]byte, error)
-	UnmarshalJSON(data []byte) error
-}
-
 type ISuscriber interface {
-	Handler(event ISpecificRecord, metadata ConsumerMetadata)
+	Handler(event interface{}, metadata ConsumerMetadata)
 }
 
 type IPublisher interface {
-	To(event ISpecificRecord, key string) error
+	To(event interface{}, key string) error
 }

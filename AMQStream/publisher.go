@@ -7,10 +7,12 @@ import (
 
 	"github.com/architecture-it/go-platform/log"
 	"github.com/confluentinc/confluent-kafka-go/kafka"
-	"github.com/linkedin/goavro/v2"
+	"github.com/confluentinc/confluent-kafka-go/schemaregistry"
+	"github.com/confluentinc/confluent-kafka-go/schemaregistry/serde"
+	"github.com/confluentinc/confluent-kafka-go/schemaregistry/serde/avro"
 )
 
-func (c *config) to(event ISpecificRecord, key string) error {
+func (c *config) to(event *SpecificAvroMessage, key string) error {
 
 	for _, element := range c.producers {
 		for _, topic := range element.ToPublish[event.SchemaName()] {
@@ -25,10 +27,23 @@ func (c *config) to(event ISpecificRecord, key string) error {
 	return nil
 }
 
-func (c *config) publish(event ISpecificRecord, key string, topic string) error {
-	eventBytes, _ := event.MarshalJSON()
-	eventSchema := event.Schema()
+func (c *config) publish(event interface{}, key string, topic string) error {
 	appName := getOrDefaultString(configurations, ApplicationName, " ")
+
+	schemaUrl := os.Getenv(SchemaUrl)
+	if schemaUrl == "" {
+		schemaUrl = configurations[SchemaUrl]
+	}
+
+	client, err := schemaregistry.NewClient(schemaregistry.NewConfig(schemaUrl))
+
+	if err != nil {
+		log.SugarLogger.Errorf("Failed to create schema registry client: %s\n", err)
+		os.Exit(1)
+	}
+
+	ser, err := avro.NewSpecificSerializer(client, serde.ValueSerde, avro.NewSerializerConfig())
+
 	p, err := kafka.NewProducer(c.cfg)
 
 	if err != nil {
@@ -40,35 +55,11 @@ func (c *config) publish(event ISpecificRecord, key string, topic string) error 
 
 	byteId, _ := json.Marshal(key)
 
-	codec, err := goavro.NewCodec(eventSchema)
-
-	if err != nil {
-		return err
-	}
-
-	native, _, err := codec.NativeFromTextual(eventBytes)
-	if err != nil {
-		return err
-	}
-
-	var bin []byte
-	bin = append(bin, 0)
-	bin = append(bin, 0)
-	bin = append(bin, 0)
-	bin = append(bin, 0)
-	bin = append(bin, 223)
-	binary, err := codec.BinaryFromNative(nil, native)
-	if err != nil {
-		return err
-	}
-
-	for _, element := range binary {
-		bin = append(bin, element)
-	}
+	payload, err := ser.Serialize(topic, &event)
 
 	p.Produce(&kafka.Message{
 		TopicPartition: kafka.TopicPartition{Topic: &topic, Partition: kafka.PartitionAny},
-		Value:          bin,
+		Value:          payload,
 		Key:            byteId,
 		Timestamp:      time.Time{},
 		TimestampType:  0,

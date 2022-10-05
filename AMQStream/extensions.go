@@ -79,7 +79,7 @@ func validRequired() error {
 	return nil
 }
 
-func (c *config) ToConsumer(suscriber ISuscriber, event ISpecificRecord, topic string) {
+func (c *config) ToConsumer(suscriber ISuscriber, event interface{}, topic string) {
 	subscriptions := make(map[string]Subscription)
 
 	subcription := Subscription{
@@ -94,7 +94,7 @@ func (c *config) ToConsumer(suscriber ISuscriber, event ISpecificRecord, topic s
 	})
 }
 
-func (c *config) ToProducer(event ISpecificRecord, topics []string) {
+func (c *config) ToProducer(event interface{}, topics []string) {
 	appended := false
 
 	for _, v := range c.producers {

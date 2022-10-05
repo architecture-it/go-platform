@@ -34,7 +34,7 @@ type ConsumerOptions struct {
 
 type Subscription struct {
 	topic       string
-	event       ISpecificRecord
+	event       interface{}
 	subscriptor ISuscriber
 }
 
