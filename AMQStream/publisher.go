@@ -2,6 +2,7 @@ package AMQStream
 
 import (
 	"encoding/json"
+	"fmt"
 	"os"
 	"time"
 
@@ -12,10 +13,10 @@ import (
 	"github.com/confluentinc/confluent-kafka-go/schemaregistry/serde/avro"
 )
 
-func (c *config) to(event *SpecificAvroMessage, key string) error {
+func (c *config) to(event avro.SpecificAvroMessage, key string) error {
 
 	for _, element := range c.producers {
-		for _, topic := range element.ToPublish[event.SchemaName()] {
+		for _, topic := range element.ToPublish[event.Schema()] {
 			err := c.publish(event, key, topic)
 			if err != nil {
 				log.Logger.Error(err.Error())
@@ -27,7 +28,7 @@ func (c *config) to(event *SpecificAvroMessage, key string) error {
 	return nil
 }
 
-func (c *config) publish(event interface{}, key string, topic string) error {
+func (c *config) publish(event avro.SpecificAvroMessage, key string, topic string) error {
 	appName := getOrDefaultString(configurations, ApplicationName, " ")
 
 	schemaUrl := os.Getenv(SchemaUrl)
@@ -55,7 +56,7 @@ func (c *config) publish(event interface{}, key string, topic string) error {
 
 	byteId, _ := json.Marshal(key)
 
-	payload, err := ser.Serialize(topic, &event)
+	payload, err := ser.Serialize(topic, event)
 
 	p.Produce(&kafka.Message{
 		TopicPartition: kafka.TopicPartition{Topic: &topic, Partition: kafka.PartitionAny},
@@ -71,9 +72,11 @@ func (c *config) publish(event interface{}, key string, topic string) error {
 	m := e.(*kafka.Message)
 
 	if m.TopicPartition.Error != nil {
+		fmt.Errorf("error: %#v", m.TopicPartition.Error)
 		return m.TopicPartition.Error
 	}
 
+	fmt.Printf("Delivered %v  to %v", m.Key, m.TopicPartition)
 	close(deliveryChan)
 
 	return nil

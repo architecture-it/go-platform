@@ -3,6 +3,7 @@ module github.com/architecture-it/go-platform
 go 1.18
 
 require (
+	github.com/actgardner/gogen-avro/v10 v10.2.1
 	github.com/architecture-it/integracion-schemas-event-go v1.1.38
 	github.com/common-nighthawk/go-figure v0.0.0-20210622060536-734e95fb86be
 	github.com/confluentinc/confluent-kafka-go v1.9.2
@@ -23,7 +24,6 @@ require (
 )
 
 require (
-	github.com/actgardner/gogen-avro/v10 v10.2.1 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/cespare/xxhash/v2 v2.1.2 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect

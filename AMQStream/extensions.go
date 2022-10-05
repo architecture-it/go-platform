@@ -79,7 +79,7 @@ func validRequired() error {
 	return nil
 }
 
-func (c *config) ToConsumer(suscriber ISuscriber, event interface{}, topic string) {
+func (c *config) ToConsumer(suscriber ISuscriber, event ISpecificRecord, topic string) {
 	subscriptions := make(map[string]Subscription)
 
 	subcription := Subscription{
@@ -94,20 +94,20 @@ func (c *config) ToConsumer(suscriber ISuscriber, event interface{}, topic strin
 	})
 }
 
-func (c *config) ToProducer(event interface{}, topics []string) {
+func (c *config) ToProducer(event ISpecificRecord, topics []string) {
 	appended := false
 
 	for _, v := range c.producers {
-		if v.ToPublish[event.SchemaName()] != nil {
+		if v.ToPublish[event.Schema()] != nil {
 			for _, t := range topics {
-				v.ToPublish[event.SchemaName()] = append(v.ToPublish[event.SchemaName()], t)
+				v.ToPublish[event.Schema()] = append(v.ToPublish[event.Schema()], t)
 			}
 			appended = true
 		}
 	}
 	if !appended {
 		topicsForAdd := make(map[string][]string)
-		topicsForAdd[event.SchemaName()] = topics
+		topicsForAdd[event.Schema()] = topics
 		c.producers = append(c.producers, ProducerOptions{
 			ToPublish: topicsForAdd,
 		})
@@ -119,7 +119,9 @@ func (c *config) Build() {
 		for _, suscriber := range element.subscriptions {
 			go func() error {
 				for {
-					err := c.consumer(suscriber.event, suscriber.topic)
+					event := suscriber.event
+					topic := suscriber.topic
+					err := c.consumer(event, topic)
 					if err != nil {
 						log.Logger.Error(err.Error())
 						return err
