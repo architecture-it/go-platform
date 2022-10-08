@@ -1,8 +1,0 @@
-Kafka: 
-  BootstrapServers: "SSL://cluster-kafka-bootstrap-amq-streams-test.apps.ocptest.andreani.com.ar:443"
-  GroupId: "capacitacion-kafka-go"
-  SecurityProtocol: "SSL"
-  SslCertificateLocation: "kafka.pem"
-  ApplicationName: "capacitacion-kafka-{poneTuNombre}"
-  SchemaUrl: "http://apicurioregistry.apps.ocptest.andreani.com.ar/apis/ccompat/v6/arquitectura/"
-  AutoOffsetReset: "earliest"

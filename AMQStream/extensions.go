@@ -3,10 +3,12 @@ package AMQStream
 import (
 	"errors"
 	"os"
+	"sync"
 
 	extension "github.com/architecture-it/go-platform/config"
 	"github.com/architecture-it/go-platform/log"
 	"github.com/confluentinc/confluent-kafka-go/kafka"
+	"github.com/confluentinc/confluent-kafka-go/schemaregistry"
 	"github.com/mitchellh/mapstructure"
 )
 
@@ -18,8 +20,8 @@ func AddKafka() (*config, error) {
 		log.Logger.DPanic(err.Error())
 		panic(err)
 	}
-
-	getInstance().cfg = &kafka.ConfigMap{
+	cfg := getInstance()
+	cfg.cfgConsumer = &kafka.ConfigMap{
 		"bootstrap.servers":                   config.BootstrapServers,
 		"group.id":                            config.GroupId,
 		"security.protocol":                   config.SecurityProtocol,
@@ -30,7 +32,21 @@ func AddKafka() (*config, error) {
 		"session.timeout.ms":                  config.SessionTimeoutMs,
 		"debug":                               config.ConsumerDebug,
 		"partition.assignment.strategy":       config.PartitionAssignmentStrategy,
+		"enable.auto.commit":                  true,
+		"auto.commit.interval.ms":             500,
 	}
+	cfg.cfgProducer = &kafka.ConfigMap{
+		"bootstrap.servers":                   config.BootstrapServers,
+		"security.protocol":                   config.SecurityProtocol,
+		"ssl.certificate.location":            config.SslCertificateLocation,
+		"message.max.bytes":                   config.MessageMaxBytes,
+		"enable.ssl.certificate.verification": config.EnableSslCertificateVerification,
+		"debug":                               config.ConsumerDebug,
+	}
+
+	cfg.schemaRegistry = schemaregistry.NewConfig(config.SchemaRegistry)
+
+	cfg.MaxRetry = config.MaxRetry
 
 	return getInstance(), nil
 }
@@ -48,6 +64,7 @@ func bindConfiguration() (*KafkaOption, error) {
 
 	result := KafkaOption{
 		BootstrapServers:                 getOrDefaultString(configurations, BootstrapServers, configurations[BootstrapServers]),
+		SchemaRegistry:                   getOrDefaultString(configurations, SchemaRegistry, configurations[SchemaUrl]),
 		GroupId:                          getOrDefaultString(configurations, GroupId, ""),
 		SessionTimeoutMs:                 getOrDefaultInt(configurations, SessionTimeoutMs, 60000),
 		SecurityProtocol:                 getOrDefaultString(configurations, SecurityProtocol, "plaintext"),
@@ -79,22 +96,23 @@ func validRequired() error {
 	return nil
 }
 
-func (c *config) ToConsumer(suscriber ISuscriber, event ISpecificRecord, topic string) {
-	subscriptions := make(map[string]Subscription)
+func (c *config) ToConsumer(suscriber ISuscriber, event ISpecificRecord, topic []string) *config {
 
-	subcription := Subscription{
+	subcription := ConsumerOptions{
 		event:       event,
 		topic:       topic,
 		subscriptor: suscriber,
 	}
-	subscriptions[event.SchemaName()] = subcription
-
-	c.consumers = append(c.consumers, ConsumerOptions{
-		subscriptions: subscriptions,
-	})
+	c.consumers = append(c.consumers, subcription)
+	return c
 }
 
-func (c *config) ToProducer(event ISpecificRecord, topics []string) {
+func (c *config) Move(topic string) *config {
+	c.consumers[len(c.consumers)-1].move = topic
+	return c
+}
+
+func (c *config) ToProducer(event ISpecificRecord, topics []string) *config {
 	appended := false
 
 	for _, v := range c.producers {
@@ -112,25 +130,25 @@ func (c *config) ToProducer(event ISpecificRecord, topics []string) {
 			ToPublish: topicsForAdd,
 		})
 	}
+	return c
 }
 
 func (c *config) Build() {
+	wg := new(sync.WaitGroup)
 	for _, element := range c.consumers {
-		for _, suscriber := range element.subscriptions {
-			go func() error {
-				for {
-					event := suscriber.event
-					topic := suscriber.topic
-					err := c.consumer(event, topic)
-					if err != nil {
-						log.Logger.Error(err.Error())
-						return err
-					}
+		wg.Add(1)
+		event := element.event
+		topic := element.topic
+		go func() {
+			for {
+				err := c.consumer(event, topic, wg)
+				if err != nil {
+					log.SugarLogger.Errorln(err.Error())
 				}
+			}
 
-			}()
-		}
-
+		}()
 	}
+	wg.Wait()
 
 }

@@ -14,7 +14,7 @@ type ISpecificRecord interface {
 }
 
 type ISuscriber interface {
-	Handler(event interface{}, metadata ConsumerMetadata)
+	Handler(event interface{}, metadata ConsumerMetadata) error
 }
 
 type IPublisher interface {
