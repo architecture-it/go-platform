@@ -2,11 +2,11 @@ package AMQStream
 
 // Configuration
 const (
-	BootstrapServers                 = "BootstrapServers"
+	BootstrapServers                 = "BootstrapServer"
 	GroupId                          = "GroupId"
-	SchemaRegistry                   = "SchemaRegistry"
+	SchemaRegistry                   = "SchemaUrl"
 	SessionTimeoutMs                 = "SessionTimeoutMs"
-	SecurityProtocol                 = "SecurityProtocol"
+	SecurityProtocol                 = "Protocol"
 	AutoOffsetReset                  = "AutoOffsetReset"
 	SslCertificateLocation           = "SslCertificateLocation"
 	MillisecondsTimeout              = "MillisecondsTimeout"
