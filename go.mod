@@ -4,7 +4,6 @@ go 1.18
 
 require (
 	github.com/actgardner/gogen-avro/v10 v10.2.1
-	github.com/architecture-it/integracion-schemas-event-go v1.1.38
 	github.com/common-nighthawk/go-figure v0.0.0-20210622060536-734e95fb86be
 	github.com/confluentinc/confluent-kafka-go v1.9.2
 	github.com/gin-contrib/cors v1.4.0
@@ -12,11 +11,11 @@ require (
 	github.com/go-playground/validator v9.31.0+incompatible
 	github.com/go-redis/redis v6.15.9+incompatible
 	github.com/jinzhu/gorm v1.9.16
-	github.com/linkedin/goavro/v2 v2.11.1
 	github.com/mitchellh/mapstructure v1.5.0
 	github.com/stretchr/testify v1.8.0
 	github.com/zsais/go-gin-prometheus v0.1.0
 	go.uber.org/zap v1.23.0
+	golang.org/x/exp v0.0.0-20221006183845-316c7553db56
 	gopkg.in/eapache/go-resiliency.v1 v1.2.0
 	gopkg.in/resty.v1 v1.12.0
 	gopkg.in/yaml.v2 v2.4.0
@@ -37,7 +36,6 @@ require (
 	github.com/golang-sql/civil v0.0.0-20220223132316-b832511892a9 // indirect
 	github.com/golang-sql/sqlexp v0.1.0 // indirect
 	github.com/golang/protobuf v1.5.2 // indirect
-	github.com/golang/snappy v0.0.4 // indirect
 	github.com/google/uuid v1.3.0 // indirect
 	github.com/heetch/avro v0.3.1 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
@@ -60,7 +58,6 @@ require (
 	go.uber.org/atomic v1.10.0 // indirect
 	go.uber.org/multierr v1.8.0 // indirect
 	golang.org/x/crypto v0.0.0-20220829220503-c86fa9a7ed90 // indirect
-	golang.org/x/exp v0.0.0-20221006183845-316c7553db56 // indirect
 	golang.org/x/net v0.0.0-20220907135653-1e95f45603a7 // indirect
 	golang.org/x/sys v0.0.0-20220907062415-87db552b00fd // indirect
 	golang.org/x/text v0.3.7 // indirect
