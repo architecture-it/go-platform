@@ -1,16 +1,22 @@
 package AMQStream
 
+import (
+	"io"
+
+	"github.com/actgardner/gogen-avro/v10/vm/types"
+)
+
 type ISpecificRecord interface {
+	types.Field
+	Serialize(w io.Writer) error
 	Schema() string
 	SchemaName() string
-	MarshalJSON() ([]byte, error)
-	UnmarshalJSON(data []byte) error
 }
 
 type ISuscriber interface {
-	Handler(event ISpecificRecord, metadata ConsumerMetadata)
+	Handler(event interface{}, metadata ConsumerMetadata) error
 }
 
 type IPublisher interface {
-	To(event ISpecificRecord, key string) error
+	To(event interface{}, key string) error
 }

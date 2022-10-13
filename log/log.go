@@ -57,6 +57,7 @@ func configureLogger() (*zap.Logger, *zap.SugaredLogger) {
 	}
 	//Creo una configuración por defecto
 	config := zap.NewDevelopmentConfig()
+	config.Level = zap.NewAtomicLevelAt(zap.InfoLevel)
 	config.EncoderConfig.EncodeTime = ELKLogTimeEncoder
 	config.EncoderConfig.EncodeLevel = ConsoleLevelEncoder
 	config.EncoderConfig.EncodeCaller = ConsoleCallerEncoder

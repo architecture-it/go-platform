@@ -1,10 +1,12 @@
 package AMQStream
 
+// Configuration
 const (
-	BootstrapServers                 = "BootstrapServers"
+	BootstrapServers                 = "BootstrapServer"
 	GroupId                          = "GroupId"
+	SchemaRegistry                   = "SchemaUrl"
 	SessionTimeoutMs                 = "SessionTimeoutMs"
-	SecurityProtocol                 = "SecurityProtocol"
+	SecurityProtocol                 = "Protocol"
 	AutoOffsetReset                  = "AutoOffsetReset"
 	SslCertificateLocation           = "SslCertificateLocation"
 	MillisecondsTimeout              = "MillisecondsTimeout"
@@ -13,7 +15,15 @@ const (
 	AutoRegisterSchemas              = "AutoRegisterSchemas"
 	MessageMaxBytes                  = "MessageMaxBytes"
 	ApplicationName                  = "ApplicationName"
-	SchemaUrl                        = "SchemaUrl"
 	PartitionAssignmentStrategy      = "PartitionAssignmentStrategy"
 	EnableSslCertificateVerification = "EnableSslCertificateVerification"
+)
+
+// Headers
+const (
+	RetryCount    = "RetryCount"
+	Reason        = "Reason_%v"
+	Deadline      = "Deadline"
+	Remitente     = "remitente"
+	CrossDeadline = "cross-deadline"
 )
