@@ -21,6 +21,11 @@ func serializeMessage(c *config, event ISpecificRecord) ([]byte, error) {
 	serConfig := avro.NewSerializerConfig()
 
 	ser, err := avro.NewSpecificSerializer(client, serde.ValueSerde, serConfig)
+
+	if err != nil {
+		log.SugarLogger.Errorln("Failed to serializer: %s\n", err)
+		return nil, err
+	}
 	ser.SubjectNameStrategy = withoutStrategy
 
 	return ser.Serialize(event.SchemaName(), event)
@@ -40,6 +45,11 @@ func deserializeMessage(c *config, message *kafka.Message, event ISpecificRecord
 	}
 
 	deser, err := avro.NewSpecificDeserializer(client, serde.ValueSerde, avro.NewDeserializerConfig())
+
+	if err != nil {
+		log.SugarLogger.Errorln("Failed to deserializer: %s\n", err)
+		return nil, err
+	}
 	deser.SubjectNameStrategy = withoutStrategy
 
 	result := event

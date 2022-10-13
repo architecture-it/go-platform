@@ -33,7 +33,7 @@ func (k *config) consumer(event ISpecificRecord, topic []string, wg *sync.WaitGr
 	lastOffset := []kafka.TopicPartition{}
 
 	sigchan := make(chan os.Signal, 1)
-	signal.Notify(sigchan, syscall.SIGINT, syscall.SIGTERM, syscall.SIGKILL)
+	signal.Notify(sigchan, syscall.SIGINT, syscall.SIGTERM)
 
 	c, err := kafka.NewConsumer(k.cfgConsumer)
 
@@ -48,7 +48,7 @@ func (k *config) consumer(event ISpecificRecord, topic []string, wg *sync.WaitGr
 		return nil
 	}
 	run := true
-	defer closeConsumer(c, topic)
+	// defer closeConsumer(c, topic)
 	for run {
 		select {
 		case sig := <-sigchan:

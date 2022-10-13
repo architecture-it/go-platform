@@ -15,7 +15,6 @@ const (
 	AutoRegisterSchemas              = "AutoRegisterSchemas"
 	MessageMaxBytes                  = "MessageMaxBytes"
 	ApplicationName                  = "ApplicationName"
-	SchemaUrl                        = "SchemaUrl"
 	PartitionAssignmentStrategy      = "PartitionAssignmentStrategy"
 	EnableSslCertificateVerification = "EnableSslCertificateVerification"
 )

@@ -30,10 +30,10 @@ func AddKafka() (*config, error) {
 		"enable.ssl.certificate.verification": config.EnableSslCertificateVerification,
 		"auto.offset.reset":                   config.AutoOffsetReset,
 		"session.timeout.ms":                  config.SessionTimeoutMs,
-		"debug":                               config.ConsumerDebug,
 		"partition.assignment.strategy":       config.PartitionAssignmentStrategy,
 		"enable.auto.commit":                  true,
 		"auto.commit.interval.ms":             500,
+		"debug":                               config.ConsumerDebug,
 	}
 	cfg.cfgProducer = &kafka.ConfigMap{
 		"bootstrap.servers":                   config.BootstrapServers,
@@ -41,7 +41,6 @@ func AddKafka() (*config, error) {
 		"ssl.certificate.location":            config.SslCertificateLocation,
 		"message.max.bytes":                   config.MessageMaxBytes,
 		"enable.ssl.certificate.verification": config.EnableSslCertificateVerification,
-		"debug":                               config.ConsumerDebug,
 	}
 
 	cfg.schemaRegistry = schemaregistry.NewConfig(config.SchemaRegistry)
@@ -53,7 +52,7 @@ func AddKafka() (*config, error) {
 
 func bindConfiguration() (*KafkaOption, error) {
 	configuration := extension.GetConfiguration("enviroment.yaml")
-	mapstructure.Decode(configuration["Kafka"], &configurations)
+	mapstructure.Decode(configuration["AMQStreams"], &configurations)
 
 	err := validRequired()
 
@@ -64,8 +63,8 @@ func bindConfiguration() (*KafkaOption, error) {
 
 	result := KafkaOption{
 		BootstrapServers:                 getOrDefaultString(configurations, BootstrapServers, configurations[BootstrapServers]),
-		SchemaRegistry:                   getOrDefaultString(configurations, SchemaRegistry, configurations[SchemaUrl]),
-		GroupId:                          getOrDefaultString(configurations, GroupId, ""),
+		SchemaRegistry:                   getOrDefaultString(configurations, SchemaRegistry, configurations[SchemaRegistry]),
+		GroupId:                          getOrDefaultString(configurations, GroupId, ApplicationName),
 		SessionTimeoutMs:                 getOrDefaultInt(configurations, SessionTimeoutMs, 60000),
 		SecurityProtocol:                 getOrDefaultString(configurations, SecurityProtocol, "plaintext"),
 		AutoOffsetReset:                  getOrDefaultString(configurations, AutoOffsetReset, "earliest"),
@@ -89,9 +88,9 @@ func validRequired() error {
 	if applicationName == "" && configurations[ApplicationName] == "" {
 		return errors.New("the applicationName is requiered")
 	}
-	schemaUrl := os.Getenv(SchemaUrl)
-	if schemaUrl == "" && configurations[SchemaUrl] == "" {
-		return errors.New("the schemaUrl is requiered")
+	schemaRegistry := os.Getenv(SchemaRegistry)
+	if schemaRegistry == "" && configurations[SchemaRegistry] == "" {
+		return errors.New("the schemaRegistry is requiered")
 	}
 	return nil
 }
@@ -117,9 +116,7 @@ func (c *config) ToProducer(event ISpecificRecord, topics []string) *config {
 
 	for _, v := range c.producers {
 		if v.ToPublish[event.Schema()] != nil {
-			for _, t := range topics {
-				v.ToPublish[event.Schema()] = append(v.ToPublish[event.Schema()], t)
-			}
+			v.ToPublish[event.Schema()] = append(v.ToPublish[event.Schema()], topics...)
 			appended = true
 		}
 	}
