@@ -8,6 +8,7 @@ import (
 )
 
 type config struct {
+	cfgAdmin       *kafka.ConfigMap
 	cfgProducer    *kafka.ConfigMap
 	cfgConsumer    *kafka.ConfigMap
 	schemaRegistry *schemaregistry.Config
