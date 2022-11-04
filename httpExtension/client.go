@@ -37,7 +37,7 @@ var Get = func(requestUrl string, params Params, header http.Header) (*Response,
 }
 
 // Send a GET request to the specified URL as an asynchronous operation
-var GetAsync = func(requestUrl string, params map[string]string, header http.Header) <-chan *Response {
+var GetAsync = func(requestUrl string, params Params, header http.Header) <-chan *Response {
 	c := make(chan *Response)
 	timeout := Timeout
 
