@@ -1,6 +1,7 @@
 package AMQStream
 
 import (
+	"encoding/json"
 	"errors"
 	"os"
 	"sync"
@@ -53,7 +54,13 @@ func AddKafka() (*config, error) {
 func bindConfiguration() (*KafkaOption, error) {
 	configuration := extension.GetConfiguration("enviroment.yaml")
 	mapstructure.Decode(configuration["AMQStreams"], &configurations)
-
+	if len(configurations) == 0 {
+		var configuration map[string]interface{}
+		configuration = make(map[string]interface{})
+		AMQStream := os.Getenv("AMQStreams")
+		json.Unmarshal([]byte(AMQStream), &configuration)
+		mapstructure.Decode(configuration["AMQStreams"], &configurations)
+	}
 	err := validRequired()
 
 	if err != nil {
