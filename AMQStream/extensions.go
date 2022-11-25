@@ -55,8 +55,6 @@ func bindConfiguration() (*KafkaOption, error) {
 	configuration := extension.GetConfiguration("enviroment.yaml")
 	mapstructure.Decode(configuration["AMQStreams"], &configurations)
 	if len(configurations) == 0 {
-		var configuration map[string]interface{}
-		configuration = make(map[string]interface{})
 		AMQStream := os.Getenv("AMQStreams")
 		json.Unmarshal([]byte(AMQStream), &configuration)
 		mapstructure.Decode(configuration["AMQStreams"], &configurations)
