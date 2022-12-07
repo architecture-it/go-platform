@@ -102,7 +102,7 @@ func doRequest(method, requestUrl string, body io.Reader, header http.Header, ti
 		return nil, err
 	}
 
-	req.Header = DefaultHeader
+	addHeader(req, DefaultHeader)
 	addHeader(req, header)
 
 	httpClient := &http.Client{Timeout: timeout}
