@@ -36,15 +36,8 @@ func withoutStrategy(topic string, serdeType serde.Type, schema schemaregistry.S
 	return topic, nil
 }
 
-func deserializeMessage(c *config, message *kafka.Message, event ISpecificRecord) (ISpecificRecord, error) {
+func createDeserialize(c *config) (*avro.SpecificDeserializer, error) {
 	client, err := schemaregistry.NewClient(c.schemaRegistry)
-
-	if event == nil {
-		errorMessage := fmt.Sprintf("Event is nil. Key: %s\n", message.Key)
-		log.SugarLogger.Errorln(errorMessage)
-		return nil, fmt.Errorf(errorMessage)
-	}
-
 	if err != nil {
 		log.SugarLogger.Errorln(fmt.Sprintf("Failed to create schema registry client: %s\n", err))
 		return nil, err
@@ -58,13 +51,15 @@ func deserializeMessage(c *config, message *kafka.Message, event ISpecificRecord
 	}
 	deser.SubjectNameStrategy = withoutStrategy
 
-	result := event
+	return deser, nil
+}
 
-	err = deser.DeserializeInto(event.SchemaName(), message.Value, result)
+func deserializeMessage(deser *avro.SpecificDeserializer, message *kafka.Message, event ISpecificRecord) (ISpecificRecord, error) {
+	result := event
+	var err = deser.DeserializeInto(event.SchemaName(), message.Value, result)
 	if err != nil {
 		log.SugarLogger.Errorln(fmt.Sprintf("Failed to deserialize payload: %s\n", err))
 		return nil, err
 	}
-
 	return result, nil
 }

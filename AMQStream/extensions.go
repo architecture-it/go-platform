@@ -3,6 +3,7 @@ package AMQStream
 import (
 	"encoding/json"
 	"errors"
+	"fmt"
 	"os"
 	"sync"
 
@@ -142,13 +143,13 @@ func (c *config) Build() {
 		event := element.event
 		topic := element.topic
 		go func() {
+			log.SugarLogger.Infoln(fmt.Sprintf("Init consumer for %s in topic %v \n", event.SchemaName(), topic))
 			for {
 				err := c.consumer(event, topic, wg)
 				if err != nil {
 					log.SugarLogger.Errorln(err.Error())
 				}
 			}
-
 		}()
 	}
 	wg.Wait()
