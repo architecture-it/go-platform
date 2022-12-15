@@ -41,9 +41,9 @@ func (k *config) consumer(event ISpecificRecord, topic []string, wg *sync.WaitGr
 		log.SugarLogger.Errorf("Failed to create consumer: %s\n", err.Error())
 		os.Exit(1)
 	}
-	log.SugarLogger.Infoln(fmt.Sprintf("Init Consumer %v", topic[0]))
 	err = c.SubscribeTopics(topic, nil)
-
+	// deserialize
+	deser, err := createDeserialize(k)
 	if err != nil {
 		return nil
 	}
@@ -70,16 +70,16 @@ func (k *config) consumer(event ISpecificRecord, topic []string, wg *sync.WaitGr
 
 				log.SugarLogger.Infof(fmt.Sprintf("Topic: %v | Consume offset: %v| partition: %v", *e.TopicPartition.Topic, e.TopicPartition.Offset, e.TopicPartition.Partition))
 				metadata := createMetadata(e)
-				event, err = deserializeMessage(k, e, event)
+				eventDes, err := deserializeMessage(deser, e, event)
 				if err != nil {
 					continue
 				}
 				if filterMessage(e, k.MaxRetry) {
-					_ = publishDeadline(k, event, metadata)
+					_ = publishDeadline(k, eventDes, metadata)
 					continue
 				}
 
-				k.notifyToSubscriber(event, metadata)
+				k.notifyToSubscriber(eventDes, metadata)
 
 			case kafka.Error:
 				log.SugarLogger.Errorf(fmt.Sprintf("%% Error: %v: %v\n", e.Code(), e))
