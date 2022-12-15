@@ -39,6 +39,12 @@ func withoutStrategy(topic string, serdeType serde.Type, schema schemaregistry.S
 func createDeserialize(c *config) (*avro.SpecificDeserializer, error) {
 	client, err := schemaregistry.NewClient(c.schemaRegistry)
 
+	if event == nil {
+		errorMessage := fmt.Sprintf("Event is nil. Key: %s\n", message.Key)
+		log.SugarLogger.Errorln(errorMessage)
+		return nil, fmt.Errorf(errorMessage)
+	}
+
 	if err != nil {
 		log.SugarLogger.Errorln(fmt.Sprintf("Failed to create schema registry client: %s\n", err))
 		return nil, err
