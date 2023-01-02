@@ -1,11 +1,13 @@
 package AMQStream
 
 import (
+	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
 	"os"
 	"sync"
+	"time"
 
 	extension "github.com/architecture-it/go-platform/config"
 	"github.com/architecture-it/go-platform/log"
@@ -44,7 +46,13 @@ func AddKafka() (*config, error) {
 		"message.max.bytes":                   config.MessageMaxBytes,
 		"enable.ssl.certificate.verification": config.EnableSslCertificateVerification,
 	}
-
+	cfg.cfgAdmin = &kafka.ConfigMap{
+		"bootstrap.servers":                   config.BootstrapServers,
+		"group.id":                            config.GroupId,
+		"security.protocol":                   config.SecurityProtocol,
+		"ssl.certificate.location":            config.SslCertificateLocation,
+		"enable.ssl.certificate.verification": config.EnableSslCertificateVerification,
+	}
 	cfg.schemaRegistry = schemaregistry.NewConfig(config.SchemaRegistry)
 
 	cfg.MaxRetry = config.MaxRetry
@@ -136,6 +144,74 @@ func (c *config) ToProducer(event ISpecificRecord, topics []string) *config {
 	return c
 }
 
+func (c *config) CreateOrUpdateTopics(numParts int, topics []string) *config {
+	replicationFactor := 3
+
+	// Create a new AdminClient.
+	// AdminClient can also be instantiated using an existing
+	// Producer or Consumer instance, see NewAdminClientFromProducer and
+	// NewAdminClientFromConsumer.
+	adminClient, err := kafka.NewAdminClient(c.cfgAdmin)
+	if err != nil {
+		log.SugarLogger.Infoln("Failed to create Admin client: %s\n", err)
+		os.Exit(1)
+	}
+
+	// Contexts are used to abort or limit the amount of time
+	// the Admin call blocks waiting for a result.
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	// Create topics on cluster.
+	// Set Admin options to wait for the operation to finish (or at most 60s)
+	maxDur, err := time.ParseDuration("60s")
+	if err != nil {
+		defer time.ParseDuration("60s")
+	}
+	for _, topic := range topics {
+		results, err := adminClient.CreateTopics(
+			ctx,
+			// Multiple topics can be created simultaneously
+			// by providing more TopicSpecification structs here.
+			[]kafka.TopicSpecification{{
+				Topic:             topic,
+				NumPartitions:     numParts,
+				ReplicationFactor: replicationFactor}},
+			// Admin options
+			kafka.SetAdminOperationTimeout(maxDur))
+		if err != nil {
+			log.SugarLogger.Infoln("Failed to create topic: %v\n", err)
+		}
+		// Print results
+		for _, result := range results {
+			if result.Error.Code() == kafka.ErrTopicAlreadyExists {
+				updateTopic(adminClient, ctx, topic, numParts, maxDur)
+			} else {
+				log.SugarLogger.Infoln("%s\n", result)
+			}
+		}
+	}
+	adminClient.Close()
+	return c
+}
+
+func updateTopic(adminClient *kafka.AdminClient, ctx context.Context, topic string, numParts int, maxDur time.Duration) {
+	resultUpdate, err := adminClient.CreatePartitions(ctx, []kafka.PartitionsSpecification{{
+		Topic:      topic,
+		IncreaseTo: numParts,
+	}}, kafka.SetAdminOperationTimeout(maxDur))
+	if err != nil {
+		log.SugarLogger.Infoln("Failed to Update topic: %v\n", err)
+	}
+	for _, result := range resultUpdate {
+		if result.Error.Code() == kafka.ErrNoError || result.Error.Code() == kafka.ErrInvalidPartitions {
+
+		} else {
+			log.SugarLogger.Infoln("%s\n", result)
+		}
+	}
+}
+
 func (c *config) Build() {
 	wg := new(sync.WaitGroup)
 	for _, element := range c.consumers {
@@ -153,5 +229,4 @@ func (c *config) Build() {
 		}()
 	}
 	wg.Wait()
-
 }
