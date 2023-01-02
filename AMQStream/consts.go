@@ -26,4 +26,5 @@ const (
 	Deadline      = "Deadline"
 	Remitente     = "remitente"
 	CrossDeadline = "cross-deadline"
+	SchemaName    = "SchemaName"
 )

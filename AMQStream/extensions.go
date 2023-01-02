@@ -2,7 +2,9 @@ package AMQStream
 
 import (
 	"context"
+	"encoding/json"
 	"errors"
+	"fmt"
 	"os"
 	"sync"
 	"time"
@@ -61,7 +63,11 @@ func AddKafka() (*config, error) {
 func bindConfiguration() (*KafkaOption, error) {
 	configuration := extension.GetConfiguration("enviroment.yaml")
 	mapstructure.Decode(configuration["AMQStreams"], &configurations)
-
+	if len(configurations) == 0 {
+		AMQStream := os.Getenv("AMQStreams")
+		json.Unmarshal([]byte(AMQStream), &configuration)
+		mapstructure.Decode(configuration["AMQStreams"], &configurations)
+	}
 	err := validRequired()
 
 	if err != nil {
@@ -213,13 +219,13 @@ func (c *config) Build() {
 		event := element.event
 		topic := element.topic
 		go func() {
+			log.SugarLogger.Infoln(fmt.Sprintf("Init consumer for %s in topic %v \n", event.SchemaName(), topic))
 			for {
 				err := c.consumer(event, topic, wg)
 				if err != nil {
 					log.SugarLogger.Errorln(err.Error())
 				}
 			}
-
 		}()
 	}
 	wg.Wait()

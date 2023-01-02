@@ -44,6 +44,7 @@ func (c *config) publish(event ISpecificRecord, key string, topic string, header
 	if currentRetry == -1 {
 		appName := getOrDefaultString(configurations, ApplicationName, " ")
 		headers = append(headers, kafka.Header{Key: Remitente, Value: []byte(appName)})
+		headers = append(headers, kafka.Header{Key: SchemaName, Value: []byte(event.SchemaName())})
 	}
 
 	p, err := kafka.NewProducer(c.cfgProducer)
