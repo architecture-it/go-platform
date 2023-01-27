@@ -173,7 +173,7 @@ func compareTopicPartitionOffset(message *kafka.Message, lastOffset []kafka.Topi
 	compare := message.TopicPartition
 	for _, v := range lastOffset {
 		if *v.Topic == *compare.Topic && v.Partition == compare.Partition {
-			return v.Offset > compare.Offset
+			return v.Offset >= compare.Offset
 		}
 	}
 	return false
