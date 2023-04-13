@@ -2,6 +2,7 @@ package httpExtension
 
 import (
 	"bytes"
+	"context"
 	"errors"
 	"io"
 	"net/http"
@@ -9,6 +10,9 @@ import (
 	"time"
 
 	"github.com/architecture-it/go-platform/log"
+
+	"go.elastic.co/apm"
+	"go.elastic.co/apm/module/apmhttp/v2"
 )
 
 type Params map[string]string
@@ -32,17 +36,17 @@ func init() {
 }
 
 // Send a GET request to the specified URL
-var Get = func(requestUrl string, params Params, header http.Header) (*Response, error) {
-	return get(requestUrl, params, header, Timeout)
+var Get = func(requestUrl string, params Params, header http.Header, ctx context.Context) (*Response, error) {
+	return get(requestUrl, params, header, Timeout, ctx)
 }
 
 // Send a GET request to the specified URL as an asynchronous operation
-var GetAsync = func(requestUrl string, params Params, header http.Header) <-chan *Response {
+var GetAsync = func(requestUrl string, params Params, header http.Header, ctx context.Context) <-chan *Response {
 	c := make(chan *Response)
 	timeout := Timeout
 
 	go func() {
-		res, _ := get(requestUrl, params, header, timeout)
+		res, _ := get(requestUrl, params, header, timeout, ctx)
 		c <- res
 		close(c)
 	}()
@@ -51,17 +55,17 @@ var GetAsync = func(requestUrl string, params Params, header http.Header) <-chan
 }
 
 // Send a POST request to the specified Url
-var Post = func(requestUrl string, body []byte, header http.Header) (*Response, error) {
-	return post(requestUrl, body, header, Timeout)
+var Post = func(requestUrl string, body []byte, header http.Header, ctx context.Context) (*Response, error) {
+	return post(requestUrl, body, header, Timeout, ctx)
 }
 
 // Send a POST request to the specified Url as an asynchronous operation
-var PostAsync = func(requestUrl string, body []byte, header http.Header) <-chan *Response {
+var PostAsync = func(requestUrl string, body []byte, header http.Header, ctx context.Context) <-chan *Response {
 	c := make(chan *Response)
 	timeout := Timeout
 
 	go func() {
-		res, _ := post(requestUrl, body, header, timeout)
+		res, _ := post(requestUrl, body, header, timeout, ctx)
 		c <- res
 		close(c)
 	}()
@@ -75,7 +79,7 @@ func WithTimeout(seconds int64) {
 	Timeout = s * time.Second
 }
 
-func get(requestUrl string, params Params, header http.Header, timeout time.Duration) (*Response, error) {
+func get(requestUrl string, params Params, header http.Header, timeout time.Duration, ctx context.Context) (*Response, error) {
 	u, err := url.Parse(requestUrl)
 	if err != nil {
 		log.Logger.Error("Couldn't parse url " + requestUrl + ". Error: " + err.Error())
@@ -88,15 +92,16 @@ func get(requestUrl string, params Params, header http.Header, timeout time.Dura
 	}
 	u.RawQuery = q.Encode()
 
-	return doRequest(http.MethodGet, u.String(), nil, header, timeout)
+	return doRequest(http.MethodGet, u.String(), nil, header, timeout, ctx)
 }
 
-func post(requestUrl string, body []byte, header http.Header, timeout time.Duration) (*Response, error) {
-	return doRequest(http.MethodPost, requestUrl, bytes.NewBuffer(body), header, timeout)
+func post(requestUrl string, body []byte, header http.Header, timeout time.Duration, ctx context.Context) (*Response, error) {
+	return doRequest(http.MethodPost, requestUrl, bytes.NewBuffer(body), header, timeout, ctx)
 }
 
-func doRequest(method, requestUrl string, body io.Reader, header http.Header, timeout time.Duration) (*Response, error) {
-	req, err := http.NewRequest(method, requestUrl, body)
+func doRequest(method, requestUrl string, body io.Reader, header http.Header, timeout time.Duration, ctx context.Context) (*Response, error) {
+
+	req, err := http.NewRequestWithContext(ctx, method, requestUrl, body)
 	if err != nil {
 		log.Logger.Error("Failed to create request. Error: " + err.Error())
 		return nil, err
@@ -106,15 +111,18 @@ func doRequest(method, requestUrl string, body io.Reader, header http.Header, ti
 	addHeader(req, header)
 
 	httpClient := &http.Client{Timeout: timeout}
-	res, err := httpClient.Do(req)
+	var tracingClient = apmhttp.WrapClient(httpClient)
+	res, err := tracingClient.Do(req)
 
 	if err != nil {
 		log.Logger.Error(method + " " + requestUrl + ". Error: " + err.Error())
+		apm.CaptureError(ctx, err).Send()
 		return nil, err
 	}
 
 	if res == nil {
 		log.Logger.Error(method + " " + requestUrl + ". Nil response")
+		apm.CaptureError(ctx, err).Send()
 		return nil, errors.New("nil response")
 	}
 
@@ -129,3 +137,34 @@ func addHeader(req *http.Request, header http.Header) {
 		}
 	}
 }
+
+/*
+func main() {
+	var myHandler http.Handler = ...
+	tracedHandler := apmhttp.Wrap(myHandler)
+}
+
+The apmhttp handler will recover panics and send them to Elastic APM.
+
+Package apmhttp also provides functions for instrumenting an http.Client or http.RoundTripper such that outgoing requests are traced as spans, if the request context includes a transaction. When performing the request, the enclosing context should be propagated by using http.Request.WithContext, or a helper, such as those provided by https://golang.org/x/net/context/ctxhttp.
+
+Client spans are not ended until the response body is fully consumed or closed. If you fail to do either, the span will not be sent. Always close the response body to ensure HTTP connections can be reused; see func (*Client) Do.
+
+
+var tracingClient = apmhttp.WrapClient(http.DefaultClient)
+
+func serverHandler(w http.ResponseWriter, req *http.Request) {
+	// Propagate the transaction context contained in req.Context().
+	resp, err := ctxhttp.Get(req.Context(), tracingClient, "http://backend.local/foo")
+	if err != nil {
+		apm.CaptureError(req.Context(), err).Send()
+		http.Error(w, "failed to query backend", 500)
+		return
+	}
+	body, err := ioutil.ReadAll(resp.Body)
+	...
+}
+
+func main() {
+	http.ListenAndServe(":8080", apmhttp.Wrap(http.HandlerFunc(serverHandler)))
+}*/
