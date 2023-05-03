@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/architecture-it/go-platform/log"
-	"go.elastic.co/apm/module/apmmongo/v2"
+	"go.elastic.co/apm/module/apmmongo"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
@@ -53,6 +53,7 @@ func createConnectionMongo(mongoURL, mongoDB string) *mongo.Database {
 func (repo *mongoRepository) GetDB(ctx context.Context) *mongo.Database {
 	// reintento de conexion si algo fallo
 	if repo.db == nil {
+		log.Logger.Info("Se intenta reconectar a mongo.")
 		repo.db = createConnectionMongo(repo.mongoURL, repo.mongoDB)
 	}
 	if repo.db == nil {

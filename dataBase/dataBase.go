@@ -4,9 +4,8 @@ import (
 	"context"
 
 	"github.com/architecture-it/go-platform/log"
-	mysql "go.elastic.co/apm/module/apmgormv2/driver/mysql"
-	sql "go.elastic.co/apm/module/apmgormv2/v2/driver/sqlserver"
-	"gorm.io/gorm"
+	"github.com/jinzhu/gorm"
+	"go.elastic.co/apm/module/apmgorm"
 )
 
 type DataRepository interface {
@@ -28,21 +27,31 @@ func NewDataRepository(dialect, connection string) DataRepository {
 	}
 }
 
+func NewSQLRepository(connection string) DataRepository {
+	conn := createConnection("mssql", connection)
+	return &dataRepository{
+		db:         conn,
+		dialect:    "mssql",
+		connection: connection,
+	}
+}
+
+func NewMysqlRepository(connection string) DataRepository {
+	conn := createConnection("mysql", connection)
+	return &dataRepository{
+		db:         conn,
+		dialect:    "mysql",
+		connection: connection,
+	}
+}
+
 func createConnection(dialect, connectionString string) *gorm.DB {
 	if dialect == "" || connectionString == "" {
-		return nil
-	}
-	var dialector gorm.Dialector
-
-	if dialect == "sql" || dialect == "mssql" {
-		dialector = sql.Open(connectionString)
-	} else if dialect == "mysql" {
-		dialector = mysql.Open(connectionString)
-	} else {
+		log.Logger.Error("No se pudo conectar a la base de datos. Falta informacion!")
 		return nil
 	}
 
-	connection, err := gorm.Open(dialector, &gorm.Config{})
+	connection, err := apmgorm.Open(dialect, connectionString)
 
 	if err != nil {
 		log.Logger.Error("Error al conectarse a la base de datos " + dialect + " Descripcion: " + err.Error())
@@ -56,11 +65,13 @@ func createConnection(dialect, connectionString string) *gorm.DB {
 func (repo *dataRepository) GetDB(ctx context.Context) *gorm.DB {
 	// reintento de conexion si algo fallo
 	if repo.db == nil {
+		log.Logger.Info("Se intenta reconectar a la base de datos.")
 		repo.db = createConnection(repo.dialect, repo.connection)
 	}
 	if repo.db == nil {
+		log.Logger.Error("No se pudo conectar a la base de datos.")
 		return nil
 	}
-	db := repo.db.WithContext(ctx)
+	db := apmgorm.WithContext(ctx, repo.db)
 	return db
 }

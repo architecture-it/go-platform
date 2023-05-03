@@ -8,7 +8,7 @@ import (
 
 	"github.com/architecture-it/go-platform/log"
 	"github.com/go-redis/redis"
-	"go.elastic.co/apm/module/apmgoredis/v2"
+	"go.elastic.co/apm/module/apmgoredis"
 )
 
 type RedisRepository interface {
