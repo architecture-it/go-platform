@@ -56,6 +56,7 @@ func createConnectionRedis(addr, pass string, db int) *redis.Client {
 func (repo *redisRepository) GetClient(ctx context.Context) *redis.Client {
 	// reintento de conexion si algo fallo
 	if repo.client == nil {
+		log.Logger.Info("Se intenta reconectar a redis.")
 		repo.client = createConnectionRedis(repo.addr, repo.pass, repo.db)
 	}
 	if repo.client == nil {
