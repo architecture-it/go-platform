@@ -10,6 +10,7 @@ import (
 	"strings"
 	"time"
 
+	"go.elastic.co/apm/module/apmgin"
 	yaml "gopkg.in/yaml.v3"
 
 	"github.com/architecture-it/go-platform/health"
@@ -21,18 +22,18 @@ import (
 	"github.com/common-nighthawk/go-figure"
 )
 
-//Server un server http basado en gin-gonic
+// Server un server http basado en gin-gonic
 type Server struct {
 	r      *gin.Engine
 	config Config
 }
 
-//GetRouter devuelve el router de gin
+// GetRouter devuelve el router de gin
 func (s *Server) GetRouter() *gin.Engine {
 	return s.r
 }
 
-//NewServer crea un server nuevo con la config indicada
+// NewServer crea un server nuevo con la config indicada
 func NewServer(cfg Config) *Server {
 	return &Server{gin.Default(), cfg}
 }
@@ -73,6 +74,10 @@ func (s *Server) AddApiDocs() {
 	s.r.GET("/openapi.yaml", func(c *gin.Context) {
 		serveYAMLFromFile(c)
 	})
+}
+
+func (s *Server) AddElasticIntegration() {
+	s.GetRouter().Use(apmgin.Middleware(s.GetRouter()))
 }
 
 // AddMetrics agrega un endpoint /metrics con las metricas de Prometheus para los requests
@@ -122,7 +127,7 @@ func (s *Server) AddHealth(fs ...func() health.Checker) {
 	})
 }
 
-//ListenAndServe inicia el server http y bloquea hasta SIGINT
+// ListenAndServe inicia el server http y bloquea hasta SIGINT
 func (s *Server) ListenAndServe() {
 	myFigure := figure.NewFigure("go-platform", "", true)
 	myFigure.Print()
@@ -155,7 +160,7 @@ func (s *Server) ListenAndServe() {
 
 }
 
-//AddCorsAllOrigins es autoexplicativo
+// AddCorsAllOrigins es autoexplicativo
 func (s *Server) AddCorsAllOrigins() {
 	s.r.Use(cors.Default())
 	//see: https://github.com/gin-contrib/cors

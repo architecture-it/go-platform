@@ -12,7 +12,7 @@ import (
 	"github.com/architecture-it/go-platform/log"
 
 	"go.elastic.co/apm"
-	"go.elastic.co/apm/module/apmhttp/v2"
+	"go.elastic.co/apm/module/apmhttp"
 )
 
 type Params map[string]string
