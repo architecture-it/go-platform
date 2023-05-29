@@ -137,6 +137,7 @@ func producerMessage(c *config,
 			time.Sleep(time.Second)
 		}
 		logger.SugarLogger.Errorln(fmt.Sprintf("Failed to produce message: %v\n", err))
+		return err
 	}
 
 	// Flush and close the producer and the events channel
