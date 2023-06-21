@@ -69,6 +69,7 @@ func producerMessage(c *config,
 	key string,
 	topic string,
 	headers []kafka.Header) error {
+	errChan := make(chan error)
 
 	go func() {
 		for e := range p.Events() {
@@ -105,6 +106,7 @@ func producerMessage(c *config,
 				m := ev
 				if m.TopicPartition.Error != nil {
 					logger.SugarLogger.Infoln(fmt.Sprintf("Delivery failed: %v\n", m.TopicPartition.Error))
+					errChan <- m.TopicPartition.Error
 				} else {
 					logger.SugarLogger.Infoln(fmt.Sprintf("Delivered message to topic %s [%d] at offset %v\n",
 						*m.TopicPartition.Topic, m.TopicPartition.Partition, m.TopicPartition.Offset))
@@ -117,6 +119,7 @@ func producerMessage(c *config,
 			// for one Produce call, so it can close it.
 			close(deliveryChan)
 		}
+		close(errChan)
 	}()
 
 	err := p.Produce(&kafka.Message{
@@ -137,6 +140,7 @@ func producerMessage(c *config,
 			time.Sleep(time.Second)
 		}
 		logger.SugarLogger.Errorln(fmt.Sprintf("Failed to produce message: %v\n", err))
+		return err
 	}
 
 	// Flush and close the producer and the events channel
@@ -144,5 +148,13 @@ func producerMessage(c *config,
 		logger.SugarLogger.Debugf("Still waiting to flush outstanding messages\n", err)
 	}
 	p.Close()
-	return nil
+
+	select {
+	case err := <-errChan:
+		// Handle the error received from the delivery channel
+		return err
+	case <-time.After(5 * time.Second):
+		// Timeout if no error is received within 5 seconds
+		return fmt.Errorf("timeout: message delivery not confirmed")
+	}
 }
