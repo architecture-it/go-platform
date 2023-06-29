@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	logger "github.com/architecture-it/go-platform/log"
 	"io/ioutil"
 	"mime"
 	"mime/multipart"
@@ -15,13 +16,13 @@ import (
 	"gopkg.in/resty.v1"
 )
 
-//Queue representa el objeto Queue de MQ
+// Queue representa el objeto Queue de MQ
 type Queue struct {
 	name string
 	api  string
 }
 
-//Topic representa al objeto Topic de MQ
+// Topic representa al objeto Topic de MQ
 type Topic struct {
 	name string
 	api  string
@@ -36,17 +37,17 @@ func init() {
 	circuitBreaker = breaker.New(3, 1, 5*time.Second)
 }
 
-//GetTopic obtiene un topic para publicar.
+// GetTopic obtiene un topic para publicar.
 func GetTopic(topic string, config Config) Topic {
 	return Topic{strings.Replace(topic, "/", ".", -1), config.HTTPMQAPIUrl}
 }
 
-//GetQueue obtiene una cola determinada por la config especificada
+// GetQueue obtiene una cola determinada por la config especificada
 func GetQueue(config Config) Queue {
 	return Queue{config.QueueName, config.HTTPMQAPIUrl}
 }
 
-//Put pone un mensaje en la cola
+// Put pone un mensaje en la cola
 func (q Queue) Put(data string) error {
 
 	url := fmt.Sprintf("%s/queues/%s", q.api, q.name)
@@ -130,6 +131,8 @@ func (t Topic) Publish(data string) error {
 			SetBody(data).
 			Post(url)
 		if res.StatusCode() != http.StatusOK {
+			logger.SugarLogger.Errorln(fmt.Sprintf("Fail at the publish message: %s\n Status code: %s\n Status: %s\n Time: %s\n Body: %s\n ReceivedAt: %s\n", res.Error(), res.StatusCode(), res.Status(), res.Time(), res.Body(), res.ReceivedAt()))
+
 			err = errors.New("API Bridge falla al publicar el mensaje")
 		}
 		return err
