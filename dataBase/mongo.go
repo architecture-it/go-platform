@@ -14,24 +14,43 @@ type MongoRepository interface {
 }
 
 type mongoRepository struct {
-	mongoURL string
-	mongoDB  string
-	db       *mongo.Database
+	mongoURL       string
+	mongoDB        string
+	mongoMechanism string
+	mongoUser      string
+	mongoPass      string
+	db             *mongo.Database
 }
 
-func NewMongoRepository(mongoURL, mongoDB string) MongoRepository {
-	db := createConnectionMongo(mongoURL, mongoDB)
+func NewMongoRepository(mongoURL, mongoDB, mongoMechanism, mongoUser, mongoPass string) MongoRepository {
+	db := createConnectionMongo(mongoURL, mongoDB, mongoMechanism, mongoUser, mongoPass)
 	return &mongoRepository{
-		mongoURL: mongoURL,
-		mongoDB:  mongoDB,
-		db:       db,
+		mongoURL:       mongoURL,
+		mongoDB:        mongoDB,
+		mongoMechanism: mongoMechanism,
+		mongoUser:      mongoUser,
+		mongoPass:      mongoPass,
+		db:             db,
 	}
 }
 
-func createConnectionMongo(mongoURL, mongoDB string) *mongo.Database {
+func createConnectionMongo(mongoURL, mongoDB, mongoMechanism, mongoUser, mongoPass string) *mongo.Database {
+
+	var clientOptionsAuth *options.ClientOptions
+
 	clientOptions := options.Client().ApplyURI(mongoURL).
 		SetMonitor(apmmongo.CommandMonitor())
-	mongoClient, err := mongo.Connect(context.TODO(), clientOptions)
+
+	if mongoMechanism != "" && mongoUser != "" && mongoPass != "" {
+		clientOptionsAuth = options.Client().SetAuth(options.Credential{
+			AuthMechanism: mongoMechanism,
+			AuthSource:    mongoDB,
+			Username:      mongoUser,
+			Password:      mongoPass,
+		})
+	}
+
+	mongoClient, err := mongo.Connect(context.TODO(), clientOptions, clientOptionsAuth)
 	if err != nil || mongoDB == "" {
 		log.Logger.Error("Error Fatal NO se conectó a MongoDB, la url es: " + mongoURL +
 			" , la BBDD es: " + mongoDB + " . Verifique que sean correctos")
@@ -54,7 +73,7 @@ func (repo *mongoRepository) GetDB(ctx context.Context) *mongo.Database {
 	// reintento de conexion si algo fallo
 	if repo.db == nil {
 		log.Logger.Info("Se intenta reconectar a mongo.")
-		repo.db = createConnectionMongo(repo.mongoURL, repo.mongoDB)
+		repo.db = createConnectionMongo(repo.mongoURL, repo.mongoDB, repo.mongoMechanism, repo.mongoUser, repo.mongoPass)
 	}
 	if repo.db == nil {
 		return nil
