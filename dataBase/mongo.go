@@ -35,14 +35,22 @@ func NewMongoRepository(mongoURL, mongoDB, mongoMechanism, mongoUser, mongoPass 
 }
 
 func createConnectionMongo(mongoURL, mongoDB, mongoMechanism, mongoUser, mongoPass string) *mongo.Database {
+
+	var clientOptionsAuth *options.ClientOptions
+
 	clientOptions := options.Client().ApplyURI(mongoURL).
-		SetMonitor(apmmongo.CommandMonitor()).SetAuth(options.Credential{
-		AuthMechanism: mongoMechanism,
-		AuthSource:    mongoDB,
-		Username:      mongoUser,
-		Password:      mongoPass,
-	})
-	mongoClient, err := mongo.Connect(context.TODO(), clientOptions)
+		SetMonitor(apmmongo.CommandMonitor())
+
+	if mongoMechanism != "" && mongoUser != "" && mongoPass != "" {
+		clientOptionsAuth = options.Client().SetAuth(options.Credential{
+			AuthMechanism: mongoMechanism,
+			AuthSource:    mongoDB,
+			Username:      mongoUser,
+			Password:      mongoPass,
+		})
+	}
+
+	mongoClient, err := mongo.Connect(context.TODO(), clientOptions, clientOptionsAuth)
 	if err != nil || mongoDB == "" {
 		log.Logger.Error("Error Fatal NO se conectó a MongoDB, la url es: " + mongoURL +
 			" , la BBDD es: " + mongoDB + " . Verifique que sean correctos")
