@@ -69,19 +69,6 @@ func createConnectionMongo(mongoURL, mongoDB, mongoMechanism, mongoUser, mongoPa
 	return db
 }
 
-// // GetDB return the database connection
-// func (repo *mongoRepository) GetDB(ctx context.Context) *mongo.Database {
-// 	// reintento de conexion si algo fallo
-// 	if repo.db == nil {
-// 		log.Logger.Info("Se intenta reconectar a mongo.")
-// 		repo.db = createConnectionMongo(repo.mongoURL, repo.mongoDB, repo.mongoMechanism, repo.mongoUser, repo.mongoPass)
-// 	}
-// 	if repo.db == nil {
-// 		return nil
-// 	}
-// 	return repo.db
-// }
-
 const (
 	maxRetries = 3
 )
