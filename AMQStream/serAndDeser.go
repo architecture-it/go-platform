@@ -10,7 +10,7 @@ import (
 	"github.com/confluentinc/confluent-kafka-go/schemaregistry/serde/avro"
 )
 
-func serializeMessage(c *config, event ISpecificRecord) ([]byte, error) {
+func serializeMessage(c *config, topic string, event ISpecificRecord) ([]byte, error) {
 	client, err := schemaregistry.NewClient(c.schemaRegistry)
 
 	if err != nil {
@@ -26,9 +26,9 @@ func serializeMessage(c *config, event ISpecificRecord) ([]byte, error) {
 		log.SugarLogger.Errorln("Failed to serializer: %s\n", err)
 		return nil, err
 	}
-	ser.SubjectNameStrategy = withoutStrategy
+	//ser.SubjectNameStrategy = withoutStrategy
 
-	return ser.Serialize(event.SchemaName(), event)
+	return ser.Serialize(topic, event)
 
 }
 
@@ -49,7 +49,7 @@ func createDeserialize(c *config) (*avro.SpecificDeserializer, error) {
 		log.SugarLogger.Errorln("Failed to deserializer: %s\n", err)
 		return nil, err
 	}
-	deser.SubjectNameStrategy = withoutStrategy
+	//deser.SubjectNameStrategy = withoutStrategy
 
 	return deser, nil
 }

@@ -53,7 +53,7 @@ func (c *config) publish(event ISpecificRecord, key string, topic string, header
 		logger.SugarLogger.Errorln(fmt.Sprintf("Failed to create producer: %s\n", err))
 		return err
 	}
-	value, err := serializeMessage(c, event)
+	value, err := serializeMessage(c, topic, event)
 	if err != nil || len(value) == 0 {
 		logger.SugarLogger.Errorln(fmt.Sprintf("Serialize error: %s\n", err))
 		return err

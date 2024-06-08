@@ -21,7 +21,7 @@ func (c *config) toJson(event ISpecificRecord, metadata ConsumerMetadata) error 
 
 	key := metadata.Key
 	topic := CrossDeadline
-	valueSerialize, _ := serializeMessage(c, event)
+	valueSerialize, _ := serializeMessage(c, topic, event)
 	dict := make(map[string]string)
 
 	for i := range metadata.Header {
