@@ -12,7 +12,8 @@ require (
 	github.com/gin-gonic/gin v1.8.1
 	github.com/go-playground/validator v9.31.0+incompatible
 	github.com/go-redis/redis v6.15.9+incompatible
-	github.com/jinzhu/gorm v1.9.16
+	github.com/jinzhu/inflection v1.0.0 // indirect
+	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/mitchellh/mapstructure v1.5.0
 	github.com/stretchr/testify v1.8.4
 	github.com/zsais/go-gin-prometheus v0.1.0
@@ -28,6 +29,8 @@ require (
 	gopkg.in/resty.v1 v1.12.0
 	gopkg.in/yaml.v2 v2.4.0
 	gopkg.in/yaml.v3 v3.0.1
+	gorm.io/driver/mysql v1.5.2
+	gorm.io/driver/sqlserver v1.5.4
 	gorm.io/gorm v1.25.12
 )
 
@@ -35,8 +38,6 @@ require (
 	github.com/microsoft/go-mssqldb v1.7.2 // indirect
 	go.elastic.co/apm/module/apmsql/v2 v2.7.0 // indirect
 	go.elastic.co/apm/v2 v2.7.0 // indirect
-	gorm.io/driver/mysql v1.5.2 // indirect
-	gorm.io/driver/sqlserver v1.5.4 // indirect
 )
 
 require (
@@ -44,7 +45,6 @@ require (
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/cespare/xxhash/v2 v2.1.2 // indirect
 	github.com/davecgh/go-spew v1.1.1 // indirect
-	github.com/denisenkom/go-mssqldb v0.12.3 // indirect
 	github.com/elastic/go-licenser v0.4.0 // indirect
 	github.com/elastic/go-sysinfo v1.7.1 // indirect
 	github.com/elastic/go-windows v1.0.1 // indirect
@@ -61,8 +61,6 @@ require (
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/heetch/avro v0.3.1 // indirect
 	github.com/jcchavezs/porto v0.1.0 // indirect
-	github.com/jinzhu/inflection v1.0.0 // indirect
-	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/joeshaw/multierror v0.0.0-20140124173710-69b34d4ec901 // indirect
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/klauspost/compress v1.13.6 // indirect
