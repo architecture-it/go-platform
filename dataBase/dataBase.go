@@ -2,10 +2,12 @@ package database
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/architecture-it/go-platform/log"
-	"github.com/jinzhu/gorm"
-	"go.elastic.co/apm/module/apmgorm"
+	apmmysql "go.elastic.co/apm/module/apmgormv2/v2/driver/mysql"
+	apmssql "go.elastic.co/apm/module/apmgormv2/v2/driver/sqlserver"
+	"gorm.io/gorm"
 )
 
 type DataRepository interface {
@@ -28,50 +30,48 @@ func NewDataRepository(dialect, connection string) DataRepository {
 }
 
 func NewSQLRepository(connection string) DataRepository {
-	conn := createConnection("mssql", connection)
-	return &dataRepository{
-		db:         conn,
-		dialect:    "mssql",
-		connection: connection,
-	}
+	return NewDataRepository("mssql", connection)
 }
 
 func NewMysqlRepository(connection string) DataRepository {
-	conn := createConnection("mysql", connection)
-	return &dataRepository{
-		db:         conn,
-		dialect:    "mysql",
-		connection: connection,
-	}
+	return NewDataRepository("mysql", connection)
 }
 
 func createConnection(dialect, connectionString string) *gorm.DB {
 	if dialect == "" || connectionString == "" {
-		log.Logger.Error("No se pudo conectar a la base de datos. Falta informacion!")
+		log.Logger.Error("No se pudo conectar a la base de datos. Falta información!")
 		return nil
 	}
 
-	connection, err := apmgorm.Open(dialect, connectionString)
+	var dialector gorm.Dialector
+	switch dialect {
+	case "mssql":
+		dialector = apmssql.Open(connectionString)
+	case "mysql":
+		dialector = apmmysql.Open(connectionString)
+	default:
+		log.Logger.Error(fmt.Sprintf("Dialect '%s' no soportado", dialect))
+		return nil
+	}
 
+	db, err := gorm.Open(dialector, &gorm.Config{})
 	if err != nil {
-		log.Logger.Error("Error al conectarse a la base de datos " + dialect + " Descripcion: " + err.Error())
+		log.Logger.Error("Error al conectarse a la base de datos: " + err.Error())
 		return nil
 	}
+
 	log.Logger.Info("Se conectó con éxito a " + dialect)
-	return connection
+	return db
 }
 
-// GetDB return the database connection
 func (repo *dataRepository) GetDB(ctx context.Context) *gorm.DB {
-	// reintento de conexion si algo fallo
 	if repo.db == nil {
-		log.Logger.Info("Se intenta reconectar a la base de datos.")
+		log.Logger.Info("Intentando reconectar a la base de datos.")
 		repo.db = createConnection(repo.dialect, repo.connection)
 	}
 	if repo.db == nil {
 		log.Logger.Error("No se pudo conectar a la base de datos.")
 		return nil
 	}
-	db := apmgorm.WithContext(ctx, repo.db)
-	return db
+	return repo.db.WithContext(ctx)
 }
