@@ -1,8 +1,6 @@
 module github.com/architecture-it/go-platform
 
-go 1.23
-
-toolchain go1.23.7
+go 1.21
 
 require (
 	github.com/actgardner/gogen-avro/v10 v10.2.1
@@ -20,7 +18,7 @@ require (
 	go.elastic.co/apm v1.15.0
 	go.elastic.co/apm/module/apmgin v1.15.0
 	go.elastic.co/apm/module/apmgoredis v1.15.0
-	go.elastic.co/apm/module/apmgormv2/v2 v2.7.0
+	go.elastic.co/apm/module/apmgormv2/v2 v2.5.0
 	go.elastic.co/apm/module/apmmongo v1.15.0
 	go.mongodb.org/mongo-driver v1.10.2
 	go.uber.org/zap v1.23.0
@@ -36,8 +34,8 @@ require (
 
 require (
 	github.com/microsoft/go-mssqldb v1.7.2 // indirect
-	go.elastic.co/apm/module/apmsql/v2 v2.7.0 // indirect
-	go.elastic.co/apm/v2 v2.7.0 // indirect
+	go.elastic.co/apm/module/apmsql/v2 v2.6.0 // indirect
+	go.elastic.co/apm/v2 v2.6.0 // indirect
 )
 
 require (
