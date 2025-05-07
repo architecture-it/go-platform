@@ -45,8 +45,7 @@ func createConnectionRedis(addr, pass string, db int) *redis.Client {
 	})
 	_, err := client.Ping().Result()
 	if err != nil {
-		log.Logger.Info("[REDIS] Error en la conexión : " + err.Error())
-		return nil
+		log.Logger.Info("[REDIS] Error en la prueba de conexión : " + err.Error())
 	}
 	log.Logger.Info("[REDIS] Se ha conectado exitosamente")
 	return client
