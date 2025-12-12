@@ -11,6 +11,13 @@ import (
 	"go.elastic.co/apm/module/apmgoredis"
 )
 
+const (
+	// Default Redis timeout values in milliseconds
+	defaultDialTimeoutMs  = 500
+	defaultReadTimeoutMs  = 300
+	defaultWriteTimeoutMs = 300
+)
+
 type RedisRepository interface {
 	GetClient(ctx context.Context) *redis.Client
 }
@@ -38,26 +45,9 @@ func NewRedisRepository(addr, pass, db string) RedisRepository {
 
 func createConnectionRedis(addr, pass string, db int) *redis.Client {
 	// Leer timeouts desde ENV (en milisegundos)
-	dialTimeoutMs := 500 // default 500ms
-	if timeoutEnv := os.Getenv("REDIS_DIAL_TIMEOUT_MS"); timeoutEnv != "" {
-		if parsed, err := strconv.Atoi(timeoutEnv); err == nil {
-			dialTimeoutMs = parsed
-		}
-	}
-
-	readTimeoutMs := 300 // default 300ms
-	if timeoutEnv := os.Getenv("REDIS_READ_TIMEOUT_MS"); timeoutEnv != "" {
-		if parsed, err := strconv.Atoi(timeoutEnv); err == nil {
-			readTimeoutMs = parsed
-		}
-	}
-
-	writeTimeoutMs := 300 // default 300ms
-	if timeoutEnv := os.Getenv("REDIS_WRITE_TIMEOUT_MS"); timeoutEnv != "" {
-		if parsed, err := strconv.Atoi(timeoutEnv); err == nil {
-			writeTimeoutMs = parsed
-		}
-	}
+	dialTimeoutMs := getTimeoutFromEnv("REDIS_DIAL_TIMEOUT_MS", defaultDialTimeoutMs)
+	readTimeoutMs := getTimeoutFromEnv("REDIS_READ_TIMEOUT_MS", defaultReadTimeoutMs)
+	writeTimeoutMs := getTimeoutFromEnv("REDIS_WRITE_TIMEOUT_MS", defaultWriteTimeoutMs)
 
 	client := redis.NewClient(&redis.Options{
 		Addr:         addr,
@@ -82,6 +72,16 @@ func createConnectionRedis(addr, pass string, db int) *redis.Client {
 	}
 
 	return client
+}
+
+// getTimeoutFromEnv retrieves timeout value from environment variable or returns default
+func getTimeoutFromEnv(envVar string, defaultValue int) int {
+	if timeoutEnv := os.Getenv(envVar); timeoutEnv != "" {
+		if parsed, err := strconv.Atoi(timeoutEnv); err == nil {
+			return parsed
+		}
+	}
+	return defaultValue
 }
 
 // GetDB return the database connection
