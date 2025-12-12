@@ -37,18 +37,50 @@ func NewRedisRepository(addr, pass, db string) RedisRepository {
 }
 
 func createConnectionRedis(addr, pass string, db int) *redis.Client {
-	client := redis.NewClient(&redis.Options{
-		Addr:        addr,
-		Password:    pass,
-		DB:          db,
-		DialTimeout: time.Millisecond * 50,
-	})
-	_, err := client.Ping().Result()
-	if err != nil {
-		log.Logger.Info("[REDIS] Error en la conexión : " + err.Error())
-		return nil
+	// Leer timeouts desde ENV (en milisegundos)
+	dialTimeoutMs := 500 // default 500ms
+	if timeoutEnv := os.Getenv("REDIS_DIAL_TIMEOUT_MS"); timeoutEnv != "" {
+		if parsed, err := strconv.Atoi(timeoutEnv); err == nil {
+			dialTimeoutMs = parsed
+		}
 	}
-	log.Logger.Info("[REDIS] Se ha conectado exitosamente")
+
+	readTimeoutMs := 300 // default 300ms
+	if timeoutEnv := os.Getenv("REDIS_READ_TIMEOUT_MS"); timeoutEnv != "" {
+		if parsed, err := strconv.Atoi(timeoutEnv); err == nil {
+			readTimeoutMs = parsed
+		}
+	}
+
+	writeTimeoutMs := 300 // default 300ms
+	if timeoutEnv := os.Getenv("REDIS_WRITE_TIMEOUT_MS"); timeoutEnv != "" {
+		if parsed, err := strconv.Atoi(timeoutEnv); err == nil {
+			writeTimeoutMs = parsed
+		}
+	}
+
+	client := redis.NewClient(&redis.Options{
+		Addr:         addr,
+		Password:     pass,
+		DB:           db,
+		DialTimeout:  time.Millisecond * time.Duration(dialTimeoutMs),
+		ReadTimeout:  time.Millisecond * time.Duration(readTimeoutMs),
+		WriteTimeout: time.Millisecond * time.Duration(writeTimeoutMs),
+	})
+
+	// Opcional: PING configurable
+	skipPing := os.Getenv("REDIS_SKIP_PING") == "true"
+	if !skipPing {
+		_, err := client.Ping().Result()
+		if err != nil {
+			log.Logger.Info("[REDIS] Error en la conexión : " + err.Error())
+			return nil
+		}
+		log.Logger.Info("[REDIS] Se ha conectado exitosamente")
+	} else {
+		log.Logger.Info("[REDIS] Cliente Redis creado sin validación de PING")
+	}
+
 	return client
 }
 
