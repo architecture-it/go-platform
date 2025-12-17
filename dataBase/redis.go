@@ -11,6 +11,13 @@ import (
 	"go.elastic.co/apm/module/apmgoredis"
 )
 
+const (
+	// Default Redis timeout values in milliseconds
+	defaultDialTimeoutMs  = 500
+	defaultReadTimeoutMs  = 300
+	defaultWriteTimeoutMs = 300
+)
+
 type RedisRepository interface {
 	GetClient(ctx context.Context) *redis.Client
 }
@@ -37,19 +44,44 @@ func NewRedisRepository(addr, pass, db string) RedisRepository {
 }
 
 func createConnectionRedis(addr, pass string, db int) *redis.Client {
+	// Leer timeouts desde ENV (en milisegundos)
+	dialTimeoutMs := getTimeoutFromEnv("REDIS_DIAL_TIMEOUT_MS", defaultDialTimeoutMs)
+	readTimeoutMs := getTimeoutFromEnv("REDIS_READ_TIMEOUT_MS", defaultReadTimeoutMs)
+	writeTimeoutMs := getTimeoutFromEnv("REDIS_WRITE_TIMEOUT_MS", defaultWriteTimeoutMs)
+
 	client := redis.NewClient(&redis.Options{
-		Addr:        addr,
-		Password:    pass,
-		DB:          db,
-		DialTimeout: time.Millisecond * 50,
+		Addr:         addr,
+		Password:     pass,
+		DB:           db,
+		DialTimeout:  time.Millisecond * time.Duration(dialTimeoutMs),
+		ReadTimeout:  time.Millisecond * time.Duration(readTimeoutMs),
+		WriteTimeout: time.Millisecond * time.Duration(writeTimeoutMs),
 	})
-	_, err := client.Ping().Result()
-	if err != nil {
-		log.Logger.Info("[REDIS] Error en la conexión : " + err.Error())
-		return nil
+
+	// Opcional: PING configurable
+	skipPing := os.Getenv("REDIS_SKIP_PING") == "true"
+	if !skipPing {
+		_, err := client.Ping().Result()
+		if err != nil {
+			log.Logger.Info("[REDIS] Error en la conexión : " + err.Error())
+			return nil
+		}
+		log.Logger.Info("[REDIS] Se ha conectado exitosamente")
+	} else {
+		log.Logger.Info("[REDIS] Cliente Redis creado sin validación de PING")
 	}
-	log.Logger.Info("[REDIS] Se ha conectado exitosamente")
+
 	return client
+}
+
+// getTimeoutFromEnv retrieves timeout value from environment variable or returns default
+func getTimeoutFromEnv(envVar string, defaultValue int) int {
+	if timeoutEnv := os.Getenv(envVar); timeoutEnv != "" {
+		if parsed, err := strconv.Atoi(timeoutEnv); err == nil {
+			return parsed
+		}
+	}
+	return defaultValue
 }
 
 // GetDB return the database connection

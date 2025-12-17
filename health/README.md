@@ -20,6 +20,15 @@ En la siguiente tabla se pueden observar las variables de entorno necesarias par
 | MySQL | MYSQL_CONNECTION |
 | Redis | REDIS_DB, REDIS_ADDR y REDIS_PASS |
 
+### Variables de timeout (opcionales)
+
+| Variable | Default | Descripción |
+|----------|---------|-------------|
+| REDIS_DIAL_TIMEOUT_MS | 500 | Timeout de conexión en milisegundos |
+| REDIS_READ_TIMEOUT_MS | 300 | Timeout de lectura en milisegundos |
+| REDIS_WRITE_TIMEOUT_MS | 300 | Timeout de escritura en milisegundos |
+| REDIS_SKIP_PING | false | Omitir PING inicial (true/false) |
+
 ## Manos a la obra! 👨‍💻👩‍💻
 
 Para agregar los Checkers que se quieran monitorear, alcanza con agregarlos en la función AddHealth del WebServer
