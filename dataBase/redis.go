@@ -2,8 +2,11 @@ package database
 
 import (
 	"context"
+	"crypto/tls"
+	"net"
 	"os"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/architecture-it/go-platform/log"
@@ -44,31 +47,82 @@ func NewRedisRepository(addr, pass, db string) RedisRepository {
 }
 
 func createConnectionRedis(addr, pass string, db int) *redis.Client {
-	// Leer timeouts desde ENV (en milisegundos)
 	dialTimeoutMs := getTimeoutFromEnv("REDIS_DIAL_TIMEOUT_MS", defaultDialTimeoutMs)
 	readTimeoutMs := getTimeoutFromEnv("REDIS_READ_TIMEOUT_MS", defaultReadTimeoutMs)
 	writeTimeoutMs := getTimeoutFromEnv("REDIS_WRITE_TIMEOUT_MS", defaultWriteTimeoutMs)
 
-	client := redis.NewClient(&redis.Options{
+	options := &redis.Options{
 		Addr:         addr,
 		Password:     pass,
 		DB:           db,
 		DialTimeout:  time.Millisecond * time.Duration(dialTimeoutMs),
 		ReadTimeout:  time.Millisecond * time.Duration(readTimeoutMs),
 		WriteTimeout: time.Millisecond * time.Duration(writeTimeoutMs),
-	})
+	}
 
-	// Opcional: PING configurable
-	skipPing := os.Getenv("REDIS_SKIP_PING") == "true"
+	tlsEnabled, err := strconv.ParseBool(
+		strings.TrimSpace(os.Getenv("REDIS_TLS_ENABLED")),
+	)
+	if err != nil && os.Getenv("REDIS_TLS_ENABLED") != "" {
+		log.Logger.Info(
+			"[REDIS] REDIS_TLS_ENABLED tiene un valor inválido. Se utilizará false",
+		)
+		tlsEnabled = false
+	}
+
+	if tlsEnabled {
+		serverName := strings.TrimSpace(
+			os.Getenv("REDIS_TLS_SERVER_NAME"),
+		)
+
+		// Si no se informó explícitamente, se obtiene desde REDIS_ADDR.
+		if serverName == "" {
+			host, _, splitErr := net.SplitHostPort(addr)
+			if splitErr != nil {
+				log.Logger.Info(
+					"[REDIS] No se pudo obtener el hostname TLS desde REDIS_ADDR: " +
+						splitErr.Error(),
+				)
+			} else {
+				serverName = host
+			}
+		}
+
+		options.TLSConfig = &tls.Config{
+			MinVersion: tls.VersionTLS12,
+			ServerName: serverName,
+		}
+
+		log.Logger.Info(
+			"[REDIS] TLS habilitado. ServerName=" + serverName,
+		)
+	} else {
+		log.Logger.Info("[REDIS] TLS deshabilitado")
+	}
+
+	client := redis.NewClient(options)
+
+	skipPing := strings.EqualFold(
+		os.Getenv("REDIS_SKIP_PING"),
+		"true",
+	)
+
 	if !skipPing {
 		_, err := client.Ping().Result()
 		if err != nil {
-			log.Logger.Info("[REDIS] Error en la conexión : " + err.Error())
+			log.Logger.Info(
+				"[REDIS] Error en la conexión: " + err.Error(),
+			)
+
+			_ = client.Close()
 			return nil
 		}
+
 		log.Logger.Info("[REDIS] Se ha conectado exitosamente")
 	} else {
-		log.Logger.Info("[REDIS] Cliente Redis creado sin validación de PING")
+		log.Logger.Info(
+			"[REDIS] Cliente Redis creado sin validación de PING",
+		)
 	}
 
 	return client
